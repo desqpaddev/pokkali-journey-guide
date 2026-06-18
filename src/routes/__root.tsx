@@ -88,11 +88,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Pokkali Village — Heritage Circuit Tours in Kerala" },
       { name: "description", content: "Walk the fields. Ride the waters. Taste the story of Pokkali rice — a vanishing heritage grain, alive again through immersive village tours." },
       { name: "author", content: "Pokkali Village" },
-      { property: "og:title", content: "Pokkali Village — Heritage Circuit Tours" },
-      { property: "og:description", content: "Immersive circuit tours through Kerala's Pokkali paddy heritage. GPS-guided storytelling in English, Hindi & Malayalam." },
+      { property: "og:title", content: "Pokkali Village — Heritage Circuit Tours in Kerala" },
+      { property: "og:description", content: "Walk the fields. Ride the waters. Taste the story of Pokkali rice — a vanishing heritage grain, alive again through immersive village tours." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Pokkali Village — Heritage Circuit Tours in Kerala" },
+      { name: "twitter:description", content: "Walk the fields. Ride the waters. Taste the story of Pokkali rice — a vanishing heritage grain, alive again through immersive village tours." },
     ],
     links: [
       {
