@@ -5,6 +5,7 @@ import { Package, ScanLine, Calendar, LayoutDashboard, ShieldCheck } from "lucid
 
 export const Route = createFileRoute("/_authenticated/admin")({
   beforeLoad: async () => {
+    if (typeof window === "undefined") return {};
     const { data: u } = await supabase.auth.getUser();
     if (!u.user) throw redirect({ to: "/auth" });
     const { data: roles } = await supabase.from("user_roles").select("role").eq("user_id", u.user.id);
