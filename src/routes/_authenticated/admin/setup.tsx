@@ -30,7 +30,7 @@ function Setup() {
   async function promote() {
     if (!user) return;
     setBusy(true);
-    const { error } = await supabase.from("user_roles").insert({ user_id: user.id, role: "admin" });
+    const { error } = await supabase.rpc("claim_first_admin");
     setBusy(false);
     if (error) return toast.error(error.message);
     toast.success("You are now an admin!");
