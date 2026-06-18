@@ -64,7 +64,7 @@ export function MobileBottomNav() {
       className="md:hidden fixed bottom-0 inset-x-0 z-50 border-t border-border/60 bg-background/95 backdrop-blur-md pb-[env(safe-area-inset-bottom)]"
       aria-label="Primary"
     >
-      <ul className="grid grid-cols-{COLS} h-16" style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0,1fr))` }}>
+      <ul className="grid h-16" style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0,1fr))` }}>
         {items.map((it) => (
           <li key={it.label} className="contents">
             <Link
