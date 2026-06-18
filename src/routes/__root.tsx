@@ -95,6 +95,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:site", content: "@Lovable" },
       { name: "twitter:title", content: "Pokkali Village — Heritage Circuit Tours in Kerala" },
       { name: "twitter:description", content: "Walk the fields. Ride the waters. Taste the story of Pokkali rice — a vanishing heritage grain, alive again through immersive village tours." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9bc19654-4e4e-4cea-bd1e-8ef5752f33ea/id-preview-50531dfa--639e2a9b-cbb4-4b8f-870b-d355af7f8795.lovable.app-1781768885576.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9bc19654-4e4e-4cea-bd1e-8ef5752f33ea/id-preview-50531dfa--639e2a9b-cbb4-4b8f-870b-d355af7f8795.lovable.app-1781768885576.png" },
     ],
     links: [
       {
