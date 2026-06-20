@@ -211,16 +211,7 @@ function Index() {
             </div>
           </div>
         </div>
-        <div className="relative">
-          <img src={hero} alt="Pokkali paddy" className="rounded-3xl aspect-[4/5] object-cover w-full" />
-          <div className="absolute -bottom-6 -left-6 bg-secondary text-secondary-foreground rounded-2xl p-5 shadow-xl">
-            <div className="font-display text-3xl font-bold leading-none">20+</div>
-            <div className="text-xs uppercase tracking-wider mt-1">Years of<br />Heritage Revival</div>
-          </div>
-          <div className="hidden md:block absolute -top-6 -right-6 h-24 w-24 rounded-full bg-primary text-secondary grid place-items-center ring-8 ring-background">
-            <Leaf className="h-10 w-10" />
-          </div>
-        </div>
+        <Tilt3DCard />
       </section>
 
       {/* TOURS — "Services We're Offering" style */}
