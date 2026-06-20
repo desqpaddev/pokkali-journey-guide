@@ -153,3 +153,16 @@
   }
   .text-balance { text-wrap: balance; }
 }
+
+@keyframes kenburns {
+  0% { transform: scale(1.05) translate3d(0, 0, 0); }
+  100% { transform: scale(1.18) translate3d(-1.5%, -1%, 0); }
+}
+
+@layer utilities {
+  .animate-kenburns {
+    animation: kenburns 8s ease-out forwards;
+    transform-origin: center center;
+    will-change: transform;
+  }
+}
