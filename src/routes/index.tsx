@@ -5,7 +5,7 @@ import { Header, Footer } from "@/components/app/Header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Wheat, Compass, Headphones, ScanLine, ArrowRight, Tractor, Sprout, ShoppingBasket } from "lucide-react";
+import { Wheat, Compass, Headphones, ScanLine, ArrowRight, Tractor, Sprout, ShoppingBasket, Check, Leaf, Sun, Droplets } from "lucide-react";
 import hero from "@/assets/hero-paddy.jpg";
 
 export const Route = createFileRoute("/")({
