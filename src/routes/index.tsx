@@ -2,11 +2,13 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Header, Footer } from "@/components/app/Header";
+import { HeroSlider } from "@/components/app/HeroSlider";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Wheat, Compass, Headphones, ScanLine, ArrowRight, Tractor, Sprout, ShoppingBasket, Check, Leaf, Sun, Droplets } from "lucide-react";
+import { Wheat, Compass, Headphones, ScanLine, ArrowRight, Sprout, Check, Leaf, Sun, Droplets } from "lucide-react";
 import hero from "@/assets/hero-paddy.jpg";
+import parallaxImg from "@/assets/parallax-fields.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -39,55 +41,8 @@ function Index() {
     <div className="min-h-screen bg-background">
       <Header />
 
-      {/* HERO — Agrion style: full-bleed image, giant centered word, pill CTA */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={hero} alt="" className="h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/55 via-primary/30 to-primary/70" />
-        </div>
-        <div className="relative container mx-auto px-4 pt-20 md:pt-28 pb-12 md:pb-16 text-primary-foreground text-center min-h-[88vh] flex flex-col items-center justify-center">
-          <div className="relative inline-block">
-            <p className="font-display italic text-lg md:text-2xl tracking-wide">
-              We are Producing Natural Products
-            </p>
-            <svg viewBox="0 0 300 12" className="mx-auto mt-1 h-2 w-56 md:w-72 text-secondary" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
-              <path d="M5 7 Q 75 1 150 6 T 295 5" />
-            </svg>
-          </div>
-          <h1 className="font-display font-semibold mt-6 leading-[0.95] text-[18vw] md:text-[12rem] tracking-tight text-balance">
-            Pokkali<span className="text-secondary">.</span>
-          </h1>
-          <p className="mt-4 max-w-xl text-base md:text-lg text-primary-foreground/90">
-            Immersive heritage circuit tours through Kerala's last salt-tolerant paddy fields.
-          </p>
-          <div className="mt-8">
-            <Button asChild variant="hero" className="rounded-full h-14 pl-7 pr-2 text-base bg-primary text-primary-foreground hover:bg-primary">
-              <Link to="/" hash="tours">
-                Discover More
-                <span className="ml-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-secondary text-secondary-foreground">
-                  <ArrowRight className="h-5 w-5" />
-                </span>
-              </Link>
-            </Button>
-          </div>
-
-          {/* In-hero feature strip */}
-          <div className="mt-16 md:mt-20 w-full border-t border-primary-foreground/20 pt-8 grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
-            {[
-              { icon: Tractor, title: "The Best Quality Standards" },
-              { icon: Sprout, title: "A Smart Organic Service" },
-              { icon: ShoppingBasket, title: "Natural Healthy Products" },
-            ].map((f) => (
-              <div key={f.title} className="flex items-center gap-4">
-                <f.icon className="h-12 w-12 shrink-0 text-secondary" strokeWidth={1.25} />
-                <div className="font-display uppercase tracking-wider text-base md:text-lg leading-tight">
-                  {f.title}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* HERO SLIDER */}
+      <HeroSlider />
 
       {/* Sub-feature row */}
       <section className="container mx-auto px-4 py-14">
