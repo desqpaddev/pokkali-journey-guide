@@ -106,16 +106,65 @@ function Index() {
         </div>
       </section>
 
-      {/* TOURS */}
-      <section id="tours" className="container mx-auto px-4 py-24">
-        <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
-          <div>
-            <div className="text-xs uppercase tracking-[0.2em] text-accent font-semibold">Choose your circuit</div>
-            <h2 className="font-display text-4xl md:text-5xl mt-2">Tours through the grain</h2>
-          </div>
-          <p className="text-muted-foreground max-w-md">
-            Half-day strolls, full-day deep dives, or multi-day immersives — every step plants hope for an endangered ecosystem.
+      {/* ABOUT — Agrion "Get to Know" style */}
+      <section className="container mx-auto px-4 py-20 grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <div className="text-sm font-display italic text-primary">Get to Know Pokkali</div>
+          <h2 className="font-display text-4xl md:text-5xl mt-2 leading-tight uppercase">
+            We grow the agriculture<br />and organic farm
+          </h2>
+          <p className="text-primary font-medium mt-6">
+            We've revived 20+ years of vanishing Pokkali heritage.
           </p>
+          <p className="text-muted-foreground mt-3 leading-relaxed">
+            Pokkali grows where land meets backwater — salt-tolerant, naturally organic, untouched by pesticides because the brackish water deters pests itself. Every visitor plants a sapling and 70% of every fee goes directly to the farmers reviving this ancient grain.
+          </p>
+          <ul className="mt-6 space-y-2">
+            {["Zero pesticides — brackish water keeps pests away.", "Heritage rice grown for over 3,000 years."].map((t) => (
+              <li key={t} className="flex items-start gap-3 text-sm">
+                <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-secondary text-secondary-foreground">
+                  <Check className="h-3 w-3" strokeWidth={3} />
+                </span>
+                {t}
+              </li>
+            ))}
+          </ul>
+          <div className="mt-8 flex items-center gap-5">
+            <Button asChild variant="default" className="rounded-full h-12 pl-6 pr-2 bg-primary hover:bg-primary">
+              <Link to="/" hash="tours">
+                Explore Tours
+                <span className="ml-3 inline-flex h-9 w-9 items-center justify-center rounded-full bg-secondary text-secondary-foreground">
+                  <ArrowRight className="h-4 w-4" />
+                </span>
+              </Link>
+            </Button>
+            <div className="flex items-center gap-3">
+              <div className="h-12 w-12 rounded-full bg-secondary/30 ring-2 ring-secondary grid place-items-center text-primary font-display font-bold">PV</div>
+              <div className="text-xs leading-tight">
+                <div className="font-semibold">The Pokkali Farmers</div>
+                <div className="text-muted-foreground">Custodians of the grain</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="relative">
+          <img src={hero} alt="Pokkali paddy" className="rounded-3xl aspect-[4/5] object-cover w-full" />
+          <div className="absolute -bottom-6 -left-6 bg-secondary text-secondary-foreground rounded-2xl p-5 shadow-xl">
+            <div className="font-display text-3xl font-bold leading-none">20+</div>
+            <div className="text-xs uppercase tracking-wider mt-1">Years of<br />Heritage Revival</div>
+          </div>
+          <div className="hidden md:block absolute -top-6 -right-6 h-24 w-24 rounded-full bg-primary text-secondary grid place-items-center ring-8 ring-background">
+            <Leaf className="h-10 w-10" />
+          </div>
+        </div>
+      </section>
+
+      {/* TOURS — "Services We're Offering" style */}
+      <section id="tours" className="bg-muted/40 py-20">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <div className="text-sm font-display italic text-primary">What We're Offering</div>
+          <h2 className="font-display text-4xl md:text-5xl mt-2 uppercase">Tours through the grain</h2>
         </div>
 
         {!packages?.length ? (
@@ -132,24 +181,27 @@ function Index() {
                 params={{ slug: p.slug }}
                 className="group"
               >
-                <Card className="overflow-hidden h-full transition-all hover:shadow-xl hover:-translate-y-1">
+                <Card className="overflow-hidden h-full transition-all hover:shadow-2xl hover:-translate-y-1 border-0 rounded-2xl bg-background">
                   <div className="aspect-[4/3] bg-muted relative overflow-hidden">
                     {p.hero_image_url ? (
                       <img src={p.hero_image_url} alt={p.title} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     ) : (
                       <img src={hero} alt="" className="h-full w-full object-cover opacity-80" />
                     )}
-                    <Badge className="absolute top-3 left-3 bg-background/90 text-foreground capitalize">
+                    <Badge className="absolute top-3 left-3 bg-secondary text-secondary-foreground capitalize border-none">
                       {p.category?.replace("-", " ")}
                     </Badge>
+                    <span className="absolute -bottom-5 right-5 h-10 w-10 rounded-full bg-secondary text-secondary-foreground grid place-items-center shadow-lg group-hover:bg-primary group-hover:text-secondary transition">
+                      <ArrowRight className="h-4 w-4" />
+                    </span>
                   </div>
-                  <div className="p-5">
-                    <h3 className="font-display text-xl font-semibold">{p.title}</h3>
+                  <div className="p-6">
+                    <h3 className="font-display text-xl font-semibold uppercase">{p.title}</h3>
                     {p.tagline && <p className="text-sm text-muted-foreground mt-1">{p.tagline}</p>}
                     <div className="mt-4 flex items-end justify-between">
                       <div>
                         <div className="text-xs text-muted-foreground">From</div>
-                        <div className="font-display text-2xl">₹{Number(p.price_per_person).toLocaleString()}</div>
+                        <div className="font-display text-2xl text-primary">₹{Number(p.price_per_person).toLocaleString()}</div>
                       </div>
                       <div className="text-xs text-muted-foreground text-right">
                         {p.duration_hours ? `${p.duration_hours}h` : ""}<br />
@@ -162,46 +214,93 @@ function Index() {
             ))}
           </div>
         )}
+      </div>
       </section>
 
-      {/* STORY */}
-      <section id="story" className="bg-primary text-primary-foreground py-24">
-        <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <div className="text-xs uppercase tracking-[0.2em] text-secondary font-semibold">Our story</div>
-            <h2 className="font-display text-4xl md:text-5xl mt-2">A grain that refused to disappear.</h2>
-            <p className="mt-6 text-primary-foreground/90 leading-relaxed">
-              Pokkali grows where land meets backwater — salt-tolerant, naturally organic, untouched by pesticides because the brackish water deters pests itself. Low yields once pushed it to the brink of extinction. Today, every visitor plants a sapling, eats a meal, takes home a story — and 70% of every fee goes directly to the farmers reviving this ancient grain.
-            </p>
-            <p className="mt-4 text-secondary font-display text-xl">
-              "Pokkali rises again — not through subsidies, but through the curious feet of travellers like you."
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            {[
-              { stat: "70%", label: "of fee to farmers" },
-              { stat: "0", label: "pesticides or fertilizers" },
-              { stat: "3", label: "languages of narration" },
-              { stat: "100%", label: "community-led" },
-            ].map((s) => (
-              <div key={s.label} className="bg-primary-foreground/10 rounded-2xl p-6 backdrop-blur">
-                <div className="font-display text-4xl text-secondary">{s.stat}</div>
-                <div className="text-sm text-primary-foreground/80 mt-1">{s.label}</div>
-              </div>
-            ))}
+      {/* DARK CTA BANNER */}
+      <section id="story" className="bg-primary text-primary-foreground py-20">
+        <div className="container mx-auto px-4 text-center">
+          <div className="text-sm font-display italic text-secondary">We're Selling Heritage Heritage</div>
+          <h2 className="font-display text-4xl md:text-5xl mt-2 max-w-3xl mx-auto uppercase leading-tight">
+            Unbeatable Organic and Pokkali Experiences
+          </h2>
+          <div className="mt-8">
+            <Button asChild className="rounded-full h-14 pl-7 pr-2 text-base bg-primary border border-primary-foreground/20 hover:bg-primary">
+              <Link to="/" hash="tours">
+                Discover More
+                <span className="ml-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-secondary text-secondary-foreground">
+                  <ArrowRight className="h-5 w-5" />
+                </span>
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* VISIT CTA */}
-      <section id="visit" className="container mx-auto px-4 py-24 text-center">
-        <h2 className="font-display text-4xl md:text-5xl">Ready to plant some hope?</h2>
-        <p className="mt-3 text-muted-foreground max-w-xl mx-auto">
-          Pick a tour, choose your date, and we'll meet you at the jetty with a welcome drink of rice kanji.
-        </p>
-        <Button asChild size="xl" variant="hero" className="mt-8">
-          <Link to="/" hash="tours">Book a tour <ArrowRight className="h-4 w-4" /></Link>
-        </Button>
+      {/* HEALTHY FOOD 3-icon row */}
+      <section className="container mx-auto px-4 py-20 grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <div className="text-sm font-display italic text-primary">Pure Organic Food</div>
+          <h2 className="font-display text-4xl md:text-5xl mt-2 uppercase leading-tight">
+            Healthy food for your good growth
+          </h2>
+          <p className="text-muted-foreground mt-4 max-w-md">
+            Every grain of Pokkali tells a story — of brackish backwaters, monsoon tides, and farmers who refused to let it disappear.
+          </p>
+        </div>
+        <div className="grid grid-cols-3 gap-4">
+          {[
+            { icon: Sprout, label: "Sowing" },
+            { icon: Sun, label: "Growing" },
+            { icon: Droplets, label: "Harvest" },
+          ].map((s) => (
+            <div key={s.label} className="bg-background border rounded-2xl p-5 text-center hover:bg-primary hover:text-primary-foreground group transition">
+              <div className="mx-auto h-14 w-14 rounded-full bg-secondary/20 text-primary group-hover:bg-secondary group-hover:text-secondary-foreground grid place-items-center transition">
+                <s.icon className="h-7 w-7" strokeWidth={1.5} />
+              </div>
+              <div className="font-display mt-3 uppercase text-sm tracking-wider">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* STATS COUNTERS */}
+      <section className="bg-muted/40 border-y">
+        <div className="container mx-auto px-4 py-14 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          {[
+            { stat: "70%", label: "Fee to Farmers" },
+            { stat: "20+", label: "Years Heritage" },
+            { stat: "3", label: "Languages" },
+            { stat: "100%", label: "Community-Led" },
+          ].map((s) => (
+            <div key={s.label}>
+              <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-secondary/30 text-primary mx-auto">
+                <Leaf className="h-5 w-5" />
+              </div>
+              <div className="font-display text-5xl text-primary mt-3 font-semibold">{s.stat}</div>
+              <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mt-1">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* SPLIT YELLOW/GREEN BANNER */}
+      <section id="visit" className="container mx-auto px-4 py-20">
+        <div className="grid md:grid-cols-[1fr_auto_1fr] items-center rounded-3xl overflow-hidden shadow-xl">
+          <div className="bg-secondary text-secondary-foreground p-10 md:p-14">
+            <div className="font-display text-3xl md:text-4xl uppercase font-semibold">Heritage Tours</div>
+          </div>
+          <div className="grid place-items-center bg-background py-6 md:py-0">
+            <Button asChild className="h-20 w-20 rounded-full bg-primary hover:bg-primary text-secondary p-0">
+              <Link to="/" hash="tours" aria-label="Book"><ArrowRight className="h-7 w-7" /></Link>
+            </Button>
+          </div>
+          <div className="bg-primary text-primary-foreground p-10 md:p-14 text-right">
+            <div className="text-sm text-secondary">Reservations</div>
+            <div className="font-display text-2xl md:text-3xl mt-1">+91 484 000 0000</div>
+            <div className="text-xs text-primary-foreground/70 mt-1">hello@pokkalivillage.in</div>
+          </div>
+        </div>
       </section>
 
       <Footer />
