@@ -111,7 +111,47 @@ export function MobileBottomNav() {
 
 export function Footer() {
   return (
-    <footer className="bg-primary text-primary-foreground pb-20 md:pb-0">
+    <footer className="relative isolate overflow-hidden bg-primary text-primary-foreground pb-20 md:pb-0">
+      {/* Creative SVG illustration background */}
+      <svg
+        aria-hidden
+        className="absolute inset-x-0 bottom-0 w-full h-full text-secondary/20 pointer-events-none"
+        viewBox="0 0 1440 700"
+        preserveAspectRatio="xMidYMax slice"
+      >
+        <defs>
+          <pattern id="footer-grain" width="40" height="40" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1" fill="currentColor" opacity="0.5" />
+          </pattern>
+          <linearGradient id="footer-sun" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="currentColor" stopOpacity="0.5" />
+            <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <rect width="1440" height="700" fill="url(#footer-grain)" />
+        {/* Sun */}
+        <circle cx="1200" cy="180" r="120" fill="url(#footer-sun)" />
+        <circle cx="1200" cy="180" r="60" fill="currentColor" opacity="0.35" />
+        {/* Concentric rings */}
+        <circle cx="120" cy="120" r="80" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.4" />
+        <circle cx="120" cy="120" r="140" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.25" />
+        <circle cx="120" cy="120" r="200" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.15" />
+        {/* Mountain silhouettes */}
+        <path d="M0,520 L160,380 L320,460 L520,320 L720,440 L920,360 L1120,460 L1300,380 L1440,440 L1440,560 L0,560 Z" fill="currentColor" opacity="0.18" />
+        <path d="M0,560 L200,460 L420,540 L640,440 L860,520 L1080,460 L1300,520 L1440,480 L1440,620 L0,620 Z" fill="currentColor" opacity="0.22" />
+        {/* Wave-like rolling fields */}
+        <path d="M0,620 C240,560 480,680 720,610 C960,540 1200,660 1440,600 L1440,700 L0,700 Z" fill="currentColor" opacity="0.35" />
+        <path d="M0,660 C240,620 480,720 720,660 C960,600 1200,720 1440,670 L1440,700 L0,700 Z" fill="currentColor" opacity="0.5" />
+        {/* Sprout sprigs */}
+        <g stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.6">
+          <path d="M260,640 Q258,610 250,595 M260,640 Q262,615 272,605" />
+          <path d="M540,640 Q538,605 530,590 M540,640 Q542,610 552,600" />
+          <path d="M880,640 Q878,605 870,590 M880,640 Q882,610 892,600" />
+          <path d="M1180,640 Q1178,605 1170,590 M1180,640 Q1182,610 1192,600" />
+        </g>
+      </svg>
+
+      <div className="relative">
       {/* Bottom dark CTA banner */}
       <div className="container mx-auto px-4 pt-16">
         <div className="bg-primary border border-primary-foreground/15 rounded-3xl px-8 py-10 md:px-14 md:py-12 flex flex-col md:flex-row items-center justify-between gap-6">
@@ -193,6 +233,7 @@ export function Footer() {
           <span>© {new Date().getFullYear()} Pokkali Village. Heritage Circuit Tours.</span>
           <span>Crafted with the farmers of Kadamakkudy</span>
         </div>
+      </div>
       </div>
     </footer>
   );
