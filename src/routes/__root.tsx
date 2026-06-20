@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
 import { MobileBottomNav } from "@/components/app/Header";
+import { RiceCursor } from "@/components/app/RiceCursor";
 import "@fontsource/fraunces/400.css";
 import "@fontsource/fraunces/600.css";
 import "@fontsource/fraunces/700.css";
@@ -145,6 +146,7 @@ function RootComponent() {
         <Outlet />
       </div>
       <MobileBottomNav />
+      <RiceCursor />
       <Toaster richColors position="top-center" />
     </QueryClientProvider>
   );
