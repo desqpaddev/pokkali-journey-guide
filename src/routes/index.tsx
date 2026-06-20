@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Header, Footer } from "@/components/app/Header";
 import { HeroSlider } from "@/components/app/HeroSlider";
+import { TourGlobe } from "@/components/app/TourGlobe";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -228,46 +229,7 @@ function Index() {
             <p className="mt-3">Tours are being prepared. Check back soon, or visit the admin to add packages.</p>
           </Card>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {packages.map((p) => (
-              <Link
-                key={p.id}
-                to="/packages/$slug"
-                params={{ slug: p.slug }}
-                className="group"
-              >
-                <Card className="overflow-hidden h-full transition-all hover:shadow-2xl hover:-translate-y-1 border-0 rounded-2xl bg-background">
-                  <div className="aspect-[4/3] bg-muted relative overflow-hidden">
-                    {p.hero_image_url ? (
-                      <img src={p.hero_image_url} alt={p.title} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    ) : (
-                      <img src={hero} alt="" className="h-full w-full object-cover opacity-80" />
-                    )}
-                    <Badge className="absolute top-3 left-3 bg-secondary text-secondary-foreground capitalize border-none">
-                      {p.category?.replace("-", " ")}
-                    </Badge>
-                    <span className="absolute -bottom-5 right-5 h-10 w-10 rounded-full bg-secondary text-secondary-foreground grid place-items-center shadow-lg group-hover:bg-primary group-hover:text-secondary transition">
-                      <ArrowRight className="h-4 w-4" />
-                    </span>
-                  </div>
-                  <div className="p-6">
-                    <h3 className="font-display text-xl font-semibold uppercase">{p.title}</h3>
-                    {p.tagline && <p className="text-sm text-muted-foreground mt-1">{p.tagline}</p>}
-                    <div className="mt-4 flex items-end justify-between">
-                      <div>
-                        <div className="text-xs text-muted-foreground">From</div>
-                        <div className="font-display text-2xl text-primary">₹{Number(p.price_per_person).toLocaleString()}</div>
-                      </div>
-                      <div className="text-xs text-muted-foreground text-right">
-                        {p.duration_hours ? `${p.duration_hours}h` : ""}<br />
-                        {p.min_group_size}–{p.max_group_size} guests
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-              </Link>
-            ))}
-          </div>
+          <TourGlobe packages={packages} />
         )}
       </div>
       </section>
