@@ -9,6 +9,115 @@ import { Badge } from "@/components/ui/badge";
 import { Wheat, Compass, Headphones, ScanLine, ArrowRight, Sprout, Check, Leaf, Sun, Droplets } from "lucide-react";
 import hero from "@/assets/hero-paddy.jpg";
 import parallaxImg from "@/assets/parallax-fields.jpg";
+import aboutImg from "@/assets/about-paddy-3d.jpg";
+import { useRef, useState } from "react";
+
+function Tilt3DCard() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [t, setT] = useState({ rx: 0, ry: 0, mx: 50, my: 50 });
+
+  const onMove = (e: React.MouseEvent) => {
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width;
+    const py = (e.clientY - r.top) / r.height;
+    setT({ ry: (px - 0.5) * 18, rx: -(py - 0.5) * 18, mx: px * 100, my: py * 100 });
+  };
+  const reset = () => setT({ rx: 0, ry: 0, mx: 50, my: 50 });
+
+  return (
+    <div
+      ref={ref}
+      onMouseMove={onMove}
+      onMouseLeave={reset}
+      className="relative [perspective:1400px] group"
+      style={{ transformStyle: "preserve-3d" }}
+    >
+      <div
+        className="relative transition-transform duration-300 ease-out will-change-transform"
+        style={{
+          transform: `rotateX(${t.rx}deg) rotateY(${t.ry}deg)`,
+          transformStyle: "preserve-3d",
+        }}
+      >
+        {/* Soft shadow plate */}
+        <div
+          className="absolute inset-0 rounded-[2rem] bg-primary/30 blur-3xl"
+          style={{ transform: "translateZ(-80px) scale(0.92)" }}
+          aria-hidden
+        />
+
+        {/* Main image card */}
+        <div
+          className="relative rounded-[2rem] overflow-hidden ring-1 ring-primary/10 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.45)]"
+          style={{ transform: "translateZ(0px)" }}
+        >
+          <img
+            src={aboutImg}
+            alt="Pokkali farmer wading through brackish paddy waters at sunrise"
+            loading="lazy"
+            width={1080}
+            height={1600}
+            className="aspect-[4/5] w-full object-cover scale-110 transition-transform duration-700 group-hover:scale-100"
+          />
+          {/* Light sheen tracking the cursor */}
+          <div
+            className="pointer-events-none absolute inset-0 mix-blend-soft-light opacity-80 transition-opacity duration-300"
+            style={{
+              background: `radial-gradient(circle at ${t.mx}% ${t.my}%, rgba(255,255,255,0.55), transparent 45%)`,
+            }}
+          />
+          {/* Bottom vignette */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-primary/40 to-transparent" />
+        </div>
+
+        {/* Floating 20+ badge */}
+        <div
+          className="absolute -bottom-6 -left-6 bg-secondary text-secondary-foreground rounded-2xl p-5 shadow-2xl ring-1 ring-black/5"
+          style={{ transform: "translateZ(90px)" }}
+        >
+          <div className="font-display text-3xl font-bold leading-none">20+</div>
+          <div className="text-xs uppercase tracking-wider mt-1">Years of<br />Heritage Revival</div>
+        </div>
+
+        {/* Floating leaf medallion */}
+        <div
+          className="hidden md:grid absolute -top-8 -right-8 h-28 w-28 rounded-full bg-primary text-secondary place-items-center ring-8 ring-background shadow-xl"
+          style={{ transform: "translateZ(120px)" }}
+        >
+          <Leaf className="h-12 w-12" />
+        </div>
+
+        {/* Floating organic chip */}
+        <div
+          className="absolute top-8 -left-8 hidden md:flex items-center gap-2 rounded-full bg-background/90 backdrop-blur px-4 py-2 shadow-lg ring-1 ring-primary/10"
+          style={{ transform: "translateZ(70px)" }}
+        >
+          <Sprout className="h-4 w-4 text-primary" />
+          <span className="text-xs font-semibold uppercase tracking-wider">100% Organic</span>
+        </div>
+
+        {/* Floating grain droplet */}
+        <div
+          className="absolute bottom-16 -right-6 hidden md:flex items-center gap-2 rounded-2xl bg-background/90 backdrop-blur px-3 py-2 shadow-lg ring-1 ring-primary/10"
+          style={{ transform: "translateZ(100px)" }}
+        >
+          <Droplets className="h-4 w-4 text-secondary" />
+          <div className="text-[10px] leading-tight">
+            <div className="font-bold text-primary">Brackish</div>
+            <div className="text-muted-foreground">Salt-tolerant</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Decorative ground rings (outside tilt) */}
+      <div className="pointer-events-none absolute -z-10 -inset-10">
+        <div className="absolute inset-0 rounded-full bg-secondary/10 blur-2xl animate-pulse" />
+      </div>
+    </div>
+  );
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -102,16 +211,7 @@ function Index() {
             </div>
           </div>
         </div>
-        <div className="relative">
-          <img src={hero} alt="Pokkali paddy" className="rounded-3xl aspect-[4/5] object-cover w-full" />
-          <div className="absolute -bottom-6 -left-6 bg-secondary text-secondary-foreground rounded-2xl p-5 shadow-xl">
-            <div className="font-display text-3xl font-bold leading-none">20+</div>
-            <div className="text-xs uppercase tracking-wider mt-1">Years of<br />Heritage Revival</div>
-          </div>
-          <div className="hidden md:block absolute -top-6 -right-6 h-24 w-24 rounded-full bg-primary text-secondary grid place-items-center ring-8 ring-background">
-            <Leaf className="h-10 w-10" />
-          </div>
-        </div>
+        <Tilt3DCard />
       </section>
 
       {/* TOURS — "Services We're Offering" style */}
