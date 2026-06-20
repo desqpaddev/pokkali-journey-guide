@@ -172,10 +172,36 @@ function Index() {
       </div>
       </section>
 
+      {/* PARALLAX SECTION */}
+      <section
+        id="story"
+        className="relative isolate overflow-hidden bg-fixed bg-center bg-cover"
+        style={{ backgroundImage: `url(${parallaxImg})` }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/70 via-primary/50 to-primary/85" />
+        {/* Floating accent ring */}
+        <div className="absolute -top-20 -right-20 h-72 w-72 rounded-full border border-secondary/40 hidden md:block" />
+        <div className="absolute -bottom-24 -left-24 h-80 w-80 rounded-full border border-secondary/30 hidden md:block" />
+        <div className="relative container mx-auto px-4 py-28 md:py-40 text-primary-foreground text-center max-w-3xl">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-foreground/10 backdrop-blur border border-primary-foreground/20 text-xs uppercase tracking-[0.2em]">
+            <Leaf className="h-3.5 w-3.5 text-secondary" /> A vanishing heritage
+          </div>
+          <h2 className="font-display text-4xl md:text-6xl mt-6 leading-tight">
+            Every step plants a grain of <span className="text-secondary italic">hope.</span>
+          </h2>
+          <p className="mt-6 text-base md:text-lg text-primary-foreground/85 leading-relaxed">
+            Pokkali grows only where land kisses brackish water — and only when travellers care enough to keep walking the fields. Seventy percent of every fee goes straight to the farmers reviving this 3,000-year-old grain.
+          </p>
+          <p className="mt-6 font-display italic text-xl md:text-2xl text-secondary">
+            "Pokkali rises again — through the curious feet of travellers like you."
+          </p>
+        </div>
+      </section>
+
       {/* DARK CTA BANNER */}
-      <section id="story" className="bg-primary text-primary-foreground py-20">
+      <section className="bg-primary text-primary-foreground py-20">
         <div className="container mx-auto px-4 text-center">
-          <div className="text-sm font-display italic text-secondary">We're Selling Heritage Heritage</div>
+          <div className="text-sm font-display italic text-secondary">We're Sharing the Heritage</div>
           <h2 className="font-display text-4xl md:text-5xl mt-2 max-w-3xl mx-auto uppercase leading-tight">
             Unbeatable Organic and Pokkali Experiences
           </h2>
