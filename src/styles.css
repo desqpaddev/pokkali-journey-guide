@@ -166,3 +166,25 @@
     will-change: transform;
   }
 }
+
+/* Rice-grain custom cursor */
+@media (hover: hover) and (pointer: fine) {
+  html.rice-cursor-active,
+  html.rice-cursor-active body,
+  html.rice-cursor-active * {
+    cursor: none !important;
+  }
+}
+
+.rice-cursor-main {
+  filter: drop-shadow(0 0 6px rgba(245, 217, 122, 0.65))
+    drop-shadow(0 0 14px rgba(184, 134, 11, 0.35));
+  transition: filter 200ms ease;
+}
+.rice-cursor-main.is-press {
+  filter: drop-shadow(0 0 10px rgba(255, 230, 140, 0.95))
+    drop-shadow(0 0 22px rgba(184, 134, 11, 0.55));
+}
+.rice-cursor-trail {
+  filter: drop-shadow(0 0 4px rgba(245, 217, 122, 0.45));
+}
