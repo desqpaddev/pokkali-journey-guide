@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Wheat, LogIn, LayoutDashboard, LogOut, MapPin, Home, Compass, User } from "lucide-react";
+import { Wheat, LogIn, LayoutDashboard, LogOut, MapPin, Home, Compass, User, Mail, Phone, Facebook, Instagram, Twitter, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -7,23 +7,38 @@ import { supabase } from "@/integrations/supabase/client";
 export function Header() {
   const { user, isAdmin } = useAuth();
   return (
-    <header className="sticky top-0 z-40 backdrop-blur-md bg-background/80 border-b border-border/60 pt-[env(safe-area-inset-top)]">
-      <div className="container mx-auto px-4 h-14 md:h-16 flex items-center justify-between gap-3">
-        <Link to="/" className="flex items-center gap-2 group">
-          <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
-            <Wheat className="h-5 w-5" />
+    <header className="sticky top-0 z-40 pt-[env(safe-area-inset-top)] bg-background/90 backdrop-blur-md border-b border-border/60">
+      {/* Top contact bar — desktop only */}
+      <div className="hidden md:block bg-primary text-primary-foreground">
+        <div className="container mx-auto px-4 h-10 flex items-center justify-between text-xs">
+          <div className="flex items-center gap-6">
+            <span className="inline-flex items-center gap-2"><Mail className="h-3.5 w-3.5 text-secondary" /> hello@pokkalivillage.in</span>
+            <span className="inline-flex items-center gap-2"><MapPin className="h-3.5 w-3.5 text-secondary" /> Kadamakkudy Islands, Kerala</span>
+          </div>
+          <div className="flex items-center gap-4 text-primary-foreground/80">
+            <Twitter className="h-3.5 w-3.5 hover:text-secondary cursor-pointer" />
+            <Facebook className="h-3.5 w-3.5 hover:text-secondary cursor-pointer" />
+            <Instagram className="h-3.5 w-3.5 hover:text-secondary cursor-pointer" />
+          </div>
+        </div>
+      </div>
+      {/* Main bar */}
+      <div className="container mx-auto px-4 h-16 md:h-20 flex items-center justify-between gap-3">
+        <Link to="/" className="flex items-center gap-3 group">
+          <span className="relative inline-flex h-12 w-12 md:h-14 md:w-14 shrink-0 items-center justify-center rounded-full bg-primary text-secondary ring-4 ring-secondary/30">
+            <Wheat className="h-6 w-6 md:h-7 md:w-7" />
           </span>
           <div className="leading-tight min-w-0">
-            <div className="font-display text-base md:text-lg font-semibold truncate">Pokkali Village</div>
-            <div className="hidden sm:block text-[10px] uppercase tracking-[0.18em] text-muted-foreground -mt-0.5">
-              Heritage Circuit Tours
+            <div className="font-display text-lg md:text-xl font-semibold truncate">Pokkali Village</div>
+            <div className="hidden sm:block text-[10px] uppercase tracking-[0.22em] text-muted-foreground -mt-0.5">
+              Best Quality Heritage Food
             </div>
           </div>
         </Link>
-        <nav className="hidden md:flex items-center gap-6 text-sm">
-          <Link to="/" hash="tours" className="hover:text-primary">Tours</Link>
-          <Link to="/" hash="story" className="hover:text-primary">Our Story</Link>
-          <Link to="/" hash="visit" className="hover:text-primary">Visit</Link>
+        <nav className="hidden md:flex items-center gap-7 text-sm font-medium">
+          <Link to="/" hash="tours" className="hover:text-primary transition">Tours</Link>
+          <Link to="/" hash="story" className="hover:text-primary transition">Our Story</Link>
+          <Link to="/" hash="visit" className="hover:text-primary transition">Visit</Link>
         </nav>
         <div className="flex items-center gap-2">
           {user ? (
@@ -41,7 +56,17 @@ export function Header() {
               </Button>
             </>
           ) : (
-            <Button asChild size="sm">
+            <Button asChild variant="hero" className="rounded-full pl-5 pr-2 h-11 hidden sm:inline-flex">
+              <Link to="/auth">
+                Book a Tour
+                <span className="ml-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary text-secondary">
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </span>
+              </Link>
+            </Button>
+          )}
+          {!user && (
+            <Button asChild size="sm" className="sm:hidden">
               <Link to="/auth"><LogIn className="h-4 w-4" />Sign in</Link>
             </Button>
           )}
