@@ -188,3 +188,8 @@
 .rice-cursor-trail {
   filter: drop-shadow(0 0 4px rgba(245, 217, 122, 0.45));
 }
+
+@keyframes flightCloud {
+  0%   { transform: translateX(0) scale(var(--cloud-scale, 1)); }
+  100% { transform: translateX(140vw) scale(var(--cloud-scale, 1)); }
+}
