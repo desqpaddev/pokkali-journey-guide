@@ -27,11 +27,13 @@ export function Header() {
       {/* Main bar */}
       <div className="container mx-auto px-4 h-16 md:h-20 flex items-center justify-between gap-3">
         <Link to="/" className="flex items-center gap-3 group">
-          <span className="relative inline-flex h-12 w-12 md:h-14 md:w-14 shrink-0 items-center justify-center rounded-full bg-primary text-secondary ring-4 ring-secondary/30">
-            <Wheat className="h-6 w-6 md:h-7 md:w-7" />
-          </span>
+          <img
+            src={paadiLogo.url}
+            alt="PAADI"
+            className="h-10 w-auto md:h-12"
+          />
           <div className="leading-tight min-w-0">
-            <div className="font-display text-lg md:text-xl font-semibold truncate">Pokkali Village</div>
+            <div className="font-display text-lg md:text-xl font-semibold truncate">PAADI</div>
             <div className="hidden sm:block text-[10px] uppercase tracking-[0.22em] text-muted-foreground -mt-0.5">
               Best Quality Heritage Food
             </div>
