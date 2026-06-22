@@ -14,6 +14,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PackagesSlugRouteImport } from './routes/packages.$slug'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as ApiTtsRouteImport } from './routes/api/tts'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AuthenticatedBookingsRouteImport } from './routes/_authenticated/bookings'
@@ -48,6 +49,11 @@ const PackagesSlugRoute = PackagesSlugRouteImport.update({
   id: '/packages/$slug',
   path: '/packages/$slug',
   getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
 } as any)
 const ApiTtsRoute = ApiTtsRouteImport.update({
   id: '/api/tts',
@@ -107,11 +113,12 @@ const AuthenticatedAdminBookingsRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/bookings': typeof AuthenticatedBookingsRoute
   '/admin/login': typeof AdminLoginRoute
   '/api/tts': typeof ApiTtsRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/packages/$slug': typeof PackagesSlugRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/admin/packages': typeof AuthenticatedAdminPackagesRoute
@@ -123,10 +130,11 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/bookings': typeof AuthenticatedBookingsRoute
   '/admin/login': typeof AdminLoginRoute
   '/api/tts': typeof ApiTtsRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/packages/$slug': typeof PackagesSlugRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/admin/packages': typeof AuthenticatedAdminPackagesRoute
@@ -140,11 +148,12 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
-  '/blog': typeof BlogRoute
+  '/blog': typeof BlogRouteWithChildren
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/_authenticated/bookings': typeof AuthenticatedBookingsRoute
   '/admin/login': typeof AdminLoginRoute
   '/api/tts': typeof ApiTtsRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/packages/$slug': typeof PackagesSlugRoute
   '/_authenticated/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/_authenticated/admin/packages': typeof AuthenticatedAdminPackagesRoute
@@ -163,6 +172,7 @@ export interface FileRouteTypes {
     | '/bookings'
     | '/admin/login'
     | '/api/tts'
+    | '/blog/$slug'
     | '/packages/$slug'
     | '/admin/bookings'
     | '/admin/packages'
@@ -178,6 +188,7 @@ export interface FileRouteTypes {
     | '/bookings'
     | '/admin/login'
     | '/api/tts'
+    | '/blog/$slug'
     | '/packages/$slug'
     | '/admin/bookings'
     | '/admin/packages'
@@ -195,6 +206,7 @@ export interface FileRouteTypes {
     | '/_authenticated/bookings'
     | '/admin/login'
     | '/api/tts'
+    | '/blog/$slug'
     | '/packages/$slug'
     | '/_authenticated/admin/bookings'
     | '/_authenticated/admin/packages'
@@ -208,7 +220,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
-  BlogRoute: typeof BlogRoute
+  BlogRoute: typeof BlogRouteWithChildren
   AdminLoginRoute: typeof AdminLoginRoute
   ApiTtsRoute: typeof ApiTtsRoute
   PackagesSlugRoute: typeof PackagesSlugRoute
@@ -250,6 +262,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/packages/$slug'
       preLoaderRoute: typeof PackagesSlugRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
     }
     '/api/tts': {
       id: '/api/tts'
@@ -361,11 +380,21 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
-  BlogRoute: BlogRoute,
+  BlogRoute: BlogRouteWithChildren,
   AdminLoginRoute: AdminLoginRoute,
   ApiTtsRoute: ApiTtsRoute,
   PackagesSlugRoute: PackagesSlugRoute,
