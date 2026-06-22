@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
@@ -24,6 +25,11 @@ import { Route as AuthenticatedAdminProductsRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminPackagesRouteImport } from './routes/_authenticated/admin/packages'
 import { Route as AuthenticatedAdminBookingsRouteImport } from './routes/_authenticated/admin/bookings'
 
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -101,6 +107,7 @@ const AuthenticatedAdminBookingsRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/blog': typeof BlogRoute
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/bookings': typeof AuthenticatedBookingsRoute
   '/admin/login': typeof AdminLoginRoute
@@ -116,6 +123,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/blog': typeof BlogRoute
   '/bookings': typeof AuthenticatedBookingsRoute
   '/admin/login': typeof AdminLoginRoute
   '/api/tts': typeof ApiTtsRoute
@@ -132,6 +140,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/blog': typeof BlogRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/_authenticated/bookings': typeof AuthenticatedBookingsRoute
   '/admin/login': typeof AdminLoginRoute
@@ -149,6 +158,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/blog'
     | '/admin'
     | '/bookings'
     | '/admin/login'
@@ -164,6 +174,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/blog'
     | '/bookings'
     | '/admin/login'
     | '/api/tts'
@@ -179,6 +190,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/blog'
     | '/_authenticated/admin'
     | '/_authenticated/bookings'
     | '/admin/login'
@@ -196,6 +208,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  BlogRoute: typeof BlogRoute
   AdminLoginRoute: typeof AdminLoginRoute
   ApiTtsRoute: typeof ApiTtsRoute
   PackagesSlugRoute: typeof PackagesSlugRoute
@@ -203,6 +216,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -345,6 +365,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  BlogRoute: BlogRoute,
   AdminLoginRoute: AdminLoginRoute,
   ApiTtsRoute: ApiTtsRoute,
   PackagesSlugRoute: PackagesSlugRoute,
