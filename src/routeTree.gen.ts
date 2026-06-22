@@ -25,6 +25,7 @@ import { Route as AuthenticatedAdminSetupRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminProductsRouteImport } from './routes/_authenticated/admin/products'
 import { Route as AuthenticatedAdminPackagesRouteImport } from './routes/_authenticated/admin/packages'
 import { Route as AuthenticatedAdminBookingsRouteImport } from './routes/_authenticated/admin/bookings'
+import { Route as AuthenticatedAdminBlogsRouteImport } from './routes/_authenticated/admin/blogs'
 
 const BlogRoute = BlogRouteImport.update({
   id: '/blog',
@@ -109,6 +110,11 @@ const AuthenticatedAdminBookingsRoute =
     path: '/bookings',
     getParentRoute: () => AuthenticatedAdminRouteRoute,
   } as any)
+const AuthenticatedAdminBlogsRoute = AuthenticatedAdminBlogsRouteImport.update({
+  id: '/blogs',
+  path: '/blogs',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -120,6 +126,7 @@ export interface FileRoutesByFullPath {
   '/api/tts': typeof ApiTtsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/packages/$slug': typeof PackagesSlugRoute
+  '/admin/blogs': typeof AuthenticatedAdminBlogsRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/admin/packages': typeof AuthenticatedAdminPackagesRoute
   '/admin/products': typeof AuthenticatedAdminProductsRoute
@@ -136,6 +143,7 @@ export interface FileRoutesByTo {
   '/api/tts': typeof ApiTtsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/packages/$slug': typeof PackagesSlugRoute
+  '/admin/blogs': typeof AuthenticatedAdminBlogsRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/admin/packages': typeof AuthenticatedAdminPackagesRoute
   '/admin/products': typeof AuthenticatedAdminProductsRoute
@@ -155,6 +163,7 @@ export interface FileRoutesById {
   '/api/tts': typeof ApiTtsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/packages/$slug': typeof PackagesSlugRoute
+  '/_authenticated/admin/blogs': typeof AuthenticatedAdminBlogsRoute
   '/_authenticated/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/_authenticated/admin/packages': typeof AuthenticatedAdminPackagesRoute
   '/_authenticated/admin/products': typeof AuthenticatedAdminProductsRoute
@@ -174,6 +183,7 @@ export interface FileRouteTypes {
     | '/api/tts'
     | '/blog/$slug'
     | '/packages/$slug'
+    | '/admin/blogs'
     | '/admin/bookings'
     | '/admin/packages'
     | '/admin/products'
@@ -190,6 +200,7 @@ export interface FileRouteTypes {
     | '/api/tts'
     | '/blog/$slug'
     | '/packages/$slug'
+    | '/admin/blogs'
     | '/admin/bookings'
     | '/admin/packages'
     | '/admin/products'
@@ -208,6 +219,7 @@ export interface FileRouteTypes {
     | '/api/tts'
     | '/blog/$slug'
     | '/packages/$slug'
+    | '/_authenticated/admin/blogs'
     | '/_authenticated/admin/bookings'
     | '/_authenticated/admin/packages'
     | '/_authenticated/admin/products'
@@ -340,10 +352,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminBookingsRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/admin/blogs': {
+      id: '/_authenticated/admin/blogs'
+      path: '/blogs'
+      fullPath: '/admin/blogs'
+      preLoaderRoute: typeof AuthenticatedAdminBlogsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
   }
 }
 
 interface AuthenticatedAdminRouteRouteChildren {
+  AuthenticatedAdminBlogsRoute: typeof AuthenticatedAdminBlogsRoute
   AuthenticatedAdminBookingsRoute: typeof AuthenticatedAdminBookingsRoute
   AuthenticatedAdminPackagesRoute: typeof AuthenticatedAdminPackagesRoute
   AuthenticatedAdminProductsRoute: typeof AuthenticatedAdminProductsRoute
@@ -353,6 +373,7 @@ interface AuthenticatedAdminRouteRouteChildren {
 
 const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
   {
+    AuthenticatedAdminBlogsRoute: AuthenticatedAdminBlogsRoute,
     AuthenticatedAdminBookingsRoute: AuthenticatedAdminBookingsRoute,
     AuthenticatedAdminPackagesRoute: AuthenticatedAdminPackagesRoute,
     AuthenticatedAdminProductsRoute: AuthenticatedAdminProductsRoute,
