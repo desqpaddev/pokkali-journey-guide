@@ -239,7 +239,7 @@ export function Footer() {
 
       <div className="border-t border-primary-foreground/10">
         <div className="container mx-auto px-4 py-5 text-xs text-primary-foreground/60 flex flex-wrap items-center justify-between gap-2">
-          <span>© {new Date().getFullYear()} Pokkali Village. Heritage Circuit Tours.</span>
+          <span>© {new Date().getFullYear()} PAADI. Heritage Circuit Tours.</span>
           <span>Crafted with the farmers of Kadamakkudy</span>
         </div>
       </div>
