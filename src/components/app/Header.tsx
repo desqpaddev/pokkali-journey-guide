@@ -162,9 +162,11 @@ export function Footer() {
       <div className="container mx-auto px-4 pt-16">
         <div className="bg-primary border border-primary-foreground/15 rounded-3xl px-8 py-10 md:px-14 md:py-12 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4">
-            <span className="h-12 w-12 rounded-full bg-secondary text-secondary-foreground grid place-items-center">
-              <Wheat className="h-6 w-6" />
-            </span>
+            <img
+              src={paadiLogo.url}
+              alt="PAADI"
+              className="h-12 w-auto"
+            />
             <div className="font-display text-2xl md:text-3xl uppercase max-w-md leading-tight">
               We're a popular leader in heritage tourism & organic farming.
             </div>
@@ -184,10 +186,12 @@ export function Footer() {
       <div className="container mx-auto px-4 py-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-10 text-sm">
         <div>
           <div className="flex items-center gap-2">
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-secondary text-primary">
-              <Wheat className="h-5 w-5" />
-            </span>
-            <div className="font-display text-lg font-semibold">Pokkali Village</div>
+            <img
+              src={paadiLogo.url}
+              alt="PAADI"
+              className="h-10 w-auto"
+            />
+            <div className="font-display text-lg font-semibold">PAADI</div>
           </div>
           <p className="text-primary-foreground/70 mt-4 leading-relaxed">
             Walk the fields. Ride the waters. Taste the story of a vanishing grain — alive again through curious travellers.
