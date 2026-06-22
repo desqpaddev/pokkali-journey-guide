@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { NewsletterForm } from "@/components/app/NewsletterForm";
+import paadiLogo from "@/assets/paadi-logo.png.asset.json";
 
 export function Header() {
   const { user, isAdmin } = useAuth();
@@ -26,11 +27,13 @@ export function Header() {
       {/* Main bar */}
       <div className="container mx-auto px-4 h-16 md:h-20 flex items-center justify-between gap-3">
         <Link to="/" className="flex items-center gap-3 group">
-          <span className="relative inline-flex h-12 w-12 md:h-14 md:w-14 shrink-0 items-center justify-center rounded-full bg-primary text-secondary ring-4 ring-secondary/30">
-            <Wheat className="h-6 w-6 md:h-7 md:w-7" />
-          </span>
+          <img
+            src={paadiLogo.url}
+            alt="PAADI"
+            className="h-10 w-auto md:h-12"
+          />
           <div className="leading-tight min-w-0">
-            <div className="font-display text-lg md:text-xl font-semibold truncate">Pokkali Village</div>
+            <div className="font-display text-lg md:text-xl font-semibold truncate">PAADI</div>
             <div className="hidden sm:block text-[10px] uppercase tracking-[0.22em] text-muted-foreground -mt-0.5">
               Best Quality Heritage Food
             </div>
@@ -159,9 +162,11 @@ export function Footer() {
       <div className="container mx-auto px-4 pt-16">
         <div className="bg-primary border border-primary-foreground/15 rounded-3xl px-8 py-10 md:px-14 md:py-12 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4">
-            <span className="h-12 w-12 rounded-full bg-secondary text-secondary-foreground grid place-items-center">
-              <Wheat className="h-6 w-6" />
-            </span>
+            <img
+              src={paadiLogo.url}
+              alt="PAADI"
+              className="h-12 w-auto"
+            />
             <div className="font-display text-2xl md:text-3xl uppercase max-w-md leading-tight">
               We're a popular leader in heritage tourism & organic farming.
             </div>
@@ -181,10 +186,12 @@ export function Footer() {
       <div className="container mx-auto px-4 py-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-10 text-sm">
         <div>
           <div className="flex items-center gap-2">
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-secondary text-primary">
-              <Wheat className="h-5 w-5" />
-            </span>
-            <div className="font-display text-lg font-semibold">Pokkali Village</div>
+            <img
+              src={paadiLogo.url}
+              alt="PAADI"
+              className="h-10 w-auto"
+            />
+            <div className="font-display text-lg font-semibold">PAADI</div>
           </div>
           <p className="text-primary-foreground/70 mt-4 leading-relaxed">
             Walk the fields. Ride the waters. Taste the story of a vanishing grain — alive again through curious travellers.
@@ -232,7 +239,7 @@ export function Footer() {
 
       <div className="border-t border-primary-foreground/10">
         <div className="container mx-auto px-4 py-5 text-xs text-primary-foreground/60 flex flex-wrap items-center justify-between gap-2">
-          <span>© {new Date().getFullYear()} Pokkali Village. Heritage Circuit Tours.</span>
+          <span>© {new Date().getFullYear()} PAADI. Heritage Circuit Tours.</span>
           <span>Crafted with the farmers of Kadamakkudy</span>
         </div>
       </div>

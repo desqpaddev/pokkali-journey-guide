@@ -2,6 +2,7 @@ import { createFileRoute, Outlet, Link, redirect, useRouterState } from "@tansta
 import { supabase } from "@/integrations/supabase/client";
 import { Header } from "@/components/app/Header";
 import { Package, ScanLine, Calendar, LayoutDashboard, ShieldCheck, BookOpen } from "lucide-react";
+import paadiLogo from "@/assets/paadi-logo.png.asset.json";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   beforeLoad: async () => {
@@ -33,7 +34,10 @@ function AdminLayout() {
         <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-accent font-semibold mb-2">
           <ShieldCheck className="h-4 w-4" /> Admin
         </div>
-        <h1 className="font-display text-4xl">Pokkali Village Control Room</h1>
+        <div className="flex items-center gap-4">
+          <img src={paadiLogo.url} alt="PAADI" className="h-12 w-auto" />
+          <h1 className="font-display text-4xl">PAADI Control Room</h1>
+        </div>
         <nav className="mt-6 flex flex-wrap gap-2 border-b border-border pb-2">
           {items.map((i) => {
             const active = path === i.to;
