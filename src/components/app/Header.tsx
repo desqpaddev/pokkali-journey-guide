@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import { Wheat, LogIn, LayoutDashboard, LogOut, MapPin, Home, Compass, User, Mail, Phone, Facebook, Instagram, Twitter, ArrowRight } from "lucide-react";
+import { Wheat, LogIn, LayoutDashboard, LogOut, MapPin, Home, Compass, User, Mail, Phone, Facebook, Instagram, Twitter, ArrowRight, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import { NewsletterForm } from "@/components/app/NewsletterForm";
 
 export function Header() {
   const { user, isAdmin } = useAuth();
@@ -39,6 +40,7 @@ export function Header() {
           <Link to="/" hash="tours" className="hover:text-primary transition">Tours</Link>
           <Link to="/" hash="story" className="hover:text-primary transition">Our Story</Link>
           <Link to="/" hash="visit" className="hover:text-primary transition">Visit</Link>
+          <Link to="/blog" className="hover:text-primary transition" activeProps={{ className: "text-primary" }}>Blog</Link>
         </nav>
         <div className="flex items-center gap-2">
           {user ? (
@@ -81,6 +83,7 @@ export function MobileBottomNav() {
   const items: Array<{ to: string; hash?: string; label: string; icon: typeof Home }> = [
     { to: "/", label: "Home", icon: Home },
     { to: "/", hash: "tours", label: "Tours", icon: Compass },
+    { to: "/blog", label: "Blog", icon: BookOpen },
     { to: user ? "/bookings" : "/auth", label: user ? "Tours" : "Sign in", icon: user ? MapPin : User },
   ];
   if (isAdmin) items.push({ to: "/admin", label: "Admin", icon: LayoutDashboard });
@@ -200,6 +203,7 @@ export function Footer() {
             <li><Link to="/" hash="tours" className="hover:text-secondary">Tours</Link></li>
             <li><Link to="/" hash="story" className="hover:text-secondary">Our Story</Link></li>
             <li><Link to="/" hash="visit" className="hover:text-secondary">Visit</Link></li>
+            <li><Link to="/blog" className="hover:text-secondary">Blog</Link></li>
             <li><Link to="/bookings" className="hover:text-secondary">My Bookings</Link></li>
           </ul>
         </div>
@@ -219,12 +223,10 @@ export function Footer() {
             <li className="flex items-start gap-2"><Mail className="h-4 w-4 text-secondary mt-0.5 shrink-0" /> hello@pokkalivillage.in</li>
             <li className="flex items-start gap-2"><MapPin className="h-4 w-4 text-secondary mt-0.5 shrink-0" /> Kadamakkudy Islands, Ernakulam, Kerala</li>
           </ul>
-          <form className="mt-5 flex bg-primary-foreground/10 rounded-full p-1.5 pl-4">
-            <input type="email" placeholder="Your email" className="bg-transparent flex-1 text-xs outline-none placeholder:text-primary-foreground/50 min-w-0" />
-            <button type="button" className="h-8 w-8 rounded-full bg-secondary text-secondary-foreground grid place-items-center shrink-0">
-              <ArrowRight className="h-3.5 w-3.5" />
-            </button>
-          </form>
+          <div className="mt-5">
+            <div className="text-[11px] uppercase tracking-widest text-secondary mb-2">Newsletter</div>
+            <NewsletterForm />
+          </div>
         </div>
       </div>
 

@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet, Link, redirect, useRouterState } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { Header } from "@/components/app/Header";
-import { Package, ScanLine, Calendar, LayoutDashboard, ShieldCheck } from "lucide-react";
+import { Package, ScanLine, Calendar, LayoutDashboard, ShieldCheck, BookOpen } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   beforeLoad: async () => {
@@ -23,6 +23,7 @@ function AdminLayout() {
     { to: "/admin", label: "Overview", icon: LayoutDashboard },
     { to: "/admin/packages", label: "Packages & GPS stops", icon: Package },
     { to: "/admin/products", label: "Products & QR", icon: ScanLine },
+    { to: "/admin/blogs", label: "Blogs & Newsletter", icon: BookOpen },
     { to: "/admin/bookings", label: "Bookings", icon: Calendar },
   ];
   return (
