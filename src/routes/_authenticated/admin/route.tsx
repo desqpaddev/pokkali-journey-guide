@@ -2,6 +2,7 @@ import { createFileRoute, Outlet, Link, redirect, useRouterState } from "@tansta
 import { supabase } from "@/integrations/supabase/client";
 import { Header } from "@/components/app/Header";
 import { Package, ScanLine, Calendar, LayoutDashboard, ShieldCheck, BookOpen } from "lucide-react";
+import paadiLogo from "@/assets/paadi-logo.png.asset.json";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   beforeLoad: async () => {

@@ -1,9 +1,10 @@
 import { Link } from "@tanstack/react-router";
-import { Wheat, LogIn, LayoutDashboard, LogOut, MapPin, Home, Compass, User, Mail, Phone, Facebook, Instagram, Twitter, ArrowRight, BookOpen } from "lucide-react";
+import { LogIn, LayoutDashboard, LogOut, MapPin, Home, Compass, User, Mail, Phone, Facebook, Instagram, Twitter, ArrowRight, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { NewsletterForm } from "@/components/app/NewsletterForm";
+import paadiLogo from "@/assets/paadi-logo.png.asset.json";
 
 export function Header() {
   const { user, isAdmin } = useAuth();
