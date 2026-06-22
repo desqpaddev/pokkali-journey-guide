@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { LogIn, LayoutDashboard, LogOut, MapPin, Home, Compass, User, Mail, Phone, Facebook, Instagram, Twitter, ArrowRight, BookOpen } from "lucide-react";
+import { Wheat, LogIn, LayoutDashboard, LogOut, MapPin, Home, Compass, User, Mail, Phone, Facebook, Instagram, Twitter, ArrowRight, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
