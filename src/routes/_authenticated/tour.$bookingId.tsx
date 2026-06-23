@@ -171,7 +171,7 @@ function TourPlayer() {
       </div>
 
       {/* Sticky scan button — lifted above mobile bottom nav */}
-      <div className="fixed inset-x-0 flex justify-center z-30 px-4 bottom-20 md:bottom-4" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
+      <div className="fixed inset-x-0 flex justify-center z-[60] px-4 bottom-24 md:bottom-6" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
         <Button onClick={() => setScanOpen(true)} variant="hero" size="xl" className="shadow-2xl">
           <ScanLine className="h-5 w-5" /> Scan a product
         </Button>
