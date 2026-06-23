@@ -90,7 +90,7 @@ function TourPlayer() {
       toast.error("Product not found");
       return;
     }
-    await navigate({ to: "/_authenticated/tour/$bookingId", params: { bookingId } });
+    await navigate({ to: "/tour/$bookingId", params: { bookingId } });
     setScannedProduct(p);
   }
 
