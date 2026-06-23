@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Html5Qrcode } from "html5-qrcode";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
@@ -43,7 +43,7 @@ export function QRScannerModal({ open, onOpenChange, onScan }: Props) {
         const cameraId = backCamera?.id ?? cams[0]?.id;
 
         if (cameraId) {
-          await html5.start({ deviceId: { exact: cameraId } }, config, onDecoded, () => {});
+          await html5.start(cameraId, config, onDecoded, () => {});
         } else {
           await html5.start({ facingMode: { ideal: "environment" } }, config, onDecoded, () => {});
         }
@@ -78,6 +78,7 @@ export function QRScannerModal({ open, onOpenChange, onScan }: Props) {
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>Scan product QR</DialogTitle>
+          <DialogDescription>Point your phone camera at a product QR code.</DialogDescription>
         </DialogHeader>
         <div id={containerId} className="rounded-lg overflow-hidden bg-muted aspect-square" />
         {starting && !err && <p className="text-sm text-muted-foreground">Opening camera...</p>}
