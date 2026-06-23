@@ -33,8 +33,7 @@ export function Header() {
             className="h-10 w-auto md:h-12"
           />
           <div className="leading-tight min-w-0">
-            <div className="font-display text-lg md:text-xl font-semibold truncate">PAADI</div>
-            <div className="hidden sm:block text-[10px] uppercase tracking-[0.22em] text-muted-foreground -mt-0.5">
+            <div className="hidden sm:block text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
               Best Quality Heritage Food
             </div>
           </div>
