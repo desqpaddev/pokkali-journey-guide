@@ -5,7 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { NewsletterForm } from "@/components/app/NewsletterForm";
 import { QRScannerModal } from "@/components/app/QRScannerModal";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState } from "react";
 import { toast } from "sonner";
 import paadiLogo from "@/assets/paadi-logo.png.asset.json";
@@ -102,26 +102,8 @@ export function MobileBottomNav() {
     setProduct(data);
   };
 
-  const openScanner = async () => {
-    // Request camera permission inside the click gesture so browsers (and
-    // iframes that allow camera) grant access before the scanner library
-    // initializes asynchronously inside the dialog.
-    try {
-      if (navigator.mediaDevices?.getUserMedia) {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: { ideal: "environment" } },
-        });
-        stream.getTracks().forEach((t) => t.stop());
-      }
-    } catch (e: unknown) {
-      const name = (e as { name?: string })?.name ?? "";
-      if (name === "NotAllowedError") {
-        toast.error("Camera blocked. Allow camera in your browser settings, or open the site in a new tab.");
-      } else if (name === "NotFoundError") {
-        toast.error("No camera found on this device.");
-      }
-      // Fall through and still open the dialog so manual entry works.
-    }
+  const openScanner = () => {
+    setProduct(null);
     setScanOpen(true);
   };
 
@@ -141,7 +123,7 @@ export function MobileBottomNav() {
     >
       <ul className="grid h-16" style={{ gridTemplateColumns: `repeat(${columns}, minmax(0,1fr))` }}>
         {items.map((it) => (
-          <li key={it.label} className="contents">
+          <li key={`${it.to}-${it.hash ?? "page"}-${it.label}`} className="contents">
             <Link
               to={it.to}
               hash={it.hash}
@@ -172,6 +154,7 @@ export function MobileBottomNav() {
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle>{product?.name}</DialogTitle>
+          <DialogDescription>Scanned product details and story.</DialogDescription>
         </DialogHeader>
         {product?.image_url && (
           <img src={product.image_url} alt={product.name} className="w-full h-48 object-cover rounded-md" />
