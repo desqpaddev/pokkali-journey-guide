@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -19,6 +19,7 @@ export const Route = createFileRoute("/_authenticated/tour/$bookingId")({
 
 function TourPlayer() {
   const { bookingId } = Route.useParams();
+  const navigate = useNavigate();
   const [lang, setLang] = useState<Lang>("english");
   const [pos, setPos] = useState<{ lat: number; lng: number; acc: number } | null>(null);
   const [posErr, setPosErr] = useState<string | null>(null);
@@ -89,6 +90,7 @@ function TourPlayer() {
       toast.error("Product not found");
       return;
     }
+    await navigate({ to: "/_authenticated/tour/$bookingId", params: { bookingId } });
     setScannedProduct(p);
   }
 
