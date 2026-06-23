@@ -86,6 +86,22 @@ export function Header() {
 
 export function MobileBottomNav() {
   const { user, isAdmin } = useAuth();
+  const [scanOpen, setScanOpen] = useState(false);
+  const [product, setProduct] = useState<{ name: string; description: string | null; story_english: string | null; story_malayalam: string | null; image_url: string | null } | null>(null);
+
+  const handleScan = async (code: string) => {
+    const { data, error } = await supabase
+      .from("products")
+      .select("name, description, story_english, story_malayalam, image_url")
+      .eq("qr_code", code)
+      .maybeSingle();
+    if (error || !data) {
+      toast.error("No product found for this QR code");
+      return;
+    }
+    setProduct(data);
+  };
+
   const items: Array<{ to: string; hash?: string; label: string; icon: typeof Home }> = [
     { to: "/", label: "Home", icon: Home },
     { to: "/", hash: "tours", label: "Tours", icon: Compass },
@@ -93,12 +109,14 @@ export function MobileBottomNav() {
     { to: user ? "/bookings" : "/auth", label: user ? "Tours" : "Sign in", icon: user ? MapPin : User },
   ];
   if (isAdmin) items.push({ to: "/admin", label: "Admin", icon: LayoutDashboard });
+  const columns = items.length + 1; // +1 for Scan button
   return (
+    <>
     <nav
       className="md:hidden fixed bottom-0 inset-x-0 z-50 border-t border-border/60 bg-background/95 backdrop-blur-md pb-[env(safe-area-inset-bottom)]"
       aria-label="Primary"
     >
-      <ul className="grid h-16" style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0,1fr))` }}>
+      <ul className="grid h-16" style={{ gridTemplateColumns: `repeat(${columns}, minmax(0,1fr))` }}>
         {items.map((it) => (
           <li key={it.label} className="contents">
             <Link
@@ -113,8 +131,44 @@ export function MobileBottomNav() {
             </Link>
           </li>
         ))}
+        <li className="contents">
+          <button
+            type="button"
+            onClick={() => setScanOpen(true)}
+            className="flex flex-col items-center justify-center gap-1 text-[10px] font-medium text-muted-foreground hover:text-primary active:scale-95 transition"
+            aria-label="Scan QR code"
+          >
+            <QrCode className="h-5 w-5" />
+            <span>Scan</span>
+          </button>
+        </li>
       </ul>
     </nav>
+    <QRScannerModal open={scanOpen} onOpenChange={setScanOpen} onScan={handleScan} />
+    <Dialog open={!!product} onOpenChange={(o) => !o && setProduct(null)}>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle>{product?.name}</DialogTitle>
+        </DialogHeader>
+        {product?.image_url && (
+          <img src={product.image_url} alt={product.name} className="w-full h-48 object-cover rounded-md" />
+        )}
+        {product?.description && <p className="text-sm text-muted-foreground">{product.description}</p>}
+        {product?.story_english && (
+          <div>
+            <div className="text-xs uppercase tracking-wider text-primary mb-1">English</div>
+            <p className="text-sm">{product.story_english}</p>
+          </div>
+        )}
+        {product?.story_malayalam && (
+          <div>
+            <div className="text-xs uppercase tracking-wider text-primary mb-1">മലയാളം</div>
+            <p className="text-sm">{product.story_malayalam}</p>
+          </div>
+        )}
+      </DialogContent>
+    </Dialog>
+    </>
   );
 }
 
