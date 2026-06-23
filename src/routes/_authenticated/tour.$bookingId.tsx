@@ -181,16 +181,32 @@ function TourPlayer() {
 
       {/* Product result */}
       {scannedProduct && (
-        <div className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-4" onClick={() => setScannedProduct(null)}>
-          <Card className="w-full max-w-lg overflow-hidden" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="fixed inset-0 z-[70] bg-background/80 backdrop-blur-sm flex items-end sm:items-center justify-center sm:p-4 overflow-y-auto"
+          onClick={() => setScannedProduct(null)}
+        >
+          <Card
+            className="w-full sm:max-w-lg overflow-hidden rounded-b-none sm:rounded-lg max-h-[90vh] flex flex-col my-0 sm:my-4"
+            onClick={(e) => e.stopPropagation()}
+          >
             {scannedProduct.image_url && (
-              <img src={scannedProduct.image_url} alt={scannedProduct.name} className="h-48 w-full object-cover" />
+              <img
+                src={scannedProduct.image_url}
+                alt={scannedProduct.name}
+                className="h-40 sm:h-48 w-full object-cover shrink-0"
+              />
             )}
-            <div className="p-6">
+            <div className="p-4 sm:p-6 overflow-y-auto flex-1 min-w-0">
               <Badge className="bg-accent text-accent-foreground">Pokkali product</Badge>
-              <h3 className="font-display text-2xl mt-2">{scannedProduct.name}</h3>
-              {scannedProduct.description && <p className="text-sm text-muted-foreground mt-1">{scannedProduct.description}</p>}
-              {scannedProduct.price && <div className="font-display text-xl mt-2">₹{Number(scannedProduct.price).toLocaleString()}</div>}
+              <h3 className="font-display text-xl sm:text-2xl mt-2 break-words">{scannedProduct.name}</h3>
+              {scannedProduct.description && (
+                <p className="text-sm text-muted-foreground mt-1 break-words">{scannedProduct.description}</p>
+              )}
+              {scannedProduct.price && (
+                <div className="font-display text-lg sm:text-xl mt-2">
+                  ₹{Number(scannedProduct.price).toLocaleString()}
+                </div>
+              )}
               <div className="mt-4">
                 <AudioPlayer
                   key={`${scannedProduct.id}-${lang}`}
@@ -201,9 +217,18 @@ function TourPlayer() {
                 />
               </div>
               {scannedProduct[`story_${lang}`] && (
-                <p className="text-sm mt-4 whitespace-pre-line leading-relaxed">{scannedProduct[`story_${lang}`]}</p>
+                <p className="text-sm mt-4 whitespace-pre-line leading-relaxed break-words">
+                  {scannedProduct[`story_${lang}`]}
+                </p>
               )}
-              <Button onClick={() => setScannedProduct(null)} variant="outline" className="w-full mt-4">Close</Button>
+              <Button
+                onClick={() => setScannedProduct(null)}
+                variant="outline"
+                className="w-full mt-4"
+                style={{ marginBottom: "env(safe-area-inset-bottom)" }}
+              >
+                Close
+              </Button>
             </div>
           </Card>
         </div>
