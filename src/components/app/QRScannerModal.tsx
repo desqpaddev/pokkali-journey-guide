@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Html5Qrcode } from "html5-qrcode";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -12,7 +11,7 @@ interface Props {
 
 export function QRScannerModal({ open, onOpenChange, onScan }: Props) {
   const containerId = "qr-reader";
-  const scannerRef = useRef<Html5Qrcode | null>(null);
+  const scannerRef = useRef<Awaited<ReturnType<typeof createScanner>> | null>(null);
   const [manual, setManual] = useState("");
   const [err, setErr] = useState<string | null>(null);
   const [starting, setStarting] = useState(false);
@@ -29,13 +28,14 @@ export function QRScannerModal({ open, onOpenChange, onScan }: Props) {
       }
       await new Promise((resolve) => requestAnimationFrame(resolve));
       if (!document.getElementById(containerId)) return;
-      const html5 = new Html5Qrcode(containerId, { verbose: false });
+      const html5 = await createScanner(containerId);
       scannerRef.current = html5;
       const onDecoded = (decoded: string) => {
         onScan(decoded);
         onOpenChange(false);
       };
       const config = { fps: 10, qrbox: { width: 240, height: 240 } };
+      const { Html5Qrcode } = await import("html5-qrcode");
       const cams = await Html5Qrcode.getCameras().catch(() => []);
       const backCamera = cams.find((cam) => /back|rear|environment/i.test(cam.label));
       const cameraId = backCamera?.id ?? cams[0]?.id;
@@ -112,4 +112,9 @@ export function QRScannerModal({ open, onOpenChange, onScan }: Props) {
       </DialogContent>
     </Dialog>
   );
+}
+
+async function createScanner(containerId: string) {
+  const { Html5Qrcode } = await import("html5-qrcode");
+  return new Html5Qrcode(containerId, { verbose: false });
 }
