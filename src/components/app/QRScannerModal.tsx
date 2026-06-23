@@ -34,16 +34,36 @@ export function QRScannerModal({ open, onOpenChange, onScan }: Props) {
         onScan(decoded);
         onOpenChange(false);
       };
-      const config = { fps: 10, qrbox: { width: 240, height: 240 } };
-      const { Html5Qrcode } = await import("html5-qrcode");
-      const cams = await Html5Qrcode.getCameras().catch(() => []);
-      const backCamera = cams.find((cam) => /back|rear|environment/i.test(cam.label));
-      const cameraId = backCamera?.id ?? cams[0]?.id;
-
-      if (cameraId) {
-        await html5.start(cameraId, config, onDecoded, () => {});
-      } else {
-        await html5.start({ facingMode: { ideal: "environment" } }, config, onDecoded, () => {});
+      const config = {
+        fps: 10,
+        qrbox: { width: 240, height: 240 },
+        videoConstraints: {
+          facingMode: { ideal: "environment" },
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+        },
+      };
+      try {
+        // Prefer the back camera explicitly via facingMode constraint.
+        await html5.start(
+          { facingMode: { exact: "environment" } },
+          config,
+          onDecoded,
+          () => {},
+        );
+      } catch {
+        // Fallback: enumerate cameras and pick one whose label looks like the back camera.
+        const { Html5Qrcode } = await import("html5-qrcode");
+        const cams = await Html5Qrcode.getCameras().catch(() => []);
+        const backCamera = cams.find((cam) =>
+          /back|rear|environment|trasera|traseira|arrière|hinten/i.test(cam.label),
+        );
+        const cameraId = backCamera?.id ?? cams[cams.length - 1]?.id ?? cams[0]?.id;
+        if (cameraId) {
+          await html5.start(cameraId, config, onDecoded, () => {});
+        } else {
+          await html5.start({ facingMode: { ideal: "environment" } }, config, onDecoded, () => {});
+        }
       }
       setCameraActive(true);
     } catch (e: unknown) {
