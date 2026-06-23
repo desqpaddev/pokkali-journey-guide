@@ -102,6 +102,29 @@ export function MobileBottomNav() {
     setProduct(data);
   };
 
+  const openScanner = async () => {
+    // Request camera permission inside the click gesture so browsers (and
+    // iframes that allow camera) grant access before the scanner library
+    // initializes asynchronously inside the dialog.
+    try {
+      if (navigator.mediaDevices?.getUserMedia) {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: { ideal: "environment" } },
+        });
+        stream.getTracks().forEach((t) => t.stop());
+      }
+    } catch (e: unknown) {
+      const name = (e as { name?: string })?.name ?? "";
+      if (name === "NotAllowedError") {
+        toast.error("Camera blocked. Allow camera in your browser settings, or open the site in a new tab.");
+      } else if (name === "NotFoundError") {
+        toast.error("No camera found on this device.");
+      }
+      // Fall through and still open the dialog so manual entry works.
+    }
+    setScanOpen(true);
+  };
+
   const items: Array<{ to: string; hash?: string; label: string; icon: typeof Home }> = [
     { to: "/", label: "Home", icon: Home },
     { to: "/", hash: "tours", label: "Tours", icon: Compass },
@@ -134,7 +157,7 @@ export function MobileBottomNav() {
         <li className="contents">
           <button
             type="button"
-            onClick={() => setScanOpen(true)}
+            onClick={openScanner}
             className="flex flex-col items-center justify-center gap-1 text-[10px] font-medium text-muted-foreground hover:text-primary active:scale-95 transition"
             aria-label="Scan QR code"
           >
