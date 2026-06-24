@@ -17,6 +17,7 @@ const SILENT_AUDIO_SRC =
   "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQQAAAAAAA==";
 
 let sharedAudio: HTMLAudioElement | null = null;
+const playableAudioCache = new Map<string, string>();
 
 function getSharedAudio() {
   if (typeof window === "undefined") return null;
@@ -65,11 +66,21 @@ export async function unlockTourAudio() {
 
 export async function resolvePlayableAudioUrl(audioUrl?: string | null) {
   if (!audioUrl) return null;
+  const cached = playableAudioCache.get(audioUrl);
+  if (cached) return cached;
   const storagePath = getProductMediaPath(audioUrl);
-  if (!storagePath) return audioUrl;
+  if (!storagePath) {
+    playableAudioCache.set(audioUrl, audioUrl);
+    return audioUrl;
+  }
   const { data, error } = await supabase.storage.from("product-media").createSignedUrl(storagePath, 60 * 60);
   if (error) throw error;
+  playableAudioCache.set(audioUrl, data.signedUrl);
   return data.signedUrl;
+}
+
+export function preloadStoryAudioUrls(audioUrls: Array<string | null | undefined>) {
+  return Promise.allSettled(audioUrls.filter(Boolean).map((url) => resolvePlayableAudioUrl(url)));
 }
 
 function speakStoryText(fallbackText: string | null | undefined, lang: Lang, onEnd?: () => void) {
@@ -94,7 +105,7 @@ export async function playStoryAudio({
 }) {
   const audio = getSharedAudio();
   if (audioUrl && audio) {
-    const playableUrl = await resolvePlayableAudioUrl(audioUrl);
+    const playableUrl = playableAudioCache.get(audioUrl) ?? (await resolvePlayableAudioUrl(audioUrl));
     if (playableUrl) {
       audio.pause();
       if (audio.src !== playableUrl) audio.src = playableUrl;
