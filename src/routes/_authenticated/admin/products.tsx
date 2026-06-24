@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Trash2, Save, ScanLine, QrCode } from "lucide-react";
+import { Plus, Trash2, Save, ScanLine, QrCode, Upload, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin/products")({
@@ -96,7 +96,12 @@ function ProductCard({ product, destinations, onChange }: { product: any; destin
           <div key={lang} className="space-y-2">
             <div className="text-xs uppercase tracking-widest font-semibold text-accent">{lang}</div>
             <Field label="Story"><Textarea rows={3} value={p[`story_${lang}`] ?? ""} onChange={(e) => setP({ ...p, [`story_${lang}`]: e.target.value })} /></Field>
-            <Field label="Audio URL (optional)"><Input value={p[`audio_${lang}_url`] ?? ""} onChange={(e) => setP({ ...p, [`audio_${lang}_url`]: e.target.value })} placeholder="Auto-generated from story if empty" /></Field>
+            <AudioField
+              value={p[`audio_${lang}_url`] ?? ""}
+              onChange={(v) => setP({ ...p, [`audio_${lang}_url`]: v })}
+              productId={product.id}
+              lang={lang}
+            />
           </div>
         ))}
       </div>
