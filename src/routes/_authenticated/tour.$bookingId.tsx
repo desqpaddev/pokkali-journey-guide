@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Navigation, ScanLine, CheckCircle2, Radio, Volume2 } from "lucide-react";
-import { AudioPlayer } from "@/components/app/AudioPlayer";
+import { AudioPlayer, playStoryAudio, unlockTourAudio } from "@/components/app/AudioPlayer";
 import { LangPicker } from "@/components/app/LangPicker";
 import { QRScannerModal } from "@/components/app/QRScannerModal";
 import { haversineMeters, type Lang } from "@/lib/geo";
@@ -27,6 +27,7 @@ function TourPlayer() {
   const [scanOpen, setScanOpen] = useState(false);
   const [scannedProduct, setScannedProduct] = useState<any | null>(null);
   const [audioUnlocked, setAudioUnlocked] = useState(false);
+  const audioUnlockedRef = useRef(false);
 
   const { data } = useQuery({
     queryKey: ["tour", bookingId],
@@ -49,6 +50,26 @@ function TourPlayer() {
   useEffect(() => {
     if (data?.booking?.preferred_language) setLang(data.booking.preferred_language as Lang);
   }, [data?.booking?.preferred_language]);
+
+  useEffect(() => {
+    audioUnlockedRef.current = audioUnlocked;
+  }, [audioUnlocked]);
+
+  useEffect(() => {
+    if (audioUnlocked) return;
+    const unlockFromGesture = () => {
+      unlockTourAudio().finally(() => {
+        audioUnlockedRef.current = true;
+        setAudioUnlocked(true);
+      });
+    };
+    window.addEventListener("pointerdown", unlockFromGesture, { once: true, passive: true });
+    window.addEventListener("touchstart", unlockFromGesture, { once: true, passive: true });
+    return () => {
+      window.removeEventListener("pointerdown", unlockFromGesture);
+      window.removeEventListener("touchstart", unlockFromGesture);
+    };
+  }, [audioUnlocked]);
 
   // GPS watch
   const watchId = useRef<number | null>(null);
