@@ -15,12 +15,23 @@ function Bookings() {
   const { data } = useQuery({
     queryKey: ["my-bookings"],
     queryFn: async () => {
+      const { data: userData } = await supabase.auth.getUser();
+      const uid = userData.user?.id;
+      if (!uid) return [];
       const { data, error } = await supabase
         .from("bookings")
         .select("*, packages(title, slug, hero_image_url, category)")
-        .order("tour_date", { ascending: false });
+        .eq("user_id", uid)
+        .order("created_at", { ascending: false });
       if (error) throw error;
-      return data;
+      // Dedupe: keep only the latest booking per package
+      const seen = new Set<string>();
+      return (data ?? []).filter((b: any) => {
+        const key = b.package_id ?? b.id;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
     },
   });
 
