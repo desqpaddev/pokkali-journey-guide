@@ -37,13 +37,14 @@ export function AudioPlayer({ audioUrl, fallbackText, lang, autoplay, voice }: P
     return true;
   }
 
-  async function play() {
+  async function play(isAuto = false) {
     setErr(null);
     if (src) {
       try {
         await audioRef.current?.play();
         setPlaying(true);
       } catch {
+        if (isAuto && browserTTS()) return;
         setErr("Tap to play");
       }
       return;
@@ -70,6 +71,7 @@ export function AudioPlayer({ audioUrl, fallbackText, lang, autoplay, voice }: P
           await audioRef.current?.play();
           setPlaying(true);
         } catch {
+          if (isAuto && browserTTS()) return;
           setErr("Tap to play");
         }
       }, 50);
@@ -86,14 +88,14 @@ export function AudioPlayer({ audioUrl, fallbackText, lang, autoplay, voice }: P
   }
 
   useEffect(() => {
-    if (autoplay && (src || fallbackText)) play();
+    if (autoplay && (src || fallbackText)) play(true);
     return () => pause();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="flex items-center gap-3">
-      <Button onClick={playing ? pause : play} size="lg" variant="hero" disabled={loading}>
+      <Button onClick={() => (playing ? pause() : play(false))} size="lg" variant="hero" disabled={loading}>
         {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : playing ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
         {playing ? "Pause" : loading ? "Loading…" : "Play story"}
       </Button>
