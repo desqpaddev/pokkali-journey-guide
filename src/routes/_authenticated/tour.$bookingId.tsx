@@ -58,7 +58,8 @@ function TourPlayer() {
   useEffect(() => {
     if (audioUnlocked) return;
     const unlockFromGesture = () => {
-      unlockTourAudio().finally(() => {
+      unlockTourAudio().then((unlocked) => {
+        if (!unlocked) return;
         audioUnlockedRef.current = true;
         setAudioUnlocked(true);
       });
@@ -129,7 +130,11 @@ function TourPlayer() {
   }
 
   async function enableTourAudio() {
-    await unlockTourAudio();
+    const unlocked = await unlockTourAudio();
+    if (!unlocked) {
+      toast.error("Audio still blocked", { description: "Please tap Enable audio again before starting the tour." });
+      return;
+    }
     audioUnlockedRef.current = true;
     setAudioUnlocked(true);
     toast.success("Tour audio enabled", { description: "Stories will start when you reach each stop." });
