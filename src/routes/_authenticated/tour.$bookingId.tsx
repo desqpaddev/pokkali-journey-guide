@@ -6,7 +6,7 @@ import { Header } from "@/components/app/Header";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Navigation, ScanLine, CheckCircle2, Radio } from "lucide-react";
+import { MapPin, Navigation, ScanLine, CheckCircle2, Radio, Volume2 } from "lucide-react";
 import { AudioPlayer } from "@/components/app/AudioPlayer";
 import { LangPicker } from "@/components/app/LangPicker";
 import { QRScannerModal } from "@/components/app/QRScannerModal";
@@ -26,6 +26,7 @@ function TourPlayer() {
   const [activeDestId, setActiveDestId] = useState<string | null>(null);
   const [scanOpen, setScanOpen] = useState(false);
   const [scannedProduct, setScannedProduct] = useState<any | null>(null);
+  const [audioUnlocked, setAudioUnlocked] = useState(false);
 
   const { data } = useQuery({
     queryKey: ["tour", bookingId],
@@ -92,6 +93,19 @@ function TourPlayer() {
     setScannedProduct(p);
   }
 
+  async function enableTourAudio() {
+    try {
+      const silentAudio = new Audio("data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgAAAA");
+      silentAudio.volume = 0;
+      await silentAudio.play();
+      silentAudio.pause();
+    } catch {
+      // Some browsers reject silent unlock files, but the user gesture is still captured.
+    }
+    setAudioUnlocked(true);
+    toast.success("Tour audio enabled", { description: "Stories will start when you reach each stop." });
+  }
+
   if (!data) return <div className="min-h-screen bg-background"><Header /><div className="container mx-auto px-4 py-16">Loading tour…</div></div>;
   const { booking, destinations } = data;
   const activeDest = destinations.find((d) => d.id === activeDestId) ?? null;
@@ -110,6 +124,11 @@ function TourPlayer() {
             <Radio className={`h-3 w-3 ${pos ? "text-green-600 animate-pulse" : "text-muted-foreground"}`} />
             {pos ? `GPS ±${Math.round(pos.acc)}m` : posErr ?? "Locating…"}
           </Badge>
+          {!audioUnlocked && (
+            <Button onClick={enableTourAudio} variant="hero" size="sm" className="min-h-10">
+              <Volume2 className="h-4 w-4" /> Enable audio
+            </Button>
+          )}
         </div>
 
         {activeDest && (
@@ -125,7 +144,7 @@ function TourPlayer() {
                 audioUrl={activeDest[`audio_${lang}_url`] as string | null}
                 fallbackText={activeDest[`story_${lang}`] as string | null}
                 lang={lang}
-                autoplay
+                autoplay={audioUnlocked}
               />
             </div>
             {activeDest[`story_${lang}`] && (
@@ -213,7 +232,7 @@ function TourPlayer() {
                   audioUrl={scannedProduct[`audio_${lang}_url`]}
                   fallbackText={scannedProduct[`story_${lang}`]}
                   lang={lang}
-                  autoplay
+                  autoplay={audioUnlocked}
                 />
               </div>
               {scannedProduct[`story_${lang}`] && (
