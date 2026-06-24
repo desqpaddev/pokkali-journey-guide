@@ -13,6 +13,111 @@ interface Props {
   voice?: string;
 }
 
+const SILENT_AUDIO_SRC =
+  "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQQAAAAAAA==";
+
+let sharedAudio: HTMLAudioElement | null = null;
+const playableAudioCache = new Map<string, string>();
+
+function getSharedAudio() {
+  if (typeof window === "undefined") return null;
+  if (!sharedAudio) {
+    sharedAudio = new Audio();
+    sharedAudio.preload = "auto";
+    sharedAudio.setAttribute("playsinline", "true");
+  }
+  return sharedAudio;
+}
+
+function getProductMediaPath(value: string) {
+  if (value.startsWith("storage://product-media/")) return value.replace("storage://product-media/", "");
+  if (value.startsWith("product-media/")) return value.replace("product-media/", "");
+  try {
+    const url = new URL(value);
+    const publicMarker = "/storage/v1/object/public/product-media/";
+    const objectMarker = "/storage/v1/object/product-media/";
+    const signedMarker = "/storage/v1/object/sign/product-media/";
+    if (url.pathname.includes(signedMarker)) return null;
+    const marker = url.pathname.includes(publicMarker) ? publicMarker : url.pathname.includes(objectMarker) ? objectMarker : null;
+    if (!marker) return null;
+    return decodeURIComponent(url.pathname.split(marker)[1] ?? "");
+  } catch {
+    return null;
+  }
+}
+
+export async function unlockTourAudio() {
+  const audio = getSharedAudio();
+  if (!audio) return false;
+  try {
+    audio.pause();
+    audio.src = SILENT_AUDIO_SRC;
+    audio.volume = 0;
+    await audio.play();
+    audio.pause();
+    audio.currentTime = 0;
+    audio.volume = 1;
+    return true;
+  } catch {
+    audio.volume = 1;
+    return false;
+  }
+}
+
+export async function resolvePlayableAudioUrl(audioUrl?: string | null) {
+  if (!audioUrl) return null;
+  const cached = playableAudioCache.get(audioUrl);
+  if (cached) return cached;
+  const storagePath = getProductMediaPath(audioUrl);
+  if (!storagePath) {
+    playableAudioCache.set(audioUrl, audioUrl);
+    return audioUrl;
+  }
+  const { data, error } = await supabase.storage.from("product-media").createSignedUrl(storagePath, 60 * 60);
+  if (error) throw error;
+  playableAudioCache.set(audioUrl, data.signedUrl);
+  return data.signedUrl;
+}
+
+export function preloadStoryAudioUrls(audioUrls: Array<string | null | undefined>) {
+  return Promise.allSettled(audioUrls.filter(Boolean).map((url) => resolvePlayableAudioUrl(url)));
+}
+
+function speakStoryText(fallbackText: string | null | undefined, lang: Lang, onEnd?: () => void) {
+  if (typeof window === "undefined" || !("speechSynthesis" in window) || !fallbackText) return false;
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(fallbackText);
+  utterance.lang = LANG_LOCALE[lang];
+  utterance.onend = () => onEnd?.();
+  utterance.onerror = () => onEnd?.();
+  window.speechSynthesis.speak(utterance);
+  return true;
+}
+
+export async function playStoryAudio({
+  audioUrl,
+  fallbackText,
+  lang,
+}: {
+  audioUrl?: string | null;
+  fallbackText?: string | null;
+  lang: Lang;
+}) {
+  const audio = getSharedAudio();
+  if (audioUrl && audio) {
+    const playableUrl = playableAudioCache.get(audioUrl) ?? (await resolvePlayableAudioUrl(audioUrl));
+    if (playableUrl) {
+      audio.pause();
+      if (audio.src !== playableUrl) audio.src = playableUrl;
+      audio.currentTime = 0;
+      audio.volume = 1;
+      await audio.play();
+      return true;
+    }
+  }
+  return speakStoryText(fallbackText, lang);
+}
+
 export function AudioPlayer({ audioUrl, fallbackText, lang, autoplay, voice }: Props) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const autoTriedRef = useRef(false);
@@ -72,42 +177,30 @@ export function AudioPlayer({ audioUrl, fallbackText, lang, autoplay, voice }: P
     };
   }, [audioUrl, fallbackText, lang]);
 
-  function getProductMediaPath(value: string) {
-    if (value.startsWith("storage://product-media/")) return value.replace("storage://product-media/", "");
-    if (value.startsWith("product-media/")) return value.replace("product-media/", "");
-    try {
-      const url = new URL(value);
-      const publicMarker = "/storage/v1/object/public/product-media/";
-      const objectMarker = "/storage/v1/object/product-media/";
-      const signedMarker = "/storage/v1/object/sign/product-media/";
-      if (url.pathname.includes(signedMarker)) return null;
-      const marker = url.pathname.includes(publicMarker) ? publicMarker : url.pathname.includes(objectMarker) ? objectMarker : null;
-      if (!marker) return null;
-      return decodeURIComponent(url.pathname.split(marker)[1] ?? "");
-    } catch {
-      return null;
-    }
-  }
-
   // Browser TTS fallback
   function browserTTS() {
-    if (typeof window === "undefined" || !("speechSynthesis" in window) || !fallbackText) return false;
-    window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(fallbackText);
-    u.lang = LANG_LOCALE[lang];
-    u.onend = () => setPlaying(false);
-    u.onerror = () => setPlaying(false);
-    window.speechSynthesis.speak(u);
-    setPlaying(true);
-    return true;
+    const ok = speakStoryText(fallbackText, lang, () => setPlaying(false));
+    if (ok) setPlaying(true);
+    return ok;
   }
 
   async function play(isAuto = false) {
     setErr(null);
     if (src) {
       try {
-        if (!audioRef.current) throw new Error("Audio not ready");
-        await audioRef.current.play();
+        const audio = getSharedAudio();
+        if (!audio) throw new Error("Audio not ready");
+        audio.onended = () => setPlaying(false);
+        audio.onpause = () => setPlaying(false);
+        audio.onerror = () => {
+          setPlaying(false);
+          setErr("Audio file could not load. Please re-upload it from admin if this continues.");
+        };
+        audio.pause();
+        if (audio.src !== src) audio.src = src;
+        audio.currentTime = 0;
+        audio.volume = 1;
+        await audio.play();
         setPlaying(true);
       } catch {
         if (isAuto && browserTTS()) return;
@@ -138,8 +231,14 @@ export function AudioPlayer({ audioUrl, fallbackText, lang, autoplay, voice }: P
       setLoading(false);
       setTimeout(async () => {
         try {
-          if (!audioRef.current) throw new Error("Audio not ready");
-          await audioRef.current.play();
+          const audio = getSharedAudio();
+          if (!audio) throw new Error("Audio not ready");
+          audio.onended = () => setPlaying(false);
+          audio.onpause = () => setPlaying(false);
+          audio.pause();
+          audio.src = url;
+          audio.currentTime = 0;
+          await audio.play();
           setPlaying(true);
         } catch {
           if (isAuto && browserTTS()) return;
@@ -153,6 +252,7 @@ export function AudioPlayer({ audioUrl, fallbackText, lang, autoplay, voice }: P
   }
 
   function pause() {
+    sharedAudio?.pause();
     audioRef.current?.pause();
     if (typeof window !== "undefined" && "speechSynthesis" in window) window.speechSynthesis.cancel();
     setPlaying(false);
@@ -184,6 +284,10 @@ export function AudioPlayer({ audioUrl, fallbackText, lang, autoplay, voice }: P
         <audio
           ref={audioRef}
           src={src}
+          onPlay={() => {
+            sharedAudio?.pause();
+            setPlaying(true);
+          }}
           onEnded={() => setPlaying(false)}
           onPause={() => setPlaying(false)}
           onError={() => {

@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Navigation, ScanLine, CheckCircle2, Radio, Volume2 } from "lucide-react";
-import { AudioPlayer } from "@/components/app/AudioPlayer";
+import { AudioPlayer, playStoryAudio, preloadStoryAudioUrls, unlockTourAudio } from "@/components/app/AudioPlayer";
 import { LangPicker } from "@/components/app/LangPicker";
 import { QRScannerModal } from "@/components/app/QRScannerModal";
 import { haversineMeters, type Lang } from "@/lib/geo";
@@ -27,6 +27,7 @@ function TourPlayer() {
   const [scanOpen, setScanOpen] = useState(false);
   const [scannedProduct, setScannedProduct] = useState<any | null>(null);
   const [audioUnlocked, setAudioUnlocked] = useState(false);
+  const audioUnlockedRef = useRef(false);
 
   const { data } = useQuery({
     queryKey: ["tour", bookingId],
@@ -49,6 +50,33 @@ function TourPlayer() {
   useEffect(() => {
     if (data?.booking?.preferred_language) setLang(data.booking.preferred_language as Lang);
   }, [data?.booking?.preferred_language]);
+
+  useEffect(() => {
+    audioUnlockedRef.current = audioUnlocked;
+  }, [audioUnlocked]);
+
+  useEffect(() => {
+    if (audioUnlocked) return;
+    const unlockFromGesture = () => {
+      unlockTourAudio().then((unlocked) => {
+        if (!unlocked) return;
+        audioUnlockedRef.current = true;
+        setAudioUnlocked(true);
+      });
+    };
+    window.addEventListener("pointerdown", unlockFromGesture, { once: true, passive: true });
+    window.addEventListener("touchstart", unlockFromGesture, { once: true, passive: true });
+    return () => {
+      window.removeEventListener("pointerdown", unlockFromGesture);
+      window.removeEventListener("touchstart", unlockFromGesture);
+    };
+  }, [audioUnlocked]);
+
+  useEffect(() => {
+    if (!audioUnlocked || !data?.destinations?.length) return;
+    const urls = data.destinations.flatMap((d) => [d.audio_english_url, d.audio_hindi_url, d.audio_malayalam_url]);
+    void preloadStoryAudioUrls(urls);
+  }, [audioUnlocked, data?.destinations]);
 
   // GPS watch
   const watchId = useRef<number | null>(null);
@@ -78,11 +106,25 @@ function TourPlayer() {
       if (dist <= (d.trigger_radius_meters ?? 50) && !triggered.has(d.id)) {
         setTriggered((s) => new Set(s).add(d.id));
         setActiveDestId(d.id);
-        toast.success(`You've reached ${d.name}`, { description: "Story is playing." });
+        if (audioUnlockedRef.current) {
+          const audioUrl = d[`audio_${lang}_url`] as string | null;
+          const fallbackText = d[`story_${lang}`] as string | null;
+          playStoryAudio({ audioUrl, fallbackText, lang })
+            .then((played) => {
+              toast.success(`You've reached ${d.name}`, {
+                description: played ? "Story is playing." : "No audio is available for this stop.",
+              });
+            })
+            .catch(() => {
+              toast.error("Audio blocked", { description: "Tap Play story once to start this stop." });
+            });
+        } else {
+          toast.info(`You've reached ${d.name}`, { description: "Tap Enable audio once to allow automatic stories." });
+        }
         break;
       }
     }
-  }, [pos, data?.destinations, triggered]);
+  }, [pos, data?.destinations, triggered, lang]);
 
   async function handleScan(code: string) {
     const { data: p } = await supabase.from("products").select("*").eq("qr_code", code).maybeSingle();
@@ -94,14 +136,12 @@ function TourPlayer() {
   }
 
   async function enableTourAudio() {
-    try {
-      const silentAudio = new Audio("data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgAAAA");
-      silentAudio.volume = 0;
-      await silentAudio.play();
-      silentAudio.pause();
-    } catch {
-      // Some browsers reject silent unlock files, but the user gesture is still captured.
+    const unlocked = await unlockTourAudio();
+    if (!unlocked) {
+      toast.error("Audio still blocked", { description: "Please tap Enable audio again before starting the tour." });
+      return;
     }
+    audioUnlockedRef.current = true;
     setAudioUnlocked(true);
     toast.success("Tour audio enabled", { description: "Stories will start when you reach each stop." });
   }
