@@ -144,11 +144,11 @@ function AudioField({ value, onChange, productId, lang }: { value: string; onCha
     }
   }
   return (
-    <div className="space-y-1">
+      <div className="space-y-2 rounded-md border bg-muted/20 p-2">
       <Label className="text-xs">Audio (upload or URL)</Label>
       <Input value={value} onChange={(e) => onChange(e.target.value)} placeholder="Auto-generated from story if empty" />
-      <div className="flex items-center gap-2">
-        <label className="inline-flex items-center gap-1 text-xs cursor-pointer text-primary hover:underline">
+      <div className="flex flex-col gap-2">
+        <label className="inline-flex min-h-10 cursor-pointer items-center justify-center gap-2 rounded-md border border-input bg-background px-3 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground">
           {uploading ? <Loader2 className="h-3 w-3 animate-spin" /> : <Upload className="h-3 w-3" />}
           {uploading ? "Uploading…" : "Upload file"}
           <input
@@ -163,7 +163,7 @@ function AudioField({ value, onChange, productId, lang }: { value: string; onCha
             }}
           />
         </label>
-        {value && <audio src={value} controls className="h-8 flex-1 min-w-0" />}
+        {value && <audio src={value} controls className="h-10 w-full min-w-0" />}
       </div>
     </div>
   );

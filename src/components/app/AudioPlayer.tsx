@@ -94,8 +94,15 @@ export function AudioPlayer({ audioUrl, fallbackText, lang, autoplay, voice }: P
   }, []);
 
   return (
-    <div className="flex items-center gap-3">
-      <Button onClick={() => (playing ? pause() : play(false))} size="lg" variant="hero" disabled={loading}>
+    <div className="w-full rounded-md border bg-card/70 p-3 shadow-sm">
+      <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center">
+      <Button
+        onClick={() => (playing ? pause() : play(false))}
+        size="lg"
+        variant="hero"
+        disabled={loading}
+        className="w-full justify-center sm:w-auto"
+      >
         {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : playing ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
         {playing ? "Pause" : loading ? "Loading…" : "Play story"}
       </Button>
@@ -106,10 +113,11 @@ export function AudioPlayer({ audioUrl, fallbackText, lang, autoplay, voice }: P
           onEnded={() => setPlaying(false)}
           onPause={() => setPlaying(false)}
           controls
-          className="flex-1 h-9"
+          className="h-10 w-full min-w-0 flex-1"
         />
       )}
-      {err && <span className="text-xs text-destructive">{err}</span>}
+      </div>
+      {err && <div className="mt-2 text-xs text-destructive">{err}</div>}
     </div>
   );
 }
