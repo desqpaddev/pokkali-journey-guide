@@ -220,8 +220,14 @@ export function AudioPlayer({ audioUrl, fallbackText, lang, autoplay, voice }: P
       setLoading(false);
       setTimeout(async () => {
         try {
-          if (!audioRef.current) throw new Error("Audio not ready");
-          await audioRef.current.play();
+          const audio = getSharedAudio();
+          if (!audio) throw new Error("Audio not ready");
+          audio.onended = () => setPlaying(false);
+          audio.onpause = () => setPlaying(false);
+          audio.pause();
+          audio.src = url;
+          audio.currentTime = 0;
+          await audio.play();
           setPlaying(true);
         } catch {
           if (isAuto && browserTTS()) return;
@@ -267,6 +273,10 @@ export function AudioPlayer({ audioUrl, fallbackText, lang, autoplay, voice }: P
         <audio
           ref={audioRef}
           src={src}
+          onPlay={() => {
+            sharedAudio?.pause();
+            setPlaying(true);
+          }}
           onEnded={() => setPlaying(false)}
           onPause={() => setPlaying(false)}
           onError={() => {
