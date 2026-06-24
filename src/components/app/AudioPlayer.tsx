@@ -51,7 +51,11 @@ export function AudioPlayer({ audioUrl, fallbackText, lang, autoplay, voice }: P
       .createSignedUrl(storagePath, 60 * 60)
       .then(({ data, error }) => {
         if (error) throw error;
-        if (alive) setSrc(data.signedUrl);
+        if (alive) {
+          autoTriedRef.current = false;
+          setErr(null);
+          setSrc(data.signedUrl);
+        }
       })
       .catch(() => {
         if (alive) {
