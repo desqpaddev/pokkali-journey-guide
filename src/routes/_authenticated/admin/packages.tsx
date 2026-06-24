@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Plus, Trash2, MapPin, Crosshair, Save } from "lucide-react";
+import { Plus, Trash2, MapPin, Crosshair, Save, Upload, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin/packages")({
@@ -268,7 +268,12 @@ function DestRow({ dest, onChange }: { dest: any; onChange: () => void }) {
             <div key={lang} className="space-y-2 border rounded-md p-3">
               <div className="text-xs uppercase tracking-widest font-semibold text-accent">{lang}</div>
               <Field label={`Story (${lang})`}><Textarea rows={4} value={d[`story_${lang}`] ?? ""} onChange={(e) => setD({ ...d, [`story_${lang}`]: e.target.value })} placeholder="Will auto-generate audio if empty URL." /></Field>
-              <Field label={`Audio URL (${lang})`}><Input value={d[`audio_${lang}_url`] ?? ""} onChange={(e) => setD({ ...d, [`audio_${lang}_url`]: e.target.value })} placeholder="Leave empty to auto-generate from story" /></Field>
+              <AudioField
+                value={d[`audio_${lang}_url`] ?? ""}
+                onChange={(v) => setD({ ...d, [`audio_${lang}_url`]: v })}
+                destinationId={dest.id}
+                lang={lang}
+              />
             </div>
           ))}
         </div>
@@ -286,6 +291,52 @@ function Field({ label, children, className }: { label: string; children: React.
     <div className={className}>
       <Label className="text-xs">{label}</Label>
       <div className="mt-1">{children}</div>
+    </div>
+  );
+}
+
+function AudioField({ value, onChange, destinationId, lang }: { value: string; onChange: (v: string) => void; destinationId: string; lang: string }) {
+  const [uploading, setUploading] = useState(false);
+
+  async function upload(file: File) {
+    setUploading(true);
+    try {
+      const ext = file.name.split(".").pop() || "mp3";
+      const path = `destinations/${destinationId}/${lang}-${Date.now()}.${ext}`;
+      const { error } = await supabase.storage.from("product-media").upload(path, file, { upsert: true, contentType: file.type });
+      if (error) throw error;
+      const { data } = supabase.storage.from("product-media").getPublicUrl(path);
+      onChange(data.publicUrl);
+      toast.success("Audio uploaded. Save stop to keep it.");
+    } catch (e: any) {
+      toast.error(e.message ?? "Upload failed");
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  return (
+    <div className="space-y-2 rounded-md border bg-muted/20 p-2">
+      <Label className="text-xs">Audio (upload or URL)</Label>
+      <Input value={value} onChange={(e) => onChange(e.target.value)} placeholder="Leave empty to auto-generate from story" />
+      <div className="flex flex-col gap-2">
+        <label className="inline-flex min-h-10 cursor-pointer items-center justify-center gap-2 rounded-md border border-input bg-background px-3 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground">
+          {uploading ? <Loader2 className="h-3 w-3 animate-spin" /> : <Upload className="h-3 w-3" />}
+          {uploading ? "Uploading…" : "Upload file"}
+          <input
+            type="file"
+            accept="audio/*"
+            className="hidden"
+            disabled={uploading}
+            onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (f) upload(f);
+              e.target.value = "";
+            }}
+          />
+        </label>
+        {value && <audio src={value} controls className="h-10 w-full min-w-0" />}
+      </div>
     </div>
   );
 }
