@@ -30,7 +30,7 @@ export function Header() {
           <img
             src={paadiLogo.url}
             alt="PAADI"
-            className="h-10 w-auto md:h-12"
+            className="h-14 w-auto md:h-16"
           />
         </Link>
         <nav className="hidden md:flex items-center gap-7 text-sm font-medium">
@@ -222,7 +222,7 @@ export function Footer() {
       <div className="border-t border-primary-foreground/10">
         <div className="container mx-auto px-4 py-5 text-xs text-primary-foreground/60 flex flex-wrap items-center justify-between gap-2">
           <span>© {new Date().getFullYear()} PAADI. Heritage Circuit Tours.</span>
-          <span>Crafted with the farmers of Kadamakkudy</span>
+          <span>Crafted with the farmers of Ezhikkara</span>
         </div>
       </div>
       </div>
