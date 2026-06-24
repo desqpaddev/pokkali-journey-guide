@@ -124,3 +124,47 @@ function Field({ label, children, className }: { label: string; children: React.
     </div>
   );
 }
+
+function AudioField({ value, onChange, productId, lang }: { value: string; onChange: (v: string) => void; productId: string; lang: string }) {
+  const [uploading, setUploading] = useState(false);
+  async function upload(file: File) {
+    setUploading(true);
+    try {
+      const ext = file.name.split(".").pop() || "mp3";
+      const path = `products/${productId}/${lang}-${Date.now()}.${ext}`;
+      const { error } = await supabase.storage.from("product-media").upload(path, file, { upsert: true, contentType: file.type });
+      if (error) throw error;
+      const { data } = supabase.storage.from("product-media").getPublicUrl(path);
+      onChange(data.publicUrl);
+      toast.success("Audio uploaded");
+    } catch (e: any) {
+      toast.error(e.message ?? "Upload failed");
+    } finally {
+      setUploading(false);
+    }
+  }
+  return (
+    <div className="space-y-1">
+      <Label className="text-xs">Audio (upload or URL)</Label>
+      <Input value={value} onChange={(e) => onChange(e.target.value)} placeholder="Auto-generated from story if empty" />
+      <div className="flex items-center gap-2">
+        <label className="inline-flex items-center gap-1 text-xs cursor-pointer text-primary hover:underline">
+          {uploading ? <Loader2 className="h-3 w-3 animate-spin" /> : <Upload className="h-3 w-3" />}
+          {uploading ? "Uploading…" : "Upload file"}
+          <input
+            type="file"
+            accept="audio/*"
+            className="hidden"
+            disabled={uploading}
+            onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (f) upload(f);
+              e.target.value = "";
+            }}
+          />
+        </label>
+        {value && <audio src={value} controls className="h-8 flex-1 min-w-0" />}
+      </div>
+    </div>
+  );
+}
