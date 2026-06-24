@@ -72,6 +72,12 @@ function TourPlayer() {
     };
   }, [audioUnlocked]);
 
+  useEffect(() => {
+    if (!audioUnlocked || !data?.destinations?.length) return;
+    const urls = data.destinations.flatMap((d) => [d.audio_english_url, d.audio_hindi_url, d.audio_malayalam_url]);
+    void preloadStoryAudioUrls(urls);
+  }, [audioUnlocked, data?.destinations]);
+
   // GPS watch
   const watchId = useRef<number | null>(null);
   useEffect(() => {
@@ -135,8 +141,6 @@ function TourPlayer() {
       toast.error("Audio still blocked", { description: "Please tap Enable audio again before starting the tour." });
       return;
     }
-    const urls = destinations.flatMap((d) => [d.audio_english_url, d.audio_hindi_url, d.audio_malayalam_url]);
-    void preloadStoryAudioUrls(urls);
     audioUnlockedRef.current = true;
     setAudioUnlocked(true);
     toast.success("Tour audio enabled", { description: "Stories will start when you reach each stop." });
