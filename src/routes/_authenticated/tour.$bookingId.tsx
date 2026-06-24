@@ -99,11 +99,25 @@ function TourPlayer() {
       if (dist <= (d.trigger_radius_meters ?? 50) && !triggered.has(d.id)) {
         setTriggered((s) => new Set(s).add(d.id));
         setActiveDestId(d.id);
-        toast.success(`You've reached ${d.name}`, { description: "Story is playing." });
+        if (audioUnlockedRef.current) {
+          const audioUrl = d[`audio_${lang}_url`] as string | null;
+          const fallbackText = d[`story_${lang}`] as string | null;
+          playStoryAudio({ audioUrl, fallbackText, lang })
+            .then((played) => {
+              toast.success(`You've reached ${d.name}`, {
+                description: played ? "Story is playing." : "No audio is available for this stop.",
+              });
+            })
+            .catch(() => {
+              toast.error("Audio blocked", { description: "Tap Play story once to start this stop." });
+            });
+        } else {
+          toast.info(`You've reached ${d.name}`, { description: "Tap Enable audio once to allow automatic stories." });
+        }
         break;
       }
     }
-  }, [pos, data?.destinations, triggered]);
+  }, [pos, data?.destinations, triggered, lang]);
 
   async function handleScan(code: string) {
     const { data: p } = await supabase.from("products").select("*").eq("qr_code", code).maybeSingle();
