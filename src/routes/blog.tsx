@@ -6,6 +6,13 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { NewsletterForm } from "@/components/app/NewsletterForm";
 import { Calendar, ArrowRight, BookOpen } from "lucide-react";
+import heroPaddy from "@/assets/hero-paddy.jpg";
+import heroBackwater from "@/assets/hero-backwater.jpg";
+import heroHarvest from "@/assets/hero-harvest.jpg";
+import parallaxFields from "@/assets/parallax-fields.jpg";
+import aboutPaddy from "@/assets/about-paddy-3d.jpg";
+
+const FALLBACK_IMAGES = [heroPaddy, heroBackwater, heroHarvest, parallaxFields, aboutPaddy];
 
 export const Route = createFileRoute("/blog")({
   head: () => ({
@@ -56,16 +63,15 @@ function BlogList() {
               <p className="mt-3">No stories published yet. Check back soon.</p>
             </Card>
           )}
-          {posts?.map((p: any) => (
+          {posts?.map((p: any, idx: number) => (
             <Link key={p.id} to="/blog/$slug" params={{ slug: p.slug }} className="group">
               <Card className="overflow-hidden h-full hover:shadow-xl transition-shadow border-l-4 border-l-secondary">
-                {p.cover_image_url ? (
-                  <img src={p.cover_image_url} alt={p.title} loading="lazy" className="aspect-[4/3] w-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                ) : (
-                  <div className="aspect-[4/3] bg-gradient-to-br from-primary/20 to-secondary/30 grid place-items-center">
-                    <BookOpen className="h-12 w-12 text-primary/40" />
-                  </div>
-                )}
+                <img
+                  src={p.cover_image_url || FALLBACK_IMAGES[idx % FALLBACK_IMAGES.length]}
+                  alt={p.title}
+                  loading="lazy"
+                  className="aspect-[4/3] w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
                 <div className="p-5">
                   <div className="flex flex-wrap gap-1.5 mb-2">
                     {(p.tags ?? []).slice(0, 2).map((t: string) => <Badge key={t} variant="secondary" className="text-[10px]">{t}</Badge>)}

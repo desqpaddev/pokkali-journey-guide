@@ -5,6 +5,12 @@ import { Header, Footer } from "@/components/app/Header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, ArrowLeft, User } from "lucide-react";
+import heroPaddy from "@/assets/hero-paddy.jpg";
+import heroBackwater from "@/assets/hero-backwater.jpg";
+import heroHarvest from "@/assets/hero-harvest.jpg";
+import parallaxFields from "@/assets/parallax-fields.jpg";
+
+const RELATED_IMAGES = [heroPaddy, heroBackwater, heroHarvest, parallaxFields];
 
 export const Route = createFileRoute("/blog/$slug")({
   component: BlogDetail,
@@ -64,12 +70,28 @@ function BlogDetail() {
                 {post.published_at && <span className="inline-flex items-center gap-1.5"><Calendar className="h-4 w-4" /> {new Date(post.published_at).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })}</span>}
               </div>
             </header>
-            {post.cover_image_url && (
-              <img src={post.cover_image_url} alt={post.title} className="mt-8 rounded-2xl w-full aspect-[16/9] object-cover" />
-            )}
+            <img
+              src={post.cover_image_url || RELATED_IMAGES[0]}
+              alt={post.title}
+              className="mt-8 rounded-2xl w-full aspect-[16/9] object-cover"
+            />
             {post.excerpt && <p className="mt-8 text-lg text-muted-foreground italic leading-relaxed border-l-4 border-secondary pl-4">{post.excerpt}</p>}
             <div className="mt-8 prose prose-lg max-w-none whitespace-pre-wrap leading-relaxed text-foreground/90">
               {post.content}
+            </div>
+            <div className="mt-12">
+              <h3 className="font-display text-xl uppercase tracking-wider mb-4">Related photos</h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {RELATED_IMAGES.map((src, i) => (
+                  <img
+                    key={i}
+                    src={src}
+                    alt="Pokkali fields"
+                    loading="lazy"
+                    className="aspect-square w-full object-cover rounded-xl hover:scale-105 transition-transform duration-500"
+                  />
+                ))}
+              </div>
             </div>
           </>
         )}
