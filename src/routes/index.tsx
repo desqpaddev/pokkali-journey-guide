@@ -341,7 +341,7 @@ function Index() {
           <div className="bg-primary text-primary-foreground p-10 md:p-14 text-right">
             <div className="text-sm text-secondary">Reservations</div>
             <div className="font-display text-2xl md:text-3xl mt-1">+91 484 000 0000</div>
-            <div className="text-xs text-primary-foreground/70 mt-1">hello@pokkalivillage.in</div>
+            <div className="text-xs text-primary-foreground/70 mt-1">hello@pokkali.in</div>
           </div>
         </div>
       </section>

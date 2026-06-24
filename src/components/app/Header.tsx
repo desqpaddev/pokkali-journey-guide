@@ -14,8 +14,8 @@ export function Header() {
       <div className="hidden md:block bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 h-10 flex items-center justify-between text-xs">
           <div className="flex items-center gap-6">
-            <span className="inline-flex items-center gap-2"><Mail className="h-3.5 w-3.5 text-secondary" /> hello@pokkalivillage.in</span>
-            <span className="inline-flex items-center gap-2"><MapPin className="h-3.5 w-3.5 text-secondary" /> Kadamakkudy Islands, Kerala</span>
+            <span className="inline-flex items-center gap-2"><Mail className="h-3.5 w-3.5 text-secondary" /> hello@pokkali.in</span>
+            <span className="inline-flex items-center gap-2"><MapPin className="h-3.5 w-3.5 text-secondary" /> Pokkali Village, Chathanad Rd, Paravur, Kerala 683513</span>
           </div>
           <div className="flex items-center gap-4 text-primary-foreground/80">
             <Twitter className="h-3.5 w-3.5 hover:text-secondary cursor-pointer" />
@@ -32,11 +32,6 @@ export function Header() {
             alt="PAADI"
             className="h-10 w-auto md:h-12"
           />
-          <div className="leading-tight min-w-0">
-            <div className="hidden sm:block text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-              Best Quality Heritage Food
-            </div>
-          </div>
         </Link>
         <nav className="hidden md:flex items-center gap-7 text-sm font-medium">
           <Link to="/" hash="tours" className="hover:text-primary transition">Tours</Link>
@@ -162,15 +157,8 @@ export function Footer() {
       {/* Bottom dark CTA banner */}
       <div className="container mx-auto px-4 pt-16">
         <div className="bg-primary border border-primary-foreground/15 rounded-3xl px-8 py-10 md:px-14 md:py-12 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-4">
-            <img
-              src={paadiLogo.url}
-              alt="PAADI"
-              className="h-12 w-auto"
-            />
-            <div className="font-display text-2xl md:text-3xl uppercase max-w-md leading-tight">
-              We're a popular leader in heritage tourism & organic farming.
-            </div>
+          <div className="font-display text-2xl md:text-3xl uppercase max-w-md leading-tight">
+            We're a popular leader in heritage tourism & organic farming.
           </div>
           <Button asChild className="rounded-full h-12 pl-6 pr-2 bg-secondary text-secondary-foreground hover:bg-secondary">
             <Link to="/" hash="tours">
@@ -186,14 +174,7 @@ export function Footer() {
       {/* 4-column footer */}
       <div className="container mx-auto px-4 py-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-10 text-sm">
         <div>
-          <div className="flex items-center gap-2">
-            <img
-              src={paadiLogo.url}
-              alt="PAADI"
-              className="h-10 w-auto"
-            />
-            <div className="font-display text-lg font-semibold">PAADI</div>
-          </div>
+          <div className="font-display text-lg font-semibold">PAADI</div>
           <p className="text-primary-foreground/70 mt-4 leading-relaxed">
             Walk the fields. Ride the waters. Taste the story of a vanishing grain — alive again through curious travellers.
           </p>
@@ -228,8 +209,8 @@ export function Footer() {
           <div className="font-display text-base uppercase tracking-wider mb-5">Contact</div>
           <ul className="space-y-2.5 text-primary-foreground/80">
             <li className="flex items-start gap-2"><Phone className="h-4 w-4 text-secondary mt-0.5 shrink-0" /> +91 484 000 0000</li>
-            <li className="flex items-start gap-2"><Mail className="h-4 w-4 text-secondary mt-0.5 shrink-0" /> hello@pokkalivillage.in</li>
-            <li className="flex items-start gap-2"><MapPin className="h-4 w-4 text-secondary mt-0.5 shrink-0" /> Kadamakkudy Islands, Ernakulam, Kerala</li>
+            <li className="flex items-start gap-2"><Mail className="h-4 w-4 text-secondary mt-0.5 shrink-0" /> hello@pokkali.in</li>
+            <li className="flex items-start gap-2"><MapPin className="h-4 w-4 text-secondary mt-0.5 shrink-0" /> Pokkali Village, Chathanad Rd, Paravur, Kerala 683513</li>
           </ul>
           <div className="mt-5">
             <div className="text-[11px] uppercase tracking-widest text-secondary mb-2">Newsletter</div>
