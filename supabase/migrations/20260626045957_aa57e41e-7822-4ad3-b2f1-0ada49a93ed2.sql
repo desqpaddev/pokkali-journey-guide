@@ -1,0 +1,1 @@
+CREATE POLICY bookings_admin_delete ON public.bookings FOR DELETE TO authenticated USING (public.has_role(auth.uid(), 'admin'));
