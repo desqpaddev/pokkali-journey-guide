@@ -91,8 +91,23 @@ function PackageEditor({ packageId }: { packageId: string }) {
   }
 
   async function remove() {
-    if (!confirm("Delete this package?")) return;
-    await supabase.from("packages").delete().eq("id", packageId);
+    const { count } = await supabase
+      .from("bookings")
+      .select("*", { count: "exact", head: true })
+      .eq("package_id", packageId);
+    const msg = count
+      ? `This package has ${count} booking(s). Deleting will also remove those bookings. Continue?`
+      : "Delete this package?";
+    if (!confirm(msg)) return;
+    if (count) {
+      const { error: bErr } = await supabase.from("bookings").delete().eq("package_id", packageId);
+      if (bErr) return toast.error(bErr.message);
+    }
+    await supabase.from("itinerary_steps").delete().eq("package_id", packageId);
+    await supabase.from("destinations").delete().eq("package_id", packageId);
+    const { error } = await supabase.from("packages").delete().eq("id", packageId);
+    if (error) return toast.error(error.message);
+    toast.success("Package deleted");
     qc.invalidateQueries({ queryKey: ["admin-packages"] });
   }
 
