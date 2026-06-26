@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet, Link, redirect, useRouterState } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { Header } from "@/components/app/Header";
-import { Package, ScanLine, Calendar, LayoutDashboard, ShieldCheck, BookOpen, UserCog } from "lucide-react";
+import { Package, ScanLine, Calendar, LayoutDashboard, ShieldCheck, BookOpen, UserCog, Users } from "lucide-react";
 import paadiLogo from "@/assets/paadi-logo.png.asset.json";
 
 export const Route = createFileRoute("/_authenticated/admin")({
@@ -25,6 +25,7 @@ function AdminLayout() {
     { to: "/admin/packages", label: "Packages & GPS stops", icon: Package },
     { to: "/admin/products", label: "Products & QR", icon: ScanLine },
     { to: "/admin/blogs", label: "Blogs & Newsletter", icon: BookOpen },
+    { to: "/admin/users", label: "Users", icon: Users },
     { to: "/admin/bookings", label: "Bookings", icon: Calendar },
     { to: "/admin/account", label: "Account", icon: UserCog },
   ];

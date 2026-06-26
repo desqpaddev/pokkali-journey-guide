@@ -23,6 +23,7 @@ import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
 import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
 import { Route as AuthenticatedTourBookingIdRouteImport } from './routes/_authenticated/tour.$bookingId'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
 import { Route as AuthenticatedAdminSetupRouteImport } from './routes/_authenticated/admin/setup'
 import { Route as AuthenticatedAdminProductsRouteImport } from './routes/_authenticated/admin/products'
 import { Route as AuthenticatedAdminPackagesRouteImport } from './routes/_authenticated/admin/packages'
@@ -105,6 +106,11 @@ const AuthenticatedTourBookingIdRoute =
     path: '/tour/$bookingId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AuthenticatedAdminRouteRoute,
+} as any)
 const AuthenticatedAdminSetupRoute = AuthenticatedAdminSetupRouteImport.update({
   id: '/setup',
   path: '/setup',
@@ -185,6 +191,7 @@ export interface FileRoutesByFullPath {
   '/admin/packages': typeof AuthenticatedAdminPackagesRoute
   '/admin/products': typeof AuthenticatedAdminProductsRoute
   '/admin/setup': typeof AuthenticatedAdminSetupRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/tour/$bookingId': typeof AuthenticatedTourBookingIdRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
@@ -210,6 +217,7 @@ export interface FileRoutesByTo {
   '/admin/packages': typeof AuthenticatedAdminPackagesRoute
   '/admin/products': typeof AuthenticatedAdminProductsRoute
   '/admin/setup': typeof AuthenticatedAdminSetupRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/tour/$bookingId': typeof AuthenticatedTourBookingIdRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
@@ -238,6 +246,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/packages': typeof AuthenticatedAdminPackagesRoute
   '/_authenticated/admin/products': typeof AuthenticatedAdminProductsRoute
   '/_authenticated/admin/setup': typeof AuthenticatedAdminSetupRoute
+  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/tour/$bookingId': typeof AuthenticatedTourBookingIdRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
@@ -266,6 +275,7 @@ export interface FileRouteTypes {
     | '/admin/packages'
     | '/admin/products'
     | '/admin/setup'
+    | '/admin/users'
     | '/tour/$bookingId'
     | '/lovable/email/suppression'
     | '/admin/'
@@ -291,6 +301,7 @@ export interface FileRouteTypes {
     | '/admin/packages'
     | '/admin/products'
     | '/admin/setup'
+    | '/admin/users'
     | '/tour/$bookingId'
     | '/lovable/email/suppression'
     | '/admin'
@@ -318,6 +329,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/packages'
     | '/_authenticated/admin/products'
     | '/_authenticated/admin/setup'
+    | '/_authenticated/admin/users'
     | '/_authenticated/tour/$bookingId'
     | '/lovable/email/suppression'
     | '/_authenticated/admin/'
@@ -445,6 +457,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTourBookingIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
     '/_authenticated/admin/setup': {
       id: '/_authenticated/admin/setup'
       path: '/setup'
@@ -532,6 +551,7 @@ interface AuthenticatedAdminRouteRouteChildren {
   AuthenticatedAdminPackagesRoute: typeof AuthenticatedAdminPackagesRoute
   AuthenticatedAdminProductsRoute: typeof AuthenticatedAdminProductsRoute
   AuthenticatedAdminSetupRoute: typeof AuthenticatedAdminSetupRoute
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
@@ -543,6 +563,7 @@ const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren
     AuthenticatedAdminPackagesRoute: AuthenticatedAdminPackagesRoute,
     AuthenticatedAdminProductsRoute: AuthenticatedAdminProductsRoute,
     AuthenticatedAdminSetupRoute: AuthenticatedAdminSetupRoute,
+    AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
     AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
   }
 

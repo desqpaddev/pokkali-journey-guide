@@ -67,6 +67,17 @@ function PackageDetail() {
       return;
     }
     setBusy(true);
+    // Check approval first for a clear message
+    const { data: prof } = await supabase
+      .from("profiles")
+      .select("approved")
+      .eq("id", user.id)
+      .maybeSingle();
+    if (!prof?.approved) {
+      setBusy(false);
+      toast.error("Your account is pending admin approval. We'll notify you once approved.");
+      return;
+    }
     const { data: b, error } = await supabase
       .from("bookings")
       .insert({
@@ -83,7 +94,12 @@ function PackageDetail() {
       .select()
       .single();
     setBusy(false);
-    if (error || !b) return toast.error(error?.message ?? "Could not book");
+    if (error || !b) {
+      const msg = error?.message?.includes("row-level security")
+        ? "Your account is pending admin approval."
+        : (error?.message ?? "Could not book");
+      return toast.error(msg);
+    }
     toast.success("Booked! Your circuit awaits.");
     navigate({ to: "/bookings" });
   }

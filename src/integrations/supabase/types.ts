@@ -435,6 +435,9 @@ export type Database = {
       }
       profiles: {
         Row: {
+          approved: boolean
+          approved_at: string | null
+          approved_by: string | null
           created_at: string
           full_name: string | null
           id: string
@@ -442,6 +445,9 @@ export type Database = {
           preferred_language: string | null
         }
         Insert: {
+          approved?: boolean
+          approved_at?: string | null
+          approved_by?: string | null
           created_at?: string
           full_name?: string | null
           id: string
@@ -449,6 +455,9 @@ export type Database = {
           preferred_language?: string | null
         }
         Update: {
+          approved?: boolean
+          approved_at?: string | null
+          approved_by?: string | null
           created_at?: string
           full_name?: string | null
           id?: string
