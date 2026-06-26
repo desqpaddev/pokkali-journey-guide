@@ -28,6 +28,7 @@ import { Route as AuthenticatedAdminProductsRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminPackagesRouteImport } from './routes/_authenticated/admin/packages'
 import { Route as AuthenticatedAdminBookingsRouteImport } from './routes/_authenticated/admin/bookings'
 import { Route as AuthenticatedAdminBlogsRouteImport } from './routes/_authenticated/admin/blogs'
+import { Route as AuthenticatedAdminAccountRouteImport } from './routes/_authenticated/admin/account'
 import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lovable/email/transactional/send'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
@@ -132,6 +133,12 @@ const AuthenticatedAdminBlogsRoute = AuthenticatedAdminBlogsRouteImport.update({
   path: '/blogs',
   getParentRoute: () => AuthenticatedAdminRouteRoute,
 } as any)
+const AuthenticatedAdminAccountRoute =
+  AuthenticatedAdminAccountRouteImport.update({
+    id: '/account',
+    path: '/account',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 const LovableEmailTransactionalSendRoute =
   LovableEmailTransactionalSendRouteImport.update({
     id: '/lovable/email/transactional/send',
@@ -172,6 +179,7 @@ export interface FileRoutesByFullPath {
   '/blog/$slug': typeof BlogSlugRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/packages/$slug': typeof PackagesSlugRoute
+  '/admin/account': typeof AuthenticatedAdminAccountRoute
   '/admin/blogs': typeof AuthenticatedAdminBlogsRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/admin/packages': typeof AuthenticatedAdminPackagesRoute
@@ -196,6 +204,7 @@ export interface FileRoutesByTo {
   '/blog/$slug': typeof BlogSlugRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/packages/$slug': typeof PackagesSlugRoute
+  '/admin/account': typeof AuthenticatedAdminAccountRoute
   '/admin/blogs': typeof AuthenticatedAdminBlogsRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/admin/packages': typeof AuthenticatedAdminPackagesRoute
@@ -223,6 +232,7 @@ export interface FileRoutesById {
   '/blog/$slug': typeof BlogSlugRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/packages/$slug': typeof PackagesSlugRoute
+  '/_authenticated/admin/account': typeof AuthenticatedAdminAccountRoute
   '/_authenticated/admin/blogs': typeof AuthenticatedAdminBlogsRoute
   '/_authenticated/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/_authenticated/admin/packages': typeof AuthenticatedAdminPackagesRoute
@@ -250,6 +260,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/email/unsubscribe'
     | '/packages/$slug'
+    | '/admin/account'
     | '/admin/blogs'
     | '/admin/bookings'
     | '/admin/packages'
@@ -274,6 +285,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/email/unsubscribe'
     | '/packages/$slug'
+    | '/admin/account'
     | '/admin/blogs'
     | '/admin/bookings'
     | '/admin/packages'
@@ -300,6 +312,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/email/unsubscribe'
     | '/packages/$slug'
+    | '/_authenticated/admin/account'
     | '/_authenticated/admin/blogs'
     | '/_authenticated/admin/bookings'
     | '/_authenticated/admin/packages'
@@ -467,6 +480,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminBlogsRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
+    '/_authenticated/admin/account': {
+      id: '/_authenticated/admin/account'
+      path: '/account'
+      fullPath: '/admin/account'
+      preLoaderRoute: typeof AuthenticatedAdminAccountRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
     '/lovable/email/transactional/send': {
       id: '/lovable/email/transactional/send'
       path: '/lovable/email/transactional/send'
@@ -506,6 +526,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedAdminRouteRouteChildren {
+  AuthenticatedAdminAccountRoute: typeof AuthenticatedAdminAccountRoute
   AuthenticatedAdminBlogsRoute: typeof AuthenticatedAdminBlogsRoute
   AuthenticatedAdminBookingsRoute: typeof AuthenticatedAdminBookingsRoute
   AuthenticatedAdminPackagesRoute: typeof AuthenticatedAdminPackagesRoute
@@ -516,6 +537,7 @@ interface AuthenticatedAdminRouteRouteChildren {
 
 const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
   {
+    AuthenticatedAdminAccountRoute: AuthenticatedAdminAccountRoute,
     AuthenticatedAdminBlogsRoute: AuthenticatedAdminBlogsRoute,
     AuthenticatedAdminBookingsRoute: AuthenticatedAdminBookingsRoute,
     AuthenticatedAdminPackagesRoute: AuthenticatedAdminPackagesRoute,
