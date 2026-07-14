@@ -8,6 +8,27 @@ PAADI is a heritage-food and cultural-tour platform for **Pokkali rice country**
 
 ---
 
+## Development timeline
+
+A dated log of when each major feature was developed and shipped.
+
+| Date (UTC) | Feature |
+| --- | --- |
+| 2026-07-14 | Added dated development timeline to features documentation |
+| 2026-07-14 | `FEATURES.md` — user-facing features & overview document created |
+| 2026-07-14 | `DOCUMENTATION.md` — full engineering documentation rewritten |
+| 2026-07-14 | Native Android app scaffolding via Capacitor (`capacitor.config.ts`, `ANDROID.md`, `appId: in.pokkali.paadi`) |
+| 2026-07-14 | PWA support — `manifest.webmanifest`, service worker (`public/sw.js`), app icons (192/512/apple-touch) |
+| — | Public site — home (hero slider, TourGlobe), packages, blog, newsletter, language picker, ambient audio |
+| — | Auth — email + password and Google OAuth, branded transactional email templates |
+| — | Traveler area — My Bookings, Live Tour with AI TTS narration, QR scanner, inline map |
+| — | Admin dashboard — Overview, Packages & GPS, Products & QR, Blogs & Newsletter, Users (approval + roles), Bookings, Account, Setup |
+| — | Backend — RLS on all public tables, `user_roles` + `has_role()` security-definer, approval-gated bookings, `/api/tts` server route, email pipeline under `/lovable/email/*` |
+
+Entries marked `—` predate this timeline and will be backfilled as history is confirmed. New features should append a row here on the day they ship.
+
+---
+
 ## 1. What PAADI does
 
 - Showcases curated **tour packages** through Pokkali rice country.
