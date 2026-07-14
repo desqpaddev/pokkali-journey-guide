@@ -17,15 +17,32 @@ A dated log of when each major feature was developed and shipped.
 | 2026-07-14 | Added dated development timeline to features documentation |
 | 2026-07-14 | `FEATURES.md` — user-facing features & overview document created |
 | 2026-07-14 | `DOCUMENTATION.md` — full engineering documentation rewritten |
-| 2026-07-14 | Native Android app scaffolding via Capacitor (`capacitor.config.ts`, `ANDROID.md`, `appId: in.pokkali.paadi`) |
-| 2026-07-14 | PWA support — `manifest.webmanifest`, service worker (`public/sw.js`), app icons (192/512/apple-touch) |
-| — | Public site — home (hero slider, TourGlobe), packages, blog, newsletter, language picker, ambient audio |
-| — | Auth — email + password and Google OAuth, branded transactional email templates |
-| — | Traveler area — My Bookings, Live Tour with AI TTS narration, QR scanner, inline map |
-| — | Admin dashboard — Overview, Packages & GPS, Products & QR, Blogs & Newsletter, Users (approval + roles), Bookings, Account, Setup |
-| — | Backend — RLS on all public tables, `user_roles` + `has_role()` security-definer, approval-gated bookings, `/api/tts` server route, email pipeline under `/lovable/email/*` |
+| 2026-06-26 | Native Android app scaffolding via Capacitor — `capacitor.config.ts`, `ANDROID.md`, `appId: in.pokkali.paadi` |
+| 2026-06-26 | PWA support — `manifest.webmanifest`, service worker (`public/sw.js`), app icons (192/512/apple-touch) |
+| 2026-06-26 | Admin **Users** panel — approve/reject travelers, grant/revoke admin role |
+| 2026-06-26 | Admin **Account** panel — self-service email + password change |
+| 2026-06-26 | Booking-approval RLS — only admin-approved users can complete a booking |
+| 2026-06-24 | Branded transactional email templates — signup, magic link, recovery, email change, reauth, invite, booking confirmation |
+| 2026-06-24 | Email pipeline — auth webhook, transactional send, queue processing, suppression, unsubscribe under `/lovable/email/*` |
+| 2026-06-23 | Initial engineering documentation |
+| 2026-06-22 | **Blogs** — public blog listing + article pages, admin blogs panel |
+| 2026-06-22 | **Newsletter** signup form with confirmation flow |
+| 2026-06-20 | `TourGlobe` — interactive "cabin window" package showcase |
+| 2026-06-20 | `HeroSlider` — cinematic landing hero |
+| 2026-06-20 | `RiceCursor` — ambient rice-grain cursor |
+| 2026-06-18 | Admin dashboard — Overview, Packages & GPS, Products & QR, Bookings, Setup |
+| 2026-06-18 | Admin sign-in shortcut at `/admin/login` |
+| 2026-06-18 | Traveler area — My Bookings, Live Tour with per-step audio narration |
+| 2026-06-18 | `/api/tts` server route — Lovable AI Gateway text-to-speech for tour narration |
+| 2026-06-18 | `QRScannerModal` — on-site QR check-ins at stops and products |
+| 2026-06-18 | `LangPicker` — English / Malayalam / Hindi language switcher |
+| 2026-06-18 | Ambient `AudioPlayer` component |
+| 2026-06-18 | Package detail + booking flow (`/packages/:slug`) |
+| 2026-06-18 | Auth — email + password and Google OAuth, session persistence |
+| 2026-06-18 | Backend foundation — RLS on all public tables, `user_roles` + `has_role()` security-definer, `bookings`, `packages`, `destinations`, `products` |
+| 2026-06-17 | Project bootstrap — TanStack Start + Tailwind v4 + shadcn/ui template |
 
-Entries marked `—` predate this timeline and will be backfilled as history is confirmed. New features should append a row here on the day they ship.
+New features should append a row here on the day they ship.
 
 ---
 
