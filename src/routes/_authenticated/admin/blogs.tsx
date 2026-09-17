@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Trash2, Save, ExternalLink, Mail } from "lucide-react";
+import { Plus, Trash2, Save, ExternalLink, Mail, Upload, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin/blogs")({
@@ -163,7 +163,9 @@ function BlogEditor({ blogId, onDeleted }: { blogId: string; onDeleted: () => vo
         <Field label="Title" className="sm:col-span-2"><Input value={v.title ?? ""} onChange={(e) => patch({ title: e.target.value })} /></Field>
         <Field label="URL slug"><Input value={v.slug ?? ""} onChange={(e) => patch({ slug: e.target.value })} /></Field>
         <Field label="Author"><Input value={v.author_name ?? ""} onChange={(e) => patch({ author_name: e.target.value })} /></Field>
-        <Field label="Cover image URL" className="sm:col-span-2"><Input value={v.cover_image_url ?? ""} onChange={(e) => patch({ cover_image_url: e.target.value })} placeholder="https://..." /></Field>
+        <Field label="Cover image" className="sm:col-span-2">
+          <CoverImageField value={v.cover_image_url ?? ""} onChange={(url) => patch({ cover_image_url: url })} blogId={blogId} />
+        </Field>
         <Field label="Tags (comma separated)" className="sm:col-span-2"><Input value={tagsValue} onChange={(e) => patch({ tags: e.target.value })} placeholder="heritage, recipes, farmers" /></Field>
         <Field label="Excerpt" className="sm:col-span-2"><Textarea rows={2} value={v.excerpt ?? ""} onChange={(e) => patch({ excerpt: e.target.value })} /></Field>
         <Field label="Content (Markdown / plain text)" className="sm:col-span-2"><Textarea rows={14} value={v.content ?? ""} onChange={(e) => patch({ content: e.target.value })} /></Field>
@@ -176,6 +178,56 @@ function BlogEditor({ blogId, onDeleted }: { blogId: string; onDeleted: () => vo
         <Button variant="hero" onClick={save}><Save className="h-4 w-4" /> Save</Button>
       </div>
     </Card>
+  );
+}
+
+function CoverImageField({ value, onChange, blogId }: { value: string; onChange: (v: string) => void; blogId: string }) {
+  const [uploading, setUploading] = useState(false);
+
+  async function upload(file: File) {
+    setUploading(true);
+    try {
+      const ext = file.name.split(".").pop() || "jpg";
+      const path = `blogs/${blogId}/cover-${Date.now()}.${ext}`;
+      const { error } = await supabase.storage.from("product-media").upload(path, file, { upsert: true, contentType: file.type });
+      if (error) throw error;
+      const { data } = supabase.storage.from("product-media").getPublicUrl(path);
+      onChange(data.publicUrl);
+      toast.success("Image uploaded — remember to Save");
+    } catch (e: any) {
+      toast.error(e.message ?? "Upload failed");
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  return (
+    <div className="space-y-2 rounded-md border bg-muted/20 p-2">
+      {value ? (
+        <img src={value} alt="Cover preview" className="h-32 w-full rounded-md object-cover" />
+      ) : null}
+      <Input value={value} onChange={(e) => onChange(e.target.value)} placeholder="Upload a photo or paste https://..." />
+      <div className="flex gap-2">
+        <label className="inline-flex min-h-10 flex-1 cursor-pointer items-center justify-center gap-2 rounded-md border border-input bg-background px-3 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground">
+          {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
+          {uploading ? "Uploading…" : "Upload photo"}
+          <input
+            type="file"
+            accept="image/*"
+            className="hidden"
+            disabled={uploading}
+            onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (f) upload(f);
+              e.target.value = "";
+            }}
+          />
+        </label>
+        {value && (
+          <Button type="button" variant="outline" size="sm" onClick={() => onChange("")}>Remove</Button>
+        )}
+      </div>
+    </div>
   );
 }
 
