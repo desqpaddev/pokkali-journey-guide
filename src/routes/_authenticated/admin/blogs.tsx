@@ -163,7 +163,9 @@ function BlogEditor({ blogId, onDeleted }: { blogId: string; onDeleted: () => vo
         <Field label="Title" className="sm:col-span-2"><Input value={v.title ?? ""} onChange={(e) => patch({ title: e.target.value })} /></Field>
         <Field label="URL slug"><Input value={v.slug ?? ""} onChange={(e) => patch({ slug: e.target.value })} /></Field>
         <Field label="Author"><Input value={v.author_name ?? ""} onChange={(e) => patch({ author_name: e.target.value })} /></Field>
-        <Field label="Cover image URL" className="sm:col-span-2"><Input value={v.cover_image_url ?? ""} onChange={(e) => patch({ cover_image_url: e.target.value })} placeholder="https://..." /></Field>
+        <Field label="Cover image" className="sm:col-span-2">
+          <CoverImageField value={v.cover_image_url ?? ""} onChange={(url) => patch({ cover_image_url: url })} blogId={blogId} />
+        </Field>
         <Field label="Tags (comma separated)" className="sm:col-span-2"><Input value={tagsValue} onChange={(e) => patch({ tags: e.target.value })} placeholder="heritage, recipes, farmers" /></Field>
         <Field label="Excerpt" className="sm:col-span-2"><Textarea rows={2} value={v.excerpt ?? ""} onChange={(e) => patch({ excerpt: e.target.value })} /></Field>
         <Field label="Content (Markdown / plain text)" className="sm:col-span-2"><Textarea rows={14} value={v.content ?? ""} onChange={(e) => patch({ content: e.target.value })} /></Field>
