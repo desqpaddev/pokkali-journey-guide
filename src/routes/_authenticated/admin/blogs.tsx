@@ -181,6 +181,56 @@ function BlogEditor({ blogId, onDeleted }: { blogId: string; onDeleted: () => vo
   );
 }
 
+function CoverImageField({ value, onChange, blogId }: { value: string; onChange: (v: string) => void; blogId: string }) {
+  const [uploading, setUploading] = useState(false);
+
+  async function upload(file: File) {
+    setUploading(true);
+    try {
+      const ext = file.name.split(".").pop() || "jpg";
+      const path = `blogs/${blogId}/cover-${Date.now()}.${ext}`;
+      const { error } = await supabase.storage.from("product-media").upload(path, file, { upsert: true, contentType: file.type });
+      if (error) throw error;
+      const { data } = supabase.storage.from("product-media").getPublicUrl(path);
+      onChange(data.publicUrl);
+      toast.success("Image uploaded — remember to Save");
+    } catch (e: any) {
+      toast.error(e.message ?? "Upload failed");
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  return (
+    <div className="space-y-2 rounded-md border bg-muted/20 p-2">
+      {value ? (
+        <img src={value} alt="Cover preview" className="h-32 w-full rounded-md object-cover" />
+      ) : null}
+      <Input value={value} onChange={(e) => onChange(e.target.value)} placeholder="Upload a photo or paste https://..." />
+      <div className="flex gap-2">
+        <label className="inline-flex min-h-10 flex-1 cursor-pointer items-center justify-center gap-2 rounded-md border border-input bg-background px-3 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground">
+          {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
+          {uploading ? "Uploading…" : "Upload photo"}
+          <input
+            type="file"
+            accept="image/*"
+            className="hidden"
+            disabled={uploading}
+            onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (f) upload(f);
+              e.target.value = "";
+            }}
+          />
+        </label>
+        {value && (
+          <Button type="button" variant="outline" size="sm" onClick={() => onChange("")}>Remove</Button>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function Field({ label, children, className }: { label: string; children: React.ReactNode; className?: string }) {
   return (
     <div className={className}>
