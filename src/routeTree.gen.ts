@@ -9,8 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WaterSportsRouteImport } from './routes/water-sports'
+import { Route as VisitRouteImport } from './routes/visit'
+import { Route as VillageHubRouteImport } from './routes/village-hub'
+import { Route as ProductsRouteImport } from './routes/products'
+import { Route as PokkaliStoryRouteImport } from './routes/pokkali-story'
+import { Route as FarmToursRouteImport } from './routes/farm-tours'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PackagesSlugRouteImport } from './routes/packages.$slug'
@@ -36,6 +44,41 @@ import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/e
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 
+const WaterSportsRoute = WaterSportsRouteImport.update({
+  id: '/water-sports',
+  path: '/water-sports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VisitRoute = VisitRouteImport.update({
+  id: '/visit',
+  path: '/visit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VillageHubRoute = VillageHubRouteImport.update({
+  id: '/village-hub',
+  path: '/village-hub',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductsRoute = ProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PokkaliStoryRoute = PokkaliStoryRouteImport.update({
+  id: '/pokkali-story',
+  path: '/pokkali-story',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FarmToursRoute = FarmToursRouteImport.update({
+  id: '/farm-tours',
+  path: '/farm-tours',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogRoute = BlogRouteImport.update({
   id: '/blog',
   path: '/blog',
@@ -44,6 +87,11 @@ const BlogRoute = BlogRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -176,8 +224,16 @@ const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/blog': typeof BlogRouteWithChildren
+  '/contact': typeof ContactRoute
+  '/farm-tours': typeof FarmToursRoute
+  '/pokkali-story': typeof PokkaliStoryRoute
+  '/products': typeof ProductsRoute
+  '/village-hub': typeof VillageHubRoute
+  '/visit': typeof VisitRoute
+  '/water-sports': typeof WaterSportsRoute
   '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/bookings': typeof AuthenticatedBookingsRoute
   '/admin/login': typeof AdminLoginRoute
@@ -203,8 +259,16 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/blog': typeof BlogRouteWithChildren
+  '/contact': typeof ContactRoute
+  '/farm-tours': typeof FarmToursRoute
+  '/pokkali-story': typeof PokkaliStoryRoute
+  '/products': typeof ProductsRoute
+  '/village-hub': typeof VillageHubRoute
+  '/visit': typeof VisitRoute
+  '/water-sports': typeof WaterSportsRoute
   '/bookings': typeof AuthenticatedBookingsRoute
   '/admin/login': typeof AdminLoginRoute
   '/api/tts': typeof ApiTtsRoute
@@ -231,8 +295,16 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/blog': typeof BlogRouteWithChildren
+  '/contact': typeof ContactRoute
+  '/farm-tours': typeof FarmToursRoute
+  '/pokkali-story': typeof PokkaliStoryRoute
+  '/products': typeof ProductsRoute
+  '/village-hub': typeof VillageHubRoute
+  '/visit': typeof VisitRoute
+  '/water-sports': typeof WaterSportsRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/_authenticated/bookings': typeof AuthenticatedBookingsRoute
   '/admin/login': typeof AdminLoginRoute
@@ -260,8 +332,16 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/auth'
     | '/blog'
+    | '/contact'
+    | '/farm-tours'
+    | '/pokkali-story'
+    | '/products'
+    | '/village-hub'
+    | '/visit'
+    | '/water-sports'
     | '/admin'
     | '/bookings'
     | '/admin/login'
@@ -287,8 +367,16 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/auth'
     | '/blog'
+    | '/contact'
+    | '/farm-tours'
+    | '/pokkali-story'
+    | '/products'
+    | '/village-hub'
+    | '/visit'
+    | '/water-sports'
     | '/bookings'
     | '/admin/login'
     | '/api/tts'
@@ -314,8 +402,16 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/about'
     | '/auth'
     | '/blog'
+    | '/contact'
+    | '/farm-tours'
+    | '/pokkali-story'
+    | '/products'
+    | '/village-hub'
+    | '/visit'
+    | '/water-sports'
     | '/_authenticated/admin'
     | '/_authenticated/bookings'
     | '/admin/login'
@@ -343,8 +439,16 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   BlogRoute: typeof BlogRouteWithChildren
+  ContactRoute: typeof ContactRoute
+  FarmToursRoute: typeof FarmToursRoute
+  PokkaliStoryRoute: typeof PokkaliStoryRoute
+  ProductsRoute: typeof ProductsRoute
+  VillageHubRoute: typeof VillageHubRoute
+  VisitRoute: typeof VisitRoute
+  WaterSportsRoute: typeof WaterSportsRoute
   AdminLoginRoute: typeof AdminLoginRoute
   ApiTtsRoute: typeof ApiTtsRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
@@ -359,6 +463,55 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/water-sports': {
+      id: '/water-sports'
+      path: '/water-sports'
+      fullPath: '/water-sports'
+      preLoaderRoute: typeof WaterSportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/visit': {
+      id: '/visit'
+      path: '/visit'
+      fullPath: '/visit'
+      preLoaderRoute: typeof VisitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/village-hub': {
+      id: '/village-hub'
+      path: '/village-hub'
+      fullPath: '/village-hub'
+      preLoaderRoute: typeof VillageHubRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/products': {
+      id: '/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof ProductsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pokkali-story': {
+      id: '/pokkali-story'
+      path: '/pokkali-story'
+      fullPath: '/pokkali-story'
+      preLoaderRoute: typeof PokkaliStoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/farm-tours': {
+      id: '/farm-tours'
+      path: '/farm-tours'
+      fullPath: '/farm-tours'
+      preLoaderRoute: typeof FarmToursRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog': {
       id: '/blog'
       path: '/blog'
@@ -371,6 +524,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -600,8 +760,16 @@ const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   BlogRoute: BlogRouteWithChildren,
+  ContactRoute: ContactRoute,
+  FarmToursRoute: FarmToursRoute,
+  PokkaliStoryRoute: PokkaliStoryRoute,
+  ProductsRoute: ProductsRoute,
+  VillageHubRoute: VillageHubRoute,
+  VisitRoute: VisitRoute,
+  WaterSportsRoute: WaterSportsRoute,
   AdminLoginRoute: AdminLoginRoute,
   ApiTtsRoute: ApiTtsRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
