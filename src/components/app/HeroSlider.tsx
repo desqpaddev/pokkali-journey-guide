@@ -5,11 +5,10 @@ import hero1 from "@/assets/hero-paddy.jpg";
 import hero2 from "@/assets/hero-backwater.jpg";
 import hero3 from "@/assets/hero-harvest.jpg";
 
-// Placeholder photos — to be replaced with real Palliyakkal photographs.
 const SLIDES = [
-  { img: hero1, caption: "Pokkali fields and bunds, Palliyakkal" },
-  { img: hero2, caption: "Backwaters and traditional agri-aqua life" },
-  { img: hero3, caption: "Visitors sharing the village harvest" },
+  { img: hero1, caption: "Coir-lined bund between Pokkali fields and water, Palliyakkal" },
+  { img: hero2, caption: "Fishing nets and canoe on the backwaters" },
+  { img: hero3, caption: "Visitors travelling by canoe through Pokkali rice" },
 ];
 
 export const GATEWAYS = [
