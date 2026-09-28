@@ -163,7 +163,7 @@ export function Footer() {
             We're a popular leader in heritage tourism & organic farming.
           </div>
           <Button asChild className="rounded-full h-12 pl-6 pr-2 bg-secondary text-secondary-foreground hover:bg-secondary">
-            <Link to="/" hash="tours">
+            <Link to="/farm-tours">
               Discover More
               <span className="ml-2 inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary text-secondary">
                 <ArrowRight className="h-4 w-4" />
