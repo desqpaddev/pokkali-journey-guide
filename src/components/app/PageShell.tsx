@@ -10,8 +10,10 @@ export function PageShell({
   intro,
   image,
   stats,
+  bare,
   children,
 }: {
+  bare?: boolean;
   eyebrow: string;
   title: string;
   intro: string;
@@ -53,7 +55,7 @@ export function PageShell({
           </div>
         )}
       </section>
-      <main>{children}</main>
+      {bare ? <main>{children}</main> : <main className="container mx-auto px-4 py-14 md:py-20 [&_section]:px-0">{children}</main>}
       <Footer />
     </div>
   );
