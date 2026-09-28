@@ -14,6 +14,193 @@ export type Database = {
   }
   public: {
     Tables: {
+      acc_audit_log: {
+        Row: {
+          action: string
+          created_at: string
+          details: Json | null
+          entity: string
+          entity_id: string | null
+          id: string
+          user_email: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          details?: Json | null
+          entity: string
+          entity_id?: string | null
+          id?: string
+          user_email?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          details?: Json | null
+          entity?: string
+          entity_id?: string | null
+          id?: string
+          user_email?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      acc_settings: {
+        Row: {
+          gst_percent: number
+          id: number
+          updated_at: string
+        }
+        Insert: {
+          gst_percent?: number
+          id?: number
+          updated_at?: string
+        }
+        Update: {
+          gst_percent?: number
+          id?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      acc_settlements: {
+        Row: {
+          adjustments: number
+          amount_earned: number
+          amount_paid: number
+          amount_payable: number
+          approved_at: string | null
+          approved_by: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          notes: string | null
+          paid_at: string | null
+          payment_reference: string | null
+          period_end: string
+          period_start: string
+          reconciled_at: string | null
+          reconciled_by: string | null
+          stakeholder_id: string
+          status: string
+        }
+        Insert: {
+          adjustments?: number
+          amount_earned?: number
+          amount_paid?: number
+          amount_payable?: number
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          notes?: string | null
+          paid_at?: string | null
+          payment_reference?: string | null
+          period_end: string
+          period_start: string
+          reconciled_at?: string | null
+          reconciled_by?: string | null
+          stakeholder_id: string
+          status?: string
+        }
+        Update: {
+          adjustments?: number
+          amount_earned?: number
+          amount_paid?: number
+          amount_payable?: number
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          notes?: string | null
+          paid_at?: string | null
+          payment_reference?: string | null
+          period_end?: string
+          period_start?: string
+          reconciled_at?: string | null
+          reconciled_by?: string | null
+          stakeholder_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "acc_settlements_stakeholder_id_fkey"
+            columns: ["stakeholder_id"]
+            isOneToOne: false
+            referencedRelation: "acc_stakeholders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      acc_share_rules: {
+        Row: {
+          activity: string
+          created_at: string
+          id: string
+          percent: number
+          stakeholder_id: string
+        }
+        Insert: {
+          activity?: string
+          created_at?: string
+          id?: string
+          percent?: number
+          stakeholder_id: string
+        }
+        Update: {
+          activity?: string
+          created_at?: string
+          id?: string
+          percent?: number
+          stakeholder_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "acc_share_rules_stakeholder_id_fkey"
+            columns: ["stakeholder_id"]
+            isOneToOne: false
+            referencedRelation: "acc_stakeholders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      acc_stakeholders: {
+        Row: {
+          bank_account: string | null
+          contact: string | null
+          created_at: string
+          id: string
+          ifsc: string | null
+          is_active: boolean
+          kind: string
+          name: string
+        }
+        Insert: {
+          bank_account?: string | null
+          contact?: string | null
+          created_at?: string
+          id?: string
+          ifsc?: string | null
+          is_active?: boolean
+          kind?: string
+          name: string
+        }
+        Update: {
+          bank_account?: string | null
+          contact?: string | null
+          created_at?: string
+          id?: string
+          ifsc?: string | null
+          is_active?: boolean
+          kind?: string
+          name?: string
+        }
+        Relationships: []
+      }
       blogs: {
         Row: {
           author_name: string | null
