@@ -4,7 +4,7 @@ import img from "@/assets/hero-harvest.jpg";
 import imgP from "@/assets/hero-paddy.jpg";
 import imgB from "@/assets/hero-backwater.jpg";
 import imgF from "@/assets/parallax-fields.jpg";
-import { Wheat, Cookie, Fish, Gift, Leaf, HeartHandshake, Truck } from "lucide-react";
+import { Wheat, Leaf, HeartHandshake, Truck } from "lucide-react";
 
 export const Route = createFileRoute("/products")({
   head: () => meta("Agri-Aqua Products — PAADI Tales", "Pokkali rice, prawns, fish and village products from Palliyakkal's agri-aqua ecosystem, straight from local producers."),
@@ -67,4 +67,3 @@ function Products() {
   );
 }
 
-void Cookie; void Fish; void Gift;
