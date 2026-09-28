@@ -33,10 +33,12 @@ export function Header() {
             className="h-14 w-auto md:h-16"
           />
         </Link>
-        <nav className="hidden md:flex items-center gap-7 text-sm font-medium">
-          <Link to="/" hash="tours" className="hover:text-primary transition">Tours</Link>
-          <Link to="/" hash="story" className="hover:text-primary transition">Our Story</Link>
-          <Link to="/" hash="visit" className="hover:text-primary transition">Visit</Link>
+        <nav className="hidden lg:flex items-center gap-5 text-sm font-medium">
+          <Link to="/farm-tours" className="hover:text-primary transition" activeProps={{ className: "text-primary" }}>Farm Tours</Link>
+          <Link to="/products" className="hover:text-primary transition" activeProps={{ className: "text-primary" }}>Products</Link>
+          <Link to="/village-hub" className="hover:text-primary transition" activeProps={{ className: "text-primary" }}>Village Hub</Link>
+          <Link to="/water-sports" className="hover:text-primary transition" activeProps={{ className: "text-primary" }}>Water Sports</Link>
+          <Link to="/pokkali-story" className="hover:text-primary transition" activeProps={{ className: "text-primary" }}>Pokkali Story</Link>
           <Link to="/blog" className="hover:text-primary transition" activeProps={{ className: "text-primary" }}>Blog</Link>
         </nav>
         <div className="flex items-center gap-2">
@@ -56,7 +58,7 @@ export function Header() {
             </>
           ) : (
             <Button asChild variant="hero" className="rounded-full pl-5 pr-2 h-11 hidden sm:inline-flex">
-              <Link to="/auth">
+              <Link to="/farm-tours">
                 Book a Tour
                 <span className="ml-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary text-secondary">
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -80,7 +82,7 @@ export function MobileBottomNav() {
 
   const items: Array<{ to: string; hash?: string; label: string; icon: typeof Home }> = [
     { to: "/", label: "Home", icon: Home },
-    { to: "/", hash: "tours", label: "Tours", icon: Compass },
+    { to: "/farm-tours", label: "Explore", icon: Compass },
     { to: "/blog", label: "Blog", icon: BookOpen },
     { to: user ? "/bookings" : "/auth", label: user ? "Tours" : "Sign in", icon: user ? MapPin : User },
   ];
@@ -161,7 +163,7 @@ export function Footer() {
             We're a popular leader in heritage tourism & organic farming.
           </div>
           <Button asChild className="rounded-full h-12 pl-6 pr-2 bg-secondary text-secondary-foreground hover:bg-secondary">
-            <Link to="/" hash="tours">
+            <Link to="/farm-tours">
               Discover More
               <span className="ml-2 inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary text-secondary">
                 <ArrowRight className="h-4 w-4" />
@@ -189,9 +191,14 @@ export function Footer() {
         <div>
           <div className="font-display text-base uppercase tracking-wider mb-5">Explore</div>
           <ul className="space-y-2.5 text-primary-foreground/80">
-            <li><Link to="/" hash="tours" className="hover:text-secondary">Tours</Link></li>
-            <li><Link to="/" hash="story" className="hover:text-secondary">Our Story</Link></li>
-            <li><Link to="/" hash="visit" className="hover:text-secondary">Visit</Link></li>
+            <li><Link to="/farm-tours" className="hover:text-secondary">Farm Tours</Link></li>
+            <li><Link to="/products" className="hover:text-secondary">Agri-Aqua Products</Link></li>
+            <li><Link to="/village-hub" className="hover:text-secondary">Village Hub</Link></li>
+            <li><Link to="/water-sports" className="hover:text-secondary">Water Sports</Link></li>
+            <li><Link to="/pokkali-story" className="hover:text-secondary">The Pokkali Story</Link></li>
+            <li><Link to="/about" className="hover:text-secondary">About Palliyakkal</Link></li>
+            <li><Link to="/visit" className="hover:text-secondary">Plan Your Visit</Link></li>
+            <li><Link to="/contact" className="hover:text-secondary">Contact</Link></li>
             <li><Link to="/blog" className="hover:text-secondary">Blog</Link></li>
             <li><Link to="/bookings" className="hover:text-secondary">My Bookings</Link></li>
           </ul>

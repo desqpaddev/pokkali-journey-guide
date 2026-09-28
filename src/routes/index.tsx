@@ -123,10 +123,10 @@ function Tilt3DCard() {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Pokkali Village — Heritage Circuit Tours in Kerala" },
-      { name: "description", content: "GPS-guided immersive tours through Kerala's Pokkali paddy heritage. Book half-day, full-day & multi-day journeys." },
-      { property: "og:title", content: "Pokkali Village — Heritage Circuit Tours" },
-      { property: "og:description", content: "Walk the fields. Ride the waters. Taste the story." },
+      { title: "PAADI Tales — Palliyakkal Agri-Aqua Digital Immersive Tales" },
+      { name: "description", content: "Experience the village. Explore the farm. Live the story. Pokkali farm tours, agri-aqua products, Village Hub and water sports at Palliyakkal, Kerala." },
+      { property: "og:title", content: "PAADI Tales — Pokkali Village, Palliyakkal" },
+      { property: "og:description", content: "Experience the village. Explore the farm. Live the story." },
       { property: "og:image", content: hero },
     ],
   }),
