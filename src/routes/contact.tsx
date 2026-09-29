@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 
 export const Route = createFileRoute("/contact")({
+  staticData: { sitemap: true },
   head: () => meta("Contact — PAADI Tales", "Enquire about farm tours, products, Village Hub services and water sports at Pokkali Village, Palliyakkal."),
   component: Contact,
 });

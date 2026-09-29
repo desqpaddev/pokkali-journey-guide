@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { ShieldCheck } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin/setup")({
+  staticData: { sitemap: false },
   component: Setup,
 });
 

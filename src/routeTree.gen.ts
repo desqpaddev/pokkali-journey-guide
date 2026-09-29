@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WaterSportsRouteImport } from './routes/water-sports'
 import { Route as VisitRouteImport } from './routes/visit'
 import { Route as VillageHubRouteImport } from './routes/village-hub'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as PokkaliStoryRouteImport } from './routes/pokkali-story'
 import { Route as FarmToursRouteImport } from './routes/farm-tours'
@@ -58,6 +59,11 @@ const VisitRoute = VisitRouteImport.update({
 const VillageHubRoute = VillageHubRouteImport.update({
   id: '/village-hub',
   path: '/village-hub',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProductsRoute = ProductsRouteImport.update({
@@ -238,6 +244,7 @@ export interface FileRoutesByFullPath {
   '/farm-tours': typeof FarmToursRoute
   '/pokkali-story': typeof PokkaliStoryRoute
   '/products': typeof ProductsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/village-hub': typeof VillageHubRoute
   '/visit': typeof VisitRoute
   '/water-sports': typeof WaterSportsRoute
@@ -274,6 +281,7 @@ export interface FileRoutesByTo {
   '/farm-tours': typeof FarmToursRoute
   '/pokkali-story': typeof PokkaliStoryRoute
   '/products': typeof ProductsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/village-hub': typeof VillageHubRoute
   '/visit': typeof VisitRoute
   '/water-sports': typeof WaterSportsRoute
@@ -311,6 +319,7 @@ export interface FileRoutesById {
   '/farm-tours': typeof FarmToursRoute
   '/pokkali-story': typeof PokkaliStoryRoute
   '/products': typeof ProductsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/village-hub': typeof VillageHubRoute
   '/visit': typeof VisitRoute
   '/water-sports': typeof WaterSportsRoute
@@ -349,6 +358,7 @@ export interface FileRouteTypes {
     | '/farm-tours'
     | '/pokkali-story'
     | '/products'
+    | '/sitemap.xml'
     | '/village-hub'
     | '/visit'
     | '/water-sports'
@@ -385,6 +395,7 @@ export interface FileRouteTypes {
     | '/farm-tours'
     | '/pokkali-story'
     | '/products'
+    | '/sitemap.xml'
     | '/village-hub'
     | '/visit'
     | '/water-sports'
@@ -421,6 +432,7 @@ export interface FileRouteTypes {
     | '/farm-tours'
     | '/pokkali-story'
     | '/products'
+    | '/sitemap.xml'
     | '/village-hub'
     | '/visit'
     | '/water-sports'
@@ -459,6 +471,7 @@ export interface RootRouteChildren {
   FarmToursRoute: typeof FarmToursRoute
   PokkaliStoryRoute: typeof PokkaliStoryRoute
   ProductsRoute: typeof ProductsRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   VillageHubRoute: typeof VillageHubRoute
   VisitRoute: typeof VisitRoute
   WaterSportsRoute: typeof WaterSportsRoute
@@ -495,6 +508,13 @@ declare module '@tanstack/react-router' {
       path: '/village-hub'
       fullPath: '/village-hub'
       preLoaderRoute: typeof VillageHubRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/products': {
@@ -789,6 +809,7 @@ const rootRouteChildren: RootRouteChildren = {
   FarmToursRoute: FarmToursRoute,
   PokkaliStoryRoute: PokkaliStoryRoute,
   ProductsRoute: ProductsRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   VillageHubRoute: VillageHubRoute,
   VisitRoute: VisitRoute,
   WaterSportsRoute: WaterSportsRoute,

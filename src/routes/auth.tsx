@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { Wheat } from "lucide-react";
 
 export const Route = createFileRoute("/auth")({
+  staticData: { sitemap: false },
   head: () => ({ meta: [{ title: "Sign in — Pokkali Village" }] }),
   component: AuthPage,
 });

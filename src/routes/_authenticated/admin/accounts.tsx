@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { Download, Trash2 } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin/accounts")({
+  staticData: { sitemap: false },
   component: Accounts,
 });
 

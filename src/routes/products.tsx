@@ -7,6 +7,7 @@ import imgF from "@/assets/parallax-fields.jpg";
 import { Wheat, Leaf, HeartHandshake, Truck } from "lucide-react";
 
 export const Route = createFileRoute("/products")({
+  staticData: { sitemap: true },
   head: () => meta("Agri-Aqua Products — PAADI Tales", "Pokkali rice, prawns, fish and village products from Palliyakkal's agri-aqua ecosystem, straight from local producers."),
   component: Products,
 });

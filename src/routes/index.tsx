@@ -121,13 +121,15 @@ function Tilt3DCard() {
 }
 
 export const Route = createFileRoute("/")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "PAADI Tales — Palliyakkal Agri-Aqua Digital Immersive Tales" },
       { name: "description", content: "Experience the village. Explore the farm. Live the story. Pokkali farm tours, agri-aqua products, Village Hub and water sports at Palliyakkal, Kerala." },
       { property: "og:title", content: "PAADI Tales — Pokkali Village, Palliyakkal" },
       { property: "og:description", content: "Experience the village. Explore the farm. Live the story." },
-      { property: "og:image", content: hero },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9bc19654-4e4e-4cea-bd1e-8ef5752f33ea/id-preview-50531dfa--639e2a9b-cbb4-4b8f-870b-d355af7f8795.lovable.app-1781768885576.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9bc19654-4e4e-4cea-bd1e-8ef5752f33ea/id-preview-50531dfa--639e2a9b-cbb4-4b8f-870b-d355af7f8795.lovable.app-1781768885576.png" },
     ],
   }),
   component: Index,

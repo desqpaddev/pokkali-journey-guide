@@ -12,6 +12,7 @@ import { Plus, Trash2, Save, ExternalLink, Mail, Upload, Loader2 } from "lucide-
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin/blogs")({
+  staticData: { sitemap: false },
   component: BlogsAdmin,
 });
 

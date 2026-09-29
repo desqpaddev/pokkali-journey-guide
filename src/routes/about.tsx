@@ -3,6 +3,7 @@ import { PageShell, Section, EnquireCta, meta } from "@/components/app/PageShell
 import img from "@/assets/parallax-fields.jpg";
 
 export const Route = createFileRoute("/about")({
+  staticData: { sitemap: true },
   head: () => meta("About Palliyakkal — PAADI Tales", "Palliyakkal in Ezhikara, its farmers and producers, and the role of Palliyakkal Service Co-operative Bank in PAADI Tales."),
   component: About,
 });

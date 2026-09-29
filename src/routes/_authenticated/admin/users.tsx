@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Check, X } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin/users")({
+  staticData: { sitemap: false },
   component: UsersAdmin,
 });
 

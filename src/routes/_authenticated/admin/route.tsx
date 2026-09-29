@@ -5,6 +5,7 @@ import { Package, ScanLine, Calendar, LayoutDashboard, ShieldCheck, BookOpen, Us
 import paadiLogo from "@/assets/paadi-logo.png.asset.json";
 
 export const Route = createFileRoute("/_authenticated/admin")({
+  staticData: { sitemap: false },
   beforeLoad: async () => {
     if (typeof window === "undefined") return {};
     const { data: u } = await supabase.auth.getUser();

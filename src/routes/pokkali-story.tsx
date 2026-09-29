@@ -8,6 +8,7 @@ import imgF from "@/assets/parallax-fields.jpg";
 import { Bird, Droplets, Leaf, Users, Recycle, Shield } from "lucide-react";
 
 export const Route = createFileRoute("/pokkali-story")({
+  staticData: { sitemap: true },
   head: () => meta("The Pokkali Story — PAADI Tales", "How Pokkali rice and aquaculture share Kerala's tidal fields: the seasons, traditional knowledge, ecology and the farmers of Palliyakkal."),
   component: Story,
 });
