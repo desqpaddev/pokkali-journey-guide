@@ -6,6 +6,7 @@ import imgP from "@/assets/hero-paddy.jpg";
 import { Sailboat, Ship, Waves, Anchor, LifeBuoy, CloudRain, Baby, ShieldCheck } from "lucide-react";
 
 export const Route = createFileRoute("/water-sports")({
+  staticData: { sitemap: true },
   head: () => meta("Water Sports — PAADI Tales", "Kayaking, country boat rides and backwater activities at Palliyakkal, with safety guidance and booking."),
   component: Water,
 });

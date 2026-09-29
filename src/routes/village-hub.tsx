@@ -7,6 +7,7 @@ import imgP from "@/assets/hero-paddy.jpg";
 import { Utensils, Fish, Gift, Info, Car, Coffee, Wifi, Baby } from "lucide-react";
 
 export const Route = createFileRoute("/village-hub")({
+  staticData: { sitemap: true },
   head: () => meta("Village Hub — PAADI Tales", "The visitor centre of Pokkali Village: restaurant, fish and agri-aqua sales counter, souvenirs and visitor services."),
   component: Hub,
 });

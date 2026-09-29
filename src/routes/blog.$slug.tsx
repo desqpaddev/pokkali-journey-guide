@@ -13,6 +13,7 @@ import parallaxFields from "@/assets/parallax-fields.jpg";
 const RELATED_IMAGES = [heroPaddy, heroBackwater, heroHarvest, parallaxFields];
 
 export const Route = createFileRoute("/blog/$slug")({
+  staticData: { sitemap: true },
   component: BlogDetail,
   errorComponent: ({ error }) => (
     <div className="min-h-screen grid place-items-center p-8 text-center">

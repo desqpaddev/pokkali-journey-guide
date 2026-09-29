@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import hero from "@/assets/hero-paddy.jpg";
 
 export const Route = createFileRoute("/packages/$slug")({
+  staticData: { sitemap: true },
   head: ({ params }) => ({
     meta: [
       { title: `${params.slug} — Pokkali Village Tour` },

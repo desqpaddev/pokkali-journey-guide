@@ -121,6 +121,7 @@ function Tilt3DCard() {
 }
 
 export const Route = createFileRoute("/")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "PAADI Tales — Palliyakkal Agri-Aqua Digital Immersive Tales" },

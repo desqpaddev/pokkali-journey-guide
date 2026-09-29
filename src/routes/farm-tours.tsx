@@ -9,6 +9,7 @@ import imgF from "@/assets/parallax-fields.jpg";
 import { Clock, Users, ArrowUpRight, Sprout, Headphones, Fish, Sun, Footprints, Utensils } from "lucide-react";
 
 export const Route = createFileRoute("/farm-tours")({
+  staticData: { sitemap: true },
   head: () => meta("Pokkali Farm Tours — PAADI Tales", "Hosted walks through Palliyakkal's Pokkali fields, bunds and backwaters with the farmers who keep them alive."),
   component: FarmTours,
 });

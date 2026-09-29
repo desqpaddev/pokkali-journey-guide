@@ -15,6 +15,7 @@ import aboutPaddy from "@/assets/about-paddy-3d.jpg";
 const FALLBACK_IMAGES = [heroPaddy, heroBackwater, heroHarvest, parallaxFields, aboutPaddy];
 
 export const Route = createFileRoute("/blog")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Stories from the Fields — Pokkali Village Blog" },

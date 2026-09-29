@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageShell, Section, InfoCard, meta } from "@/components/app/PageShell";
 
 export const Route = createFileRoute("/visit")({
+  staticData: { sitemap: true },
   head: () => meta("Plan Your Visit — PAADI Tales", "How to reach Pokkali Village at Palliyakkal, Ezhikara, best time to visit and practical tips."),
   component: Visit,
 });
