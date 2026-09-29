@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calendar, Users, MapPin, ArrowRight, Wheat } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/bookings")({
+  staticData: { sitemap: false },
   component: Bookings,
 });
 

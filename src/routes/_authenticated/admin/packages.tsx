@@ -14,6 +14,7 @@ import { Plus, Trash2, MapPin, Crosshair, Save, Upload, Loader2 } from "lucide-r
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin/packages")({
+  staticData: { sitemap: false },
   component: PackagesAdmin,
 });
 

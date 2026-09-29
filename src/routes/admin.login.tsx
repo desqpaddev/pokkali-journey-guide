@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { ShieldCheck } from "lucide-react";
 
 export const Route = createFileRoute("/admin/login")({
+  staticData: { sitemap: false },
   head: () => ({ meta: [{ title: "Admin sign in — Pokkali Village" }] }),
   component: AdminLogin,
 });

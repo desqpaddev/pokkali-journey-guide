@@ -12,6 +12,7 @@ import { Plus, Trash2, Save, ScanLine, QrCode, Upload, Loader2 } from "lucide-re
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin/products")({
+  staticData: { sitemap: false },
   component: ProductsAdmin,
 });
 

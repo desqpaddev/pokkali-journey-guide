@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Package, MapPin, ScanLine, Calendar } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin/")({
+  staticData: { sitemap: false },
   component: Overview,
 });
 

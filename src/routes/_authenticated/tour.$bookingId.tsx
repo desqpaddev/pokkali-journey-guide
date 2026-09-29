@@ -14,6 +14,7 @@ import { haversineMeters, type Lang } from "@/lib/geo";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/tour/$bookingId")({
+  staticData: { sitemap: false },
   component: TourPlayer,
 });
 

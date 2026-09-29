@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin/account")({
+  staticData: { sitemap: false },
   component: AdminAccount,
 });
 
