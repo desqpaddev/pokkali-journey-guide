@@ -54,7 +54,29 @@ function Applications() {
     toast.success(`Agent ${status}`);
     qc.invalidateQueries({ queryKey: ["admin-agents"] });
   }
+  const [edit, setEdit] = useState<any>(null);
+  async function saveEdit() {
+    const { id, agency_name, code, phone, gst_no, address } = edit;
+    if (!agency_name?.trim() || !code?.trim()) return toast.error("Agency name and code are required");
+    const { error } = await supabase.from("agents").update({ agency_name, code: code.toUpperCase(), phone, gst_no, address }).eq("id", id);
+    if (error) return toast.error(error.message.includes("duplicate") ? "That agent code is already used" : error.message);
+    toast.success("Agent updated");
+    setEdit(null);
+    qc.invalidateQueries({ queryKey: ["admin-agents"] });
+  }
   return (
+    <>
+    {edit && (
+      <Card className="p-4 mt-4 space-y-3 max-w-2xl">
+        <h3 className="font-semibold">Edit agent</h3>
+        <div className="grid sm:grid-cols-2 gap-3">
+          {([["agency_name", "Agency name"], ["code", "Agent code"], ["phone", "Phone"], ["gst_no", "GST number"], ["address", "Address"]] as const).map(([k, l]) => (
+            <div key={k}><Label className="text-xs">{l}</Label><Input className="mt-1" maxLength={200} value={edit[k] ?? ""} onChange={(e) => setEdit({ ...edit, [k]: e.target.value })} /></div>
+          ))}
+        </div>
+        <div className="flex gap-2"><Button size="sm" onClick={saveEdit}>Save</Button><Button size="sm" variant="outline" onClick={() => setEdit(null)}>Cancel</Button></div>
+      </Card>
+    )}
     <Card className="p-0 overflow-x-auto mt-4">
       <table className="w-full text-sm">
         <thead className="bg-muted/50 text-left"><tr>{["Agency", "Code", "Phone", "GST", "Status", ""].map((h) => <th key={h} className="p-3">{h}</th>)}</tr></thead>
@@ -65,6 +87,7 @@ function Applications() {
               <td className="p-3">{a.code}</td><td className="p-3">{a.phone}</td><td className="p-3">{a.gst_no || "—"}</td>
               <td className="p-3"><Badge variant="outline" className="capitalize">{a.status}</Badge></td>
               <td className="p-3 text-right space-x-2 whitespace-nowrap">
+                <Button size="sm" variant="ghost" onClick={() => setEdit({ ...a })}>Edit</Button>
                 {a.status !== "approved" && <Button size="sm" onClick={() => setStatus(a.id, "approved")}>Approve</Button>}
                 {a.status === "pending" && <Button size="sm" variant="outline" onClick={() => setStatus(a.id, "rejected")}>Reject</Button>}
                 {a.status === "approved" && <Button size="sm" variant="outline" onClick={() => setStatus(a.id, "suspended")}>Suspend</Button>}
@@ -75,12 +98,14 @@ function Applications() {
         </tbody>
       </table>
     </Card>
+    </>
   );
 }
 
 function Markups() {
   const qc = useQueryClient();
   const [notes, setNotes] = useState<Record<string, string>>({});
+  const [vals, setVals] = useState<Record<string, { type: string; value: number }>>({});
   const { data } = useQuery({
     queryKey: ["admin-markups"],
     queryFn: async () =>
@@ -88,7 +113,8 @@ function Markups() {
   });
   async function review(id: string, status: string) {
     const u = await me();
-    const { error } = await supabase.from("agent_markups").update({ status, admin_note: notes[id] || null, reviewed_by: u.id, reviewed_at: new Date().toISOString() }).eq("id", id);
+    const v = vals[id];
+    const { error } = await supabase.from("agent_markups").update({ ...(v ? { markup_type: v.type, markup_value: Math.max(0, v.value) } : {}), status, admin_note: notes[id] || null, reviewed_by: u.id, reviewed_at: new Date().toISOString() }).eq("id", id);
     if (error) return toast.error(error.message);
     toast.success(`Markup ${status}`);
     qc.invalidateQueries({ queryKey: ["admin-markups"] });
@@ -98,14 +124,21 @@ function Markups() {
     <div className="grid md:grid-cols-2 gap-4 mt-4">
       {sorted.map((m: any) => {
         const base = Number(m.packages?.price_per_person ?? 0);
+        const v = vals[m.id] ?? { type: m.markup_type, value: Number(m.markup_value) };
         return (
           <Card key={m.id} className="p-4">
             <div className="flex justify-between"><b>{m.agents?.agency_name}</b><Badge variant="outline" className="capitalize">{m.status}</Badge></div>
             <div className="text-sm">{m.packages?.title}</div>
-            <div className="text-sm mt-1">Base ₹{base} + {m.markup_type === "percent" ? `${m.markup_value}%` : `₹${m.markup_value}`} = <b>₹{agentPrice(base, m.markup_type, Number(m.markup_value))}</b> / guest</div>
+            <div className="flex gap-2 mt-2">
+              <select className="h-9 rounded-md border border-input bg-background px-2 text-sm" value={v.type} onChange={(e) => setVals({ ...vals, [m.id]: { ...v, type: e.target.value } })}>
+                <option value="fixed">Fixed ₹ / guest</option><option value="percent">Percent %</option>
+              </select>
+              <Input type="number" min={0} className="h-9" value={v.value} onChange={(e) => setVals({ ...vals, [m.id]: { ...v, value: Number(e.target.value) } })} />
+            </div>
+            <div className="text-sm mt-1">Base ₹{base} + {v.type === "percent" ? `${v.value}%` : `₹${v.value}`} = <b>₹{agentPrice(base, v.type, v.value)}</b> / guest</div>
             <Input className="mt-2" placeholder="Note to agent (optional)" value={notes[m.id] ?? ""} onChange={(e) => setNotes({ ...notes, [m.id]: e.target.value })} />
             <div className="flex gap-2 mt-2">
-              <Button size="sm" onClick={() => review(m.id, "approved")}>Approve</Button>
+              <Button size="sm" onClick={() => review(m.id, "approved")}>{m.status === "approved" ? "Save & keep approved" : "Save & approve"}</Button>
               <Button size="sm" variant="outline" onClick={() => review(m.id, "rejected")}>Reject</Button>
             </div>
           </Card>
