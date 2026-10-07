@@ -1,6 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { createAgentBooking } from "@/lib/agents.functions";
+import { AGENT_REF_KEY } from "@/lib/agent-utils";
 import { supabase } from "@/integrations/supabase/client";
 import { Header, Footer } from "@/components/app/Header";
 import { Card } from "@/components/ui/card";
@@ -50,12 +53,28 @@ function PackageDetail() {
   const [phone, setPhone] = useState("");
   const [lang, setLang] = useState<Lang>("english");
   const [busy, setBusy] = useState(false);
+  const [agentCode, setAgentCode] = useState<string | null>(null);
+  const agentBook = useServerFn(createAgentBooking);
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get("agent");
+    if (q) sessionStorage.setItem(AGENT_REF_KEY, q.toUpperCase());
+    setAgentCode(q?.toUpperCase() ?? sessionStorage.getItem(AGENT_REF_KEY));
+  }, []);
+  const { data: agentPrice } = useQuery({
+    queryKey: ["agent-price", agentCode, data?.pkg?.id],
+    enabled: !!agentCode && !!data?.pkg?.id,
+    queryFn: async () => {
+      const { data: r } = await supabase.rpc("get_agent_price", { _code: agentCode!, _package_id: data!.pkg!.id });
+      return r?.[0] ?? null;
+    },
+  });
 
   if (isLoading) return <div className="min-h-screen bg-background"><Header /><div className="container mx-auto px-4 py-16">Loading…</div></div>;
   if (!data?.pkg) return <div className="min-h-screen bg-background"><Header /><div className="container mx-auto px-4 py-16">Tour not found. <Link to="/" className="text-primary underline">Go home</Link></div></div>;
 
   const { pkg, steps, dests } = data;
-  const total = guests * Number(pkg.price_per_person);
+  const perGuest = agentPrice ? Number(agentPrice.price_per_person) : Number(pkg.price_per_person);
+  const total = guests * perGuest;
 
   async function book() {
     if (!user) {
@@ -68,6 +87,17 @@ function PackageDetail() {
       return;
     }
     setBusy(true);
+    if (agentPrice && agentCode) {
+      try {
+        await agentBook({ data: { mode: "link", agentCode, packageId: pkg.id, tourDate: date, guests, contactName, contactPhone: phone, contactEmail: user.email ?? undefined, language: lang } });
+        toast.success("Booking received! It will be confirmed shortly.");
+        navigate({ to: "/bookings" });
+      } catch (e: any) {
+        toast.error(e.message);
+      }
+      setBusy(false);
+      return;
+    }
     // Check approval first for a clear message
     const { data: prof } = await supabase
       .from("profiles")
@@ -171,7 +201,8 @@ function PackageDetail() {
 
         <Card className="p-6 h-fit sticky top-20">
           <div className="text-xs uppercase tracking-widest text-muted-foreground">From</div>
-          <div className="font-display text-4xl">₹{Number(pkg.price_per_person).toLocaleString()}<span className="text-sm text-muted-foreground"> /guest</span></div>
+          {agentPrice && <div className="text-xs text-accent font-semibold mb-1">Booked via {agentPrice.agency_name}</div>}
+          <div className="font-display text-4xl">₹{perGuest.toLocaleString()}<span className="text-sm text-muted-foreground"> /guest</span></div>
           <div className="mt-6 space-y-3">
             <div>
               <Label className="text-xs">Tour date</Label>

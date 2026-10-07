@@ -8,6 +8,13 @@
       "when": 1790577468466,
       "tag": "0000_pscb_accounts",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791376774737,
+      "tag": "0001_tour_agents",
+      "breakpoints": true
     }
   ]
 }

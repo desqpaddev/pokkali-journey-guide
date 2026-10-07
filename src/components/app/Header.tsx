@@ -47,6 +47,9 @@ export function Header() {
               <Button asChild variant="ghost" size="sm" className="hidden md:inline-flex">
                 <Link to="/bookings"><MapPin className="h-4 w-4" />My Tours</Link>
               </Button>
+              <Button asChild variant="ghost" size="sm" className="hidden lg:inline-flex">
+                <Link to="/agent">Agent</Link>
+              </Button>
               {isAdmin && (
                 <Button asChild variant="outline" size="sm" className="hidden md:inline-flex">
                   <Link to="/admin"><LayoutDashboard className="h-4 w-4" />Admin</Link>
@@ -201,6 +204,7 @@ export function Footer() {
             <li><Link to="/contact" className="hover:text-secondary">Contact</Link></li>
             <li><Link to="/blog" className="hover:text-secondary">Blog</Link></li>
             <li><Link to="/bookings" className="hover:text-secondary">My Bookings</Link></li>
+            <li><Link to="/agent" className="hover:text-secondary">Become a tour agent</Link></li>
           </ul>
         </div>
         <div>

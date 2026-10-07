@@ -15,7 +15,7 @@ function BookingsAdmin() {
     queryFn: async () => {
       const { data } = await supabase
         .from("bookings")
-        .select("*, packages(title)")
+        .select("*, packages(title), agents(agency_name)")
         .order("created_at", { ascending: false });
       return data ?? [];
     },
@@ -32,6 +32,7 @@ function BookingsAdmin() {
             <th className="px-4 py-3">Guests</th>
             <th className="px-4 py-3">Language</th>
             <th className="px-4 py-3">Total</th>
+            <th className="px-4 py-3">Agent</th>
             <th className="px-4 py-3">Status</th>
           </tr>
         </thead>
@@ -44,10 +45,11 @@ function BookingsAdmin() {
               <td className="px-4 py-3">{b.num_guests}</td>
               <td className="px-4 py-3 capitalize">{b.preferred_language}</td>
               <td className="px-4 py-3">₹{Number(b.total_amount).toLocaleString()}</td>
+              <td className="px-4 py-3">{b.agents?.agency_name ?? "—"}</td>
               <td className="px-4 py-3"><Badge variant="outline" className="capitalize">{b.status}</Badge></td>
             </tr>
           ))}
-          {!data?.length && <tr><td colSpan={7} className="p-12 text-center text-muted-foreground">No bookings yet.</td></tr>}
+          {!data?.length && <tr><td colSpan={8} className="p-12 text-center text-muted-foreground">No bookings yet.</td></tr>}
         </tbody>
       </table>
     </Card>

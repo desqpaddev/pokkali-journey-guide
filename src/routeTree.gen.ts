@@ -29,15 +29,18 @@ import { Route as ApiTtsRouteImport } from './routes/api/tts'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AuthenticatedBookingsRouteImport } from './routes/_authenticated/bookings'
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
+import { Route as AuthenticatedAgentIndexRouteImport } from './routes/_authenticated/agent/index'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
 import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
 import { Route as AuthenticatedTourBookingIdRouteImport } from './routes/_authenticated/tour.$bookingId'
+import { Route as AuthenticatedAgentApplyRouteImport } from './routes/_authenticated/agent/apply'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
 import { Route as AuthenticatedAdminSetupRouteImport } from './routes/_authenticated/admin/setup'
 import { Route as AuthenticatedAdminProductsRouteImport } from './routes/_authenticated/admin/products'
 import { Route as AuthenticatedAdminPackagesRouteImport } from './routes/_authenticated/admin/packages'
 import { Route as AuthenticatedAdminBookingsRouteImport } from './routes/_authenticated/admin/bookings'
 import { Route as AuthenticatedAdminBlogsRouteImport } from './routes/_authenticated/admin/blogs'
+import { Route as AuthenticatedAdminAgentsRouteImport } from './routes/_authenticated/admin/agents'
 import { Route as AuthenticatedAdminAccountsRouteImport } from './routes/_authenticated/admin/accounts'
 import { Route as AuthenticatedAdminAccountRouteImport } from './routes/_authenticated/admin/account'
 import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lovable/email/transactional/send'
@@ -145,6 +148,11 @@ const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAgentIndexRoute = AuthenticatedAgentIndexRouteImport.update({
+  id: '/agent/',
+  path: '/agent/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -161,6 +169,11 @@ const AuthenticatedTourBookingIdRoute =
     path: '/tour/$bookingId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAgentApplyRoute = AuthenticatedAgentApplyRouteImport.update({
+  id: '/agent/apply',
+  path: '/agent/apply',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
   id: '/users',
   path: '/users',
@@ -194,6 +207,12 @@ const AuthenticatedAdminBlogsRoute = AuthenticatedAdminBlogsRouteImport.update({
   path: '/blogs',
   getParentRoute: () => AuthenticatedAdminRouteRoute,
 } as any)
+const AuthenticatedAdminAgentsRoute =
+  AuthenticatedAdminAgentsRouteImport.update({
+    id: '/agents',
+    path: '/agents',
+    getParentRoute: () => AuthenticatedAdminRouteRoute,
+  } as any)
 const AuthenticatedAdminAccountsRoute =
   AuthenticatedAdminAccountsRouteImport.update({
     id: '/accounts',
@@ -257,15 +276,18 @@ export interface FileRoutesByFullPath {
   '/packages/$slug': typeof PackagesSlugRoute
   '/admin/account': typeof AuthenticatedAdminAccountRoute
   '/admin/accounts': typeof AuthenticatedAdminAccountsRoute
+  '/admin/agents': typeof AuthenticatedAdminAgentsRoute
   '/admin/blogs': typeof AuthenticatedAdminBlogsRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/admin/packages': typeof AuthenticatedAdminPackagesRoute
   '/admin/products': typeof AuthenticatedAdminProductsRoute
   '/admin/setup': typeof AuthenticatedAdminSetupRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/agent/apply': typeof AuthenticatedAgentApplyRoute
   '/tour/$bookingId': typeof AuthenticatedTourBookingIdRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/agent/': typeof AuthenticatedAgentIndexRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
@@ -293,15 +315,18 @@ export interface FileRoutesByTo {
   '/packages/$slug': typeof PackagesSlugRoute
   '/admin/account': typeof AuthenticatedAdminAccountRoute
   '/admin/accounts': typeof AuthenticatedAdminAccountsRoute
+  '/admin/agents': typeof AuthenticatedAdminAgentsRoute
   '/admin/blogs': typeof AuthenticatedAdminBlogsRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/admin/packages': typeof AuthenticatedAdminPackagesRoute
   '/admin/products': typeof AuthenticatedAdminProductsRoute
   '/admin/setup': typeof AuthenticatedAdminSetupRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/agent/apply': typeof AuthenticatedAgentApplyRoute
   '/tour/$bookingId': typeof AuthenticatedTourBookingIdRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
+  '/agent': typeof AuthenticatedAgentIndexRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
@@ -332,15 +357,18 @@ export interface FileRoutesById {
   '/packages/$slug': typeof PackagesSlugRoute
   '/_authenticated/admin/account': typeof AuthenticatedAdminAccountRoute
   '/_authenticated/admin/accounts': typeof AuthenticatedAdminAccountsRoute
+  '/_authenticated/admin/agents': typeof AuthenticatedAdminAgentsRoute
   '/_authenticated/admin/blogs': typeof AuthenticatedAdminBlogsRoute
   '/_authenticated/admin/bookings': typeof AuthenticatedAdminBookingsRoute
   '/_authenticated/admin/packages': typeof AuthenticatedAdminPackagesRoute
   '/_authenticated/admin/products': typeof AuthenticatedAdminProductsRoute
   '/_authenticated/admin/setup': typeof AuthenticatedAdminSetupRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/_authenticated/agent/apply': typeof AuthenticatedAgentApplyRoute
   '/_authenticated/tour/$bookingId': typeof AuthenticatedTourBookingIdRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/agent/': typeof AuthenticatedAgentIndexRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/queue/process': typeof LovableEmailQueueProcessRoute
@@ -371,15 +399,18 @@ export interface FileRouteTypes {
     | '/packages/$slug'
     | '/admin/account'
     | '/admin/accounts'
+    | '/admin/agents'
     | '/admin/blogs'
     | '/admin/bookings'
     | '/admin/packages'
     | '/admin/products'
     | '/admin/setup'
     | '/admin/users'
+    | '/agent/apply'
     | '/tour/$bookingId'
     | '/lovable/email/suppression'
     | '/admin/'
+    | '/agent/'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/lovable/email/queue/process'
@@ -407,15 +438,18 @@ export interface FileRouteTypes {
     | '/packages/$slug'
     | '/admin/account'
     | '/admin/accounts'
+    | '/admin/agents'
     | '/admin/blogs'
     | '/admin/bookings'
     | '/admin/packages'
     | '/admin/products'
     | '/admin/setup'
     | '/admin/users'
+    | '/agent/apply'
     | '/tour/$bookingId'
     | '/lovable/email/suppression'
     | '/admin'
+    | '/agent'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/lovable/email/queue/process'
@@ -445,15 +479,18 @@ export interface FileRouteTypes {
     | '/packages/$slug'
     | '/_authenticated/admin/account'
     | '/_authenticated/admin/accounts'
+    | '/_authenticated/admin/agents'
     | '/_authenticated/admin/blogs'
     | '/_authenticated/admin/bookings'
     | '/_authenticated/admin/packages'
     | '/_authenticated/admin/products'
     | '/_authenticated/admin/setup'
     | '/_authenticated/admin/users'
+    | '/_authenticated/agent/apply'
     | '/_authenticated/tour/$bookingId'
     | '/lovable/email/suppression'
     | '/_authenticated/admin/'
+    | '/_authenticated/agent/'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/lovable/email/queue/process'
@@ -629,6 +666,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/agent/': {
+      id: '/_authenticated/agent/'
+      path: '/agent'
+      fullPath: '/agent/'
+      preLoaderRoute: typeof AuthenticatedAgentIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/': {
       id: '/_authenticated/admin/'
       path: '/'
@@ -648,6 +692,13 @@ declare module '@tanstack/react-router' {
       path: '/tour/$bookingId'
       fullPath: '/tour/$bookingId'
       preLoaderRoute: typeof AuthenticatedTourBookingIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/agent/apply': {
+      id: '/_authenticated/agent/apply'
+      path: '/agent/apply'
+      fullPath: '/agent/apply'
+      preLoaderRoute: typeof AuthenticatedAgentApplyRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin/users': {
@@ -690,6 +741,13 @@ declare module '@tanstack/react-router' {
       path: '/blogs'
       fullPath: '/admin/blogs'
       preLoaderRoute: typeof AuthenticatedAdminBlogsRouteImport
+      parentRoute: typeof AuthenticatedAdminRouteRoute
+    }
+    '/_authenticated/admin/agents': {
+      id: '/_authenticated/admin/agents'
+      path: '/agents'
+      fullPath: '/admin/agents'
+      preLoaderRoute: typeof AuthenticatedAdminAgentsRouteImport
       parentRoute: typeof AuthenticatedAdminRouteRoute
     }
     '/_authenticated/admin/accounts': {
@@ -747,6 +805,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedAdminRouteRouteChildren {
   AuthenticatedAdminAccountRoute: typeof AuthenticatedAdminAccountRoute
   AuthenticatedAdminAccountsRoute: typeof AuthenticatedAdminAccountsRoute
+  AuthenticatedAdminAgentsRoute: typeof AuthenticatedAdminAgentsRoute
   AuthenticatedAdminBlogsRoute: typeof AuthenticatedAdminBlogsRoute
   AuthenticatedAdminBookingsRoute: typeof AuthenticatedAdminBookingsRoute
   AuthenticatedAdminPackagesRoute: typeof AuthenticatedAdminPackagesRoute
@@ -760,6 +819,7 @@ const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren
   {
     AuthenticatedAdminAccountRoute: AuthenticatedAdminAccountRoute,
     AuthenticatedAdminAccountsRoute: AuthenticatedAdminAccountsRoute,
+    AuthenticatedAdminAgentsRoute: AuthenticatedAdminAgentsRoute,
     AuthenticatedAdminBlogsRoute: AuthenticatedAdminBlogsRoute,
     AuthenticatedAdminBookingsRoute: AuthenticatedAdminBookingsRoute,
     AuthenticatedAdminPackagesRoute: AuthenticatedAdminPackagesRoute,
@@ -777,13 +837,17 @@ const AuthenticatedAdminRouteRouteWithChildren =
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRouteWithChildren
   AuthenticatedBookingsRoute: typeof AuthenticatedBookingsRoute
+  AuthenticatedAgentApplyRoute: typeof AuthenticatedAgentApplyRoute
   AuthenticatedTourBookingIdRoute: typeof AuthenticatedTourBookingIdRoute
+  AuthenticatedAgentIndexRoute: typeof AuthenticatedAgentIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRouteWithChildren,
   AuthenticatedBookingsRoute: AuthenticatedBookingsRoute,
+  AuthenticatedAgentApplyRoute: AuthenticatedAgentApplyRoute,
   AuthenticatedTourBookingIdRoute: AuthenticatedTourBookingIdRoute,
+  AuthenticatedAgentIndexRoute: AuthenticatedAgentIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
