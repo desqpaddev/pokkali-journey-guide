@@ -181,3 +181,7 @@ Accessible at **`/admin`** to users with the `admin` role. The first user to sig
 ---
 
 For engineering internals — stack, routing, database schema, server functions, and file layout — see [`DOCUMENTATION.md`](./DOCUMENTATION.md). For the native Android build steps, see [`ANDROID.md`](./ANDROID.md).
+## Tour agent module (2026-10-07)
+- Agents apply at /agent/apply; admin approves under Admin → Agents.
+- Agents set fixed ₹ or % markup per package (admin approval), book for customers, or share links (/packages/<slug>?agent=CODE).
+- All agent bookings need admin confirmation (sends confirmation email). Agent sales report with CSV for admin and agent.
