@@ -19,7 +19,7 @@ export const Route = createFileRoute("/blog/$slug")({
     <div className="min-h-screen grid place-items-center p-8 text-center">
       <div>
         <h1 className="font-display text-2xl">Couldn't load this story</h1>
-        <p className="text-muted-foreground mt-2 text-sm">{error.message}</p>
+        <p className="text-muted-foreground mt-2 text-sm">{(error as Error).message}</p>
         <Button asChild variant="outline" className="mt-4"><Link to="/blog">Back to blog</Link></Button>
       </div>
     </div>
