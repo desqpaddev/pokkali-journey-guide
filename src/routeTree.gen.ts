@@ -32,6 +32,7 @@ import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
 import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
 import { Route as AuthenticatedTourBookingIdRouteImport } from './routes/_authenticated/tour.$bookingId'
+import { Route as AuthenticatedAgentApplyRouteImport } from './routes/_authenticated/agent/apply'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin/users'
 import { Route as AuthenticatedAdminSetupRouteImport } from './routes/_authenticated/admin/setup'
 import { Route as AuthenticatedAdminProductsRouteImport } from './routes/_authenticated/admin/products'
@@ -161,6 +162,11 @@ const AuthenticatedTourBookingIdRoute =
     path: '/tour/$bookingId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAgentApplyRoute = AuthenticatedAgentApplyRouteImport.update({
+  id: '/agent/apply',
+  path: '/agent/apply',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
   id: '/users',
   path: '/users',
@@ -263,6 +269,7 @@ export interface FileRoutesByFullPath {
   '/admin/products': typeof AuthenticatedAdminProductsRoute
   '/admin/setup': typeof AuthenticatedAdminSetupRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/agent/apply': typeof AuthenticatedAgentApplyRoute
   '/tour/$bookingId': typeof AuthenticatedTourBookingIdRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
@@ -299,6 +306,7 @@ export interface FileRoutesByTo {
   '/admin/products': typeof AuthenticatedAdminProductsRoute
   '/admin/setup': typeof AuthenticatedAdminSetupRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/agent/apply': typeof AuthenticatedAgentApplyRoute
   '/tour/$bookingId': typeof AuthenticatedTourBookingIdRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
@@ -338,6 +346,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/products': typeof AuthenticatedAdminProductsRoute
   '/_authenticated/admin/setup': typeof AuthenticatedAdminSetupRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/_authenticated/agent/apply': typeof AuthenticatedAgentApplyRoute
   '/_authenticated/tour/$bookingId': typeof AuthenticatedTourBookingIdRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
@@ -377,6 +386,7 @@ export interface FileRouteTypes {
     | '/admin/products'
     | '/admin/setup'
     | '/admin/users'
+    | '/agent/apply'
     | '/tour/$bookingId'
     | '/lovable/email/suppression'
     | '/admin/'
@@ -413,6 +423,7 @@ export interface FileRouteTypes {
     | '/admin/products'
     | '/admin/setup'
     | '/admin/users'
+    | '/agent/apply'
     | '/tour/$bookingId'
     | '/lovable/email/suppression'
     | '/admin'
@@ -451,6 +462,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/products'
     | '/_authenticated/admin/setup'
     | '/_authenticated/admin/users'
+    | '/_authenticated/agent/apply'
     | '/_authenticated/tour/$bookingId'
     | '/lovable/email/suppression'
     | '/_authenticated/admin/'
@@ -650,6 +662,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTourBookingIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/agent/apply': {
+      id: '/_authenticated/agent/apply'
+      path: '/agent/apply'
+      fullPath: '/agent/apply'
+      preLoaderRoute: typeof AuthenticatedAgentApplyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/users': {
       id: '/_authenticated/admin/users'
       path: '/users'
@@ -777,12 +796,14 @@ const AuthenticatedAdminRouteRouteWithChildren =
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRouteWithChildren
   AuthenticatedBookingsRoute: typeof AuthenticatedBookingsRoute
+  AuthenticatedAgentApplyRoute: typeof AuthenticatedAgentApplyRoute
   AuthenticatedTourBookingIdRoute: typeof AuthenticatedTourBookingIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRouteWithChildren,
   AuthenticatedBookingsRoute: AuthenticatedBookingsRoute,
+  AuthenticatedAgentApplyRoute: AuthenticatedAgentApplyRoute,
   AuthenticatedTourBookingIdRoute: AuthenticatedTourBookingIdRoute,
 }
 
