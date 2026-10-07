@@ -201,6 +201,102 @@ export type Database = {
         }
         Relationships: []
       }
+      agent_markups: {
+        Row: {
+          admin_note: string | null
+          agent_id: string
+          created_at: string
+          id: string
+          markup_type: string
+          markup_value: number
+          package_id: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+        }
+        Insert: {
+          admin_note?: string | null
+          agent_id: string
+          created_at?: string
+          id?: string
+          markup_type?: string
+          markup_value?: number
+          package_id: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+        }
+        Update: {
+          admin_note?: string | null
+          agent_id?: string
+          created_at?: string
+          id?: string
+          markup_type?: string
+          markup_value?: number
+          package_id?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_markups_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agent_markups_package_id_fkey"
+            columns: ["package_id"]
+            isOneToOne: false
+            referencedRelation: "packages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      agents: {
+        Row: {
+          address: string | null
+          agency_name: string
+          approved_at: string | null
+          approved_by: string | null
+          code: string
+          created_at: string
+          gst_no: string | null
+          id: string
+          phone: string | null
+          status: string
+          user_id: string
+        }
+        Insert: {
+          address?: string | null
+          agency_name: string
+          approved_at?: string | null
+          approved_by?: string | null
+          code?: string
+          created_at?: string
+          gst_no?: string | null
+          id?: string
+          phone?: string | null
+          status?: string
+          user_id: string
+        }
+        Update: {
+          address?: string | null
+          agency_name?: string
+          approved_at?: string | null
+          approved_by?: string | null
+          code?: string
+          created_at?: string
+          gst_no?: string | null
+          id?: string
+          phone?: string | null
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       blogs: {
         Row: {
           author_name: string | null
@@ -248,11 +344,15 @@ export type Database = {
       }
       bookings: {
         Row: {
+          agent_id: string | null
+          base_amount: number | null
+          booked_by_agent: boolean
           contact_email: string | null
           contact_name: string | null
           contact_phone: string | null
           created_at: string
           id: string
+          markup_amount: number | null
           num_guests: number
           package_id: string
           preferred_language: string | null
@@ -262,11 +362,15 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          agent_id?: string | null
+          base_amount?: number | null
+          booked_by_agent?: boolean
           contact_email?: string | null
           contact_name?: string | null
           contact_phone?: string | null
           created_at?: string
           id?: string
+          markup_amount?: number | null
           num_guests?: number
           package_id: string
           preferred_language?: string | null
@@ -276,11 +380,15 @@ export type Database = {
           user_id: string
         }
         Update: {
+          agent_id?: string | null
+          base_amount?: number | null
+          booked_by_agent?: boolean
           contact_email?: string | null
           contact_name?: string | null
           contact_phone?: string | null
           created_at?: string
           id?: string
+          markup_amount?: number | null
           num_guests?: number
           package_id?: string
           preferred_language?: string | null
@@ -290,6 +398,13 @@ export type Database = {
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "bookings_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "agents"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "bookings_package_id_fkey"
             columns: ["package_id"]
@@ -709,6 +824,15 @@ export type Database = {
       enqueue_email: {
         Args: { payload: Json; queue_name: string }
         Returns: number
+      }
+      get_agent_price: {
+        Args: { _code: string; _package_id: string }
+        Returns: {
+          agency_name: string
+          agent_id: string
+          base_price: number
+          price_per_person: number
+        }[]
       }
       has_role: {
         Args: {
