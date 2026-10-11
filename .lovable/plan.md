@@ -34,10 +34,19 @@ Strategy: win the easy, specific searches first (Pokkali, day trips, kayaking). 
 1. **Page titles and descriptions**: rewrite them on Home, Farm Tours, Products, Village Hub, Water Sports, Pokkali Story, About, Visit and Contact, so each page leads with its keywords.
 2. **Page wording**: work each page's keywords naturally into its main heading, opening paragraph, section headings and FAQs. Nothing gets stuffed or hidden.
 3. **New page "Day Trip from Kochi"**: a guide covering a one-day plan, travel time from Kochi and the airport, what to do (farm tour, kayaking, country boat, the Pokkali story), best time to visit and FAQs. It links to booking.
-4. **3 new blog posts** (published, in the existing blog):
-   - "Pokkali Rice: Benefits of Kerala's Salt-Tolerant Grain"
-   - "Kerala Backwaters Beyond Alleppey: Kayaking near Kochi"
-   - "Chinese Fishing Nets of Kochi and the Village Nets of Palliyakkal"
+4. **6 new blog posts** (published, in the existing blog), each built around 1–2 keywords:
+   - "Pokkali Rice: Benefits of Kerala's Salt-Tolerant Grain" (pokkali rice, pokkali rice benefits, salt tolerant rice)
+   - "Things to Do in Kochi: A Village Day Trip Locals Love" (things to do in kochi, places to visit near kochi)
+   - "Kayaking in Kochi: Paddling the Quiet Backwaters of Palliyakkal" (kayaking in kochi, kerala backwaters)
+   - "Chinese Fishing Nets of Kochi and the Village Nets of Palliyakkal" (chinese fishing nets kochi)
+   - "Red Rice of Kerala vs Pokkali: What's the Difference?" (red rice kerala, buy pokkali rice)
+   - "Eco Tourism in Kerala: Walking the Paddy Fields of a Living Village" (eco tourism kerala, paddy field kerala, responsible tourism kerala)
+5. **Newsletters**: a branded newsletter email template, plus 3 ready issues that each feature the new blog posts and a tour offer:
+   - Issue 1: "The Pokkali Story", covering the rice posts
+   - Issue 2: "Day Trips & Backwaters from Kochi", covering the Kochi and kayaking posts
+   - Issue 3: "Eco Travel in Kerala", covering the eco tourism and fishing nets posts
+
+   In Admin → Blogs & Newsletter, a new "Send newsletter" area lets you pick an issue, preview it, send a test, then send it to all active subscribers. Each email includes an unsubscribe link. Nothing is sent automatically. You choose when to send each issue.
 5. **Links between pages**: each page links to 2–3 related pages using keyword-rich link text, and the footer links to the new guide.
 6. **Search details Google reads**: each page tells search engines its own main address and how it looks when shared. Google also gets business details (name, address, area), tour and attraction details, FAQs, and breadcrumb trails on the inner pages.
 7. **Sitemap**: add the new page; the blog posts are added automatically.
