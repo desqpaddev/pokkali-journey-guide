@@ -223,15 +223,51 @@ export function InfoCard({ title, children }: { title: string; children: ReactNo
   );
 }
 
-export function meta(title: string, description: string) {
+export const SITE_URL = "https://pokkali.in";
+
+export const ORG_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": ["TouristAttraction", "LocalBusiness"],
+  name: "PAADI Tales — Pokkali Village",
+  url: SITE_URL,
+  description: "Pokkali farm tours, kayaking and eco tourism at Palliyakkal village near Kochi, Kerala.",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Palliyakkal, Ezhikara",
+    addressLocality: "North Paravur",
+    addressRegion: "Kerala",
+    postalCode: "683513",
+    addressCountry: "IN",
+  },
+  touristType: ["Eco tourism", "Agri tourism", "Families"],
+};
+
+type MetaOpts = { path?: string; crumb?: string; jsonld?: object[]; type?: string };
+
+export function meta(title: string, description: string, opts: MetaOpts = {}) {
+  const url = opts.path !== undefined ? `${SITE_URL}${opts.path}` : undefined;
+  const ld: object[] = [...(opts.jsonld ?? [])];
+  if (opts.path && opts.path !== "/" && opts.crumb) {
+    ld.push({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+        { "@type": "ListItem", position: 2, name: opts.crumb, item: url },
+      ],
+    });
+  }
   return {
     meta: [
       { title },
       { name: "description", content: description },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
-      { property: "og:type", content: "website" },
+      { property: "og:type", content: opts.type ?? "website" },
+      ...(url ? [{ property: "og:url", content: url }] : []),
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: url ? [{ rel: "canonical", href: url }] : [],
+    scripts: ld.map((j) => ({ type: "application/ld+json", children: JSON.stringify(j) })),
   };
 }

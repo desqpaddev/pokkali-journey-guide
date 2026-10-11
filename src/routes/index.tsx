@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Header, Footer } from "@/components/app/Header";
 import { HeroSlider } from "@/components/app/HeroSlider";
+import { ORG_JSONLD } from "@/components/app/PageShell";
 import { TourGlobe } from "@/components/app/TourGlobe";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -124,13 +125,18 @@ export const Route = createFileRoute("/")({
   staticData: { sitemap: true },
   head: () => ({
     meta: [
-      { title: "PAADI Tales — Palliyakkal Agri-Aqua Digital Immersive Tales" },
-      { name: "description", content: "Experience the village. Explore the farm. Live the story. Pokkali farm tours, agri-aqua products, Village Hub and water sports at Palliyakkal, Kerala." },
-      { property: "og:title", content: "PAADI Tales — Pokkali Village, Palliyakkal" },
-      { property: "og:description", content: "Experience the village. Explore the farm. Live the story." },
+      { title: "Pokkali Village — Eco Tourism & Village Tour near Kochi, Kerala" },
+      { name: "description", content: "Eco tourism in Kerala at Palliyakkal: a Pokkali paddy field village tour, kayaking and local food — an easy day trip from Kochi." },
+      { property: "og:title", content: "Pokkali Village — Eco Tourism & Village Tour near Kochi" },
+      { property: "og:description", content: "Pokkali farm tours, kayaking and village life — an easy day trip from Kochi, Kerala." },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://pokkali.in/" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9bc19654-4e4e-4cea-bd1e-8ef5752f33ea/id-preview-50531dfa--639e2a9b-cbb4-4b8f-870b-d355af7f8795.lovable.app-1781768885576.png" },
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9bc19654-4e4e-4cea-bd1e-8ef5752f33ea/id-preview-50531dfa--639e2a9b-cbb4-4b8f-870b-d355af7f8795.lovable.app-1781768885576.png" },
     ],
+    links: [{ rel: "canonical", href: "https://pokkali.in/" }],
+    scripts: [{ type: "application/ld+json", children: JSON.stringify(ORG_JSONLD) }],
   }),
   component: Index,
 });
@@ -178,13 +184,13 @@ function Index() {
         <div>
           <div className="text-sm font-display italic text-primary">Get to Know Pokkali</div>
           <h2 className="font-display text-4xl md:text-5xl mt-2 leading-tight uppercase">
-            We grow the agriculture<br />and organic farm
+            Eco tourism in Kerala,<br />rooted in Pokkali farming
           </h2>
           <p className="text-primary font-medium mt-6">
             We've revived 20+ years of vanishing Pokkali heritage.
           </p>
           <p className="text-muted-foreground mt-3 leading-relaxed">
-            Pokkali grows where land meets backwater — salt-tolerant, naturally organic, untouched by pesticides because the brackish water deters pests itself. Every visitor plants a sapling and 70% of every fee goes directly to the farmers reviving this ancient grain.
+            Pokkali grows where land meets backwater — salt-tolerant, naturally organic, untouched by pesticides because the brackish water deters pests itself. A Kerala village tour here is responsible tourism: every visitor plants a sapling and 70% of every fee goes directly to the farmers reviving this ancient grain.
           </p>
           <ul className="mt-6 space-y-2">
             {["Zero pesticides — brackish water keeps pests away.", "Heritage rice grown for over 3,000 years."].map((t) => (

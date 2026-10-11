@@ -18,10 +18,13 @@ export const Route = createFileRoute("/blog")({
   staticData: { sitemap: true },
   head: () => ({
     meta: [
-      { title: "Stories from the Fields — Pokkali Village Blog" },
-      { name: "description", content: "Reflections, recipes, and farmer stories from the Pokkali heritage backwaters of Kerala." },
-      { property: "og:title", content: "Stories from the Fields — Pokkali Village Blog" },
-      { property: "og:description", content: "Reflections, recipes, and farmer stories from Kerala's Pokkali heritage." },
+      { title: "Pokkali Village Blog — Pokkali Rice, Kochi Day Trips & Kerala Eco Tourism" },
+      { name: "description", content: "Guides and stories on Pokkali rice, things to do near Kochi, kayaking the Kerala backwaters and eco tourism in Kerala." },
+      { property: "og:title", content: "Pokkali Village Blog — Stories from the Fields" },
+      { property: "og:description", content: "Pokkali rice, Kochi day trips, kayaking and Kerala eco tourism." },
+      { property: "og:url", content: "https://pokkali.in/blog" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: BlogList,

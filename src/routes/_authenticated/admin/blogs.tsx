@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Plus, Trash2, Save, ExternalLink, Mail, Upload, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { NEWSLETTER_ISSUES } from "@/lib/newsletter-issues";
 
 export const Route = createFileRoute("/_authenticated/admin/blogs")({
   staticData: { sitemap: false },
@@ -52,6 +53,7 @@ function BlogsAdmin() {
 
   return (
     <div className="space-y-6">
+      <NewsletterSender subs={subs ?? []} />
       <Card className="p-5">
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <div className="inline-flex items-center gap-2">
@@ -238,5 +240,76 @@ function Field({ label, children, className }: { label: string; children: React.
       <Label className="text-xs">{label}</Label>
       <div className="mt-1">{children}</div>
     </div>
+  );
+}
+
+function NewsletterSender({ subs }: { subs: any[] }) {
+  const [issueId, setIssueId] = useState(NEWSLETTER_ISSUES[0].id);
+  const [busy, setBusy] = useState(false);
+  const issue = NEWSLETTER_ISSUES.find((i) => i.id === issueId)!;
+  const active = subs.filter((s) => s.is_active);
+
+  async function send(emails: string[], test: boolean) {
+    const { data: s } = await supabase.auth.getSession();
+    const token = s.session?.access_token;
+    let ok = 0;
+    for (const email of emails) {
+      const r = await fetch("/lovable/email/transactional/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({
+          templateName: "newsletter",
+          recipientEmail: email,
+          idempotencyKey: `${issueId}-${test ? "test-" + Date.now() + "-" : ""}${email}`,
+          templateData: { issueId },
+        }),
+      }).catch(() => null);
+      if (r?.ok) ok++;
+    }
+    return ok;
+  }
+
+  async function sendTest() {
+    const { data: u } = await supabase.auth.getUser();
+    if (!u.user?.email) return toast.error("No email on your account");
+    setBusy(true);
+    const ok = await send([u.user.email], true);
+    setBusy(false);
+    ok ? toast.success(`Test sent to ${u.user.email}`) : toast.error("Test could not be sent");
+  }
+
+  async function sendAll() {
+    if (!active.length) return toast.error("No active subscribers");
+    if (!confirm(`Send "${issue.title}" to ${active.length} subscribers?`)) return;
+    setBusy(true);
+    const ok = await send(active.map((s) => s.email), false);
+    setBusy(false);
+    toast.success(`Queued for ${ok} of ${active.length} subscribers`);
+  }
+
+  return (
+    <Card className="p-5">
+      <div className="font-semibold flex items-center gap-2"><Mail className="h-5 w-5 text-primary" /> Send newsletter</div>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {NEWSLETTER_ISSUES.map((i) => (
+          <Button key={i.id} size="sm" variant={i.id === issueId ? "default" : "outline"} onClick={() => setIssueId(i.id)}>{i.title}</Button>
+        ))}
+      </div>
+      <div className="mt-4 rounded-lg border border-border p-4 bg-muted/30">
+        <div className="text-xs text-muted-foreground">Subject</div>
+        <div className="font-medium">{issue.subject}</div>
+        <p className="text-sm mt-2">{issue.intro}</p>
+        <ul className="mt-2 text-sm list-disc pl-5">
+          {issue.posts.map((p) => (
+            <li key={p.slug}><Link to="/blog/$slug" params={{ slug: p.slug }} className="underline" target="_blank">{p.title}</Link></li>
+          ))}
+        </ul>
+        <div className="text-xs mt-2 text-muted-foreground">Button: {issue.cta.label}</div>
+      </div>
+      <div className="mt-4 flex gap-2 flex-wrap">
+        <Button size="sm" variant="outline" disabled={busy} onClick={sendTest}>Send test to me</Button>
+        <Button size="sm" disabled={busy} onClick={sendAll}>{busy ? "Sending…" : `Send to ${active.length} subscribers`}</Button>
+      </div>
+    </Card>
   );
 }

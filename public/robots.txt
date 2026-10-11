@@ -5,4 +5,4 @@ Disallow: /bookings
 Disallow: /tour/
 Disallow: /auth
 
-Sitemap: https://pokkalivillage.com/sitemap.xml
+Sitemap: https://pokkali.in/sitemap.xml

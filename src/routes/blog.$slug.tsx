@@ -9,11 +9,34 @@ import heroPaddy from "@/assets/hero-paddy.jpg";
 import heroBackwater from "@/assets/hero-backwater.jpg";
 import heroHarvest from "@/assets/hero-harvest.jpg";
 import parallaxFields from "@/assets/parallax-fields.jpg";
+import { getBlogMeta } from "@/lib/blog-meta.functions";
 
 const RELATED_IMAGES = [heroPaddy, heroBackwater, heroHarvest, parallaxFields];
 
 export const Route = createFileRoute("/blog/$slug")({
   staticData: { sitemap: true },
+  loader: ({ params }) => getBlogMeta({ data: { slug: params.slug } }),
+  head: ({ params, loaderData }) => {
+    const url = `https://pokkali.in/blog/${params.slug}`;
+    if (!loaderData) return { meta: [{ title: "Pokkali Village Blog" }, { name: "robots", content: "noindex" }] };
+    const title = `${loaderData.title} | Pokkali Village Blog`;
+    const desc = loaderData.excerpt ?? "A story from Pokkali Village, Kerala.";
+    const img = loaderData.cover_image_url?.startsWith("https://") ? loaderData.cover_image_url : null;
+    return {
+      meta: [
+        { title },
+        { name: "description", content: desc },
+        { property: "og:title", content: loaderData.title },
+        { property: "og:description", content: desc },
+        { property: "og:type", content: "article" },
+        { property: "og:url", content: url },
+        { name: "twitter:card", content: "summary_large_image" },
+        ...(img ? [{ property: "og:image", content: img }, { name: "twitter:image", content: img }] : []),
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [{ type: "application/ld+json", children: JSON.stringify({ "@context": "https://schema.org", "@type": "Article", headline: loaderData.title, description: desc, datePublished: loaderData.published_at, author: { "@type": "Person", name: loaderData.author_name ?? "Pokkali Village" }, mainEntityOfPage: url, ...(img ? { image: img } : {}) }) }],
+    };
+  },
   component: BlogDetail,
   errorComponent: ({ error }) => (
     <div className="min-h-screen grid place-items-center p-8 text-center">

@@ -8,13 +8,13 @@ import { Utensils, Fish, Gift, Info, Car, Coffee, Wifi, Baby } from "lucide-reac
 
 export const Route = createFileRoute("/village-hub")({
   staticData: { sitemap: true },
-  head: () => meta("Village Hub — PAADI Tales", "The visitor centre of Pokkali Village: restaurant, fish and agri-aqua sales counter, souvenirs and visitor services."),
+  head: () => meta("Village Hub — Farm Stay Style Food & Shop in Kerala | Pokkali Village", "Get a farm stay feel in Kerala for a day: Pokkali rice meals, fresh fish, a village shop and visitor services at the Palliyakkal Village Hub near Kochi.", { path: "/village-hub", crumb: "Village Hub" }),
   component: Hub,
 });
 
 function Hub() {
   return (
-    <PageShell bare eyebrow="Gateway 03" title="Village Hub" intro="The heart of your visit — eat, shop and rest at the visitor centre of Pokkali Village." image={img}
+    <PageShell bare eyebrow="Gateway 03" title="Village Hub" intro="The heart of your visit — a farm stay feel in Kerala without the overnight: eat, shop and rest at the visitor centre of Pokkali Village." image={img}
       stats={[{ value: "1", label: "Place to start" }, { value: "4", label: "Core services" }, { value: "Kerala", label: "Home kitchen" }, { value: "Free", label: "Parking" }]}>
       <Lead eyebrow="Where every tour begins" title="A welcoming stop by the fields">
         <p>Run with the local community and the Palliyakkal Service Co-operative Bank, the Hub is where you check in, meet your guide, share a meal and pick up fresh produce before heading home.</p>

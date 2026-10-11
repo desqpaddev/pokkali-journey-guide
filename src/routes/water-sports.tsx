@@ -7,16 +7,16 @@ import { Sailboat, Ship, Waves, Anchor, LifeBuoy, CloudRain, Baby, ShieldCheck }
 
 export const Route = createFileRoute("/water-sports")({
   staticData: { sitemap: true },
-  head: () => meta("Water Sports — PAADI Tales", "Kayaking, country boat rides and backwater activities at Palliyakkal, with safety guidance and booking."),
+  head: () => meta("Kayaking in Kochi & Backwater Tours | Pokkali Village Water Sports", "Kayaking near Kochi on calm Kerala backwaters: guided kayak trails, country boat rides and backwater tours at Palliyakkal village.", { path: "/water-sports", crumb: "Water Sports" }),
   component: Water,
 });
 
 function Water() {
   return (
-    <PageShell bare eyebrow="Gateway 04" title="Water Sports" intro="See Palliyakkal from the water — calm backwater paddles past fields, mangroves and fishing nets." image={img}
+    <PageShell bare eyebrow="Gateway 04" title="Water Sports" intro="Kayaking in Kochi's quiet northern backwaters. See Palliyakkal from the water — calm backwater paddles past fields, mangroves and fishing nets." image={img}
       stats={[{ value: "4", label: "Activities" }, { value: "Calm", label: "Backwaters" }, { value: "Trained", label: "Local crew" }, { value: "100%", label: "Life jackets" }]}>
-      <Lead eyebrow="On the backwater" title="Glide where the fields meet the tide">
-        <p>The channels around Palliyakkal are sheltered and slow — perfect for first-time paddlers and families. Drift past Pokkali fields, mangrove edges, Chinese nets and birds feeding at low tide.</p>
+      <Lead eyebrow="On the backwater" title="A backwater tour near Kochi, where the fields meet the tide">
+        <p>Skip the crowded houseboat routes — the Kerala backwaters around Palliyakkal are sheltered and slow — perfect for first-time paddlers and families. Drift past Pokkali fields, mangrove edges, Chinese nets and birds feeding at low tide.</p>
       </Lead>
       <FeatureGrid tinted cols={4} items={[
         { icon: Sailboat, title: "Kayaking", text: "Guided single and double kayaks through quiet channels.", tag: "Ages 12+" },
