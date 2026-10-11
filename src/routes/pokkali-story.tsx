@@ -9,15 +9,15 @@ import { Bird, Droplets, Leaf, Users, Recycle, Shield } from "lucide-react";
 
 export const Route = createFileRoute("/pokkali-story")({
   staticData: { sitemap: true },
-  head: () => meta("The Pokkali Story — PAADI Tales", "How Pokkali rice and aquaculture share Kerala's tidal fields: the seasons, traditional knowledge, ecology and the farmers of Palliyakkal."),
+  head: () => meta("What is Pokkali Rice? Kerala's Salt-Tolerant Rice | The Pokkali Story", "Pokkali is a salt-tolerant rice grown in Kerala's tidal fields, alternating with prawn farming. Discover how Pokkali rice is grown, its seasons and its farmers.", { path: "/pokkali-story", crumb: "The Pokkali Story" }),
   component: Story,
 });
 
 function Story() {
   return (
-    <PageShell bare eyebrow="The foundation" title="The Pokkali Story" intro="A rice that grows in salt water, and a farming system where land and backwater take turns." image={img}
+    <PageShell bare eyebrow="The foundation" title="The Pokkali Story" intro="Pokkali is a salt-tolerant rice that grows in Kerala's brackish water — a farming system where land and backwater take turns." image={img}
       stats={[{ value: "3000+", label: "Years of tradition" }, { value: "2m", label: "Tall rice plants" }, { value: "GI", label: "Tag since 2008" }, { value: "1", label: "Field, two harvests" }]}>
-      <Lead eyebrow="Chapter one" title="A rice that refused to drown">
+      <Lead eyebrow="Chapter one" title="What is Pokkali rice? A rice that refused to drown">
         <p>Along the coastal wetlands of central Kerala, where seawater meets the backwaters, most crops fail. Pokkali thrives. Its tall stalks rise above floods and tolerate salt — a gift of generations of careful seed selection by Kerala's farmers.</p>
       </Lead>
       <Split image={imgP} eyebrow="Chapter two" title="Mounds, seeds and the monsoon" points={["Farmers raise earthen mounds as the rains wash salt away", "Sprouted seeds are sown on the mounds", "Seedlings are spread across the field once strong"]}>

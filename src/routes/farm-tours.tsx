@@ -10,7 +10,7 @@ import { Clock, Users, ArrowUpRight, Sprout, Headphones, Fish, Sun, Footprints, 
 
 export const Route = createFileRoute("/farm-tours")({
   staticData: { sitemap: true },
-  head: () => meta("Pokkali Farm Tours — PAADI Tales", "Hosted walks through Palliyakkal's Pokkali fields, bunds and backwaters with the farmers who keep them alive."),
+  head: () => meta("Pokkali Farming Tour in Kerala Paddy Fields | Pokkali Village", "Walk real paddy fields in Kerala on a hosted Pokkali farming tour at Palliyakkal, near Kochi — sow, harvest and learn from the farmers.", { path: "/farm-tours", crumb: "Farm Tours", jsonld: [{ "@context": "https://schema.org", "@type": "TouristTrip", name: "Pokkali Farm Tour (Half Day)", description: "Guided Pokkali farming tour through the paddy fields of Palliyakkal, Kerala.", touristType: "Eco tourism", provider: { "@type": "Organization", name: "PAADI Tales — Pokkali Village", url: "https://pokkali.in" } }] }),
   component: FarmTours,
 });
 
@@ -23,7 +23,7 @@ function FarmTours() {
     },
   });
   return (
-    <PageShell bare eyebrow="Gateway 01" title="Pokkali Farm Tours" intro="Step onto the bunds of Palliyakkal, where salt-tolerant Pokkali rice and prawn farming share the same water through the seasons." image={img}
+    <PageShell bare eyebrow="Gateway 01" title="Pokkali Farm Tours" intro="A hands-on Pokkali farming tour in the paddy fields of Kerala. Step onto the bunds of Palliyakkal, where salt-tolerant Pokkali rice and prawn farming share the same water through the seasons." image={img}
       stats={[{ value: "3–4", label: "Hours on the farm" }, { value: "15", label: "Story stops" }, { value: "2", label: "Farming seasons" }, { value: "100%", label: "Chemical-free fields" }]}>
       <Lead eyebrow="A hosted village walk" title="Walk the fields with the people who farm them">
         <p>A local guide leads you along narrow bunds, past sluice gates and prawn ponds, into the working life of a Pokkali farm. At every stop, the PAADI app plays a short audio story in English or Malayalam — so the land speaks for itself.</p>

@@ -8,7 +8,7 @@ import { Wheat, Leaf, HeartHandshake, Truck } from "lucide-react";
 
 export const Route = createFileRoute("/products")({
   staticData: { sitemap: true },
-  head: () => meta("Agri-Aqua Products — PAADI Tales", "Pokkali rice, prawns, fish and village products from Palliyakkal's agri-aqua ecosystem, straight from local producers."),
+  head: () => meta("Buy Pokkali Rice & Kerala Red Rice | Pokkali Village Products", "Buy Pokkali rice — Kerala's salt-tolerant red rice — plus prawns, fish and village products straight from Palliyakkal farmers. Learn the benefits.", { path: "/products", crumb: "Products" }),
   component: Products,
 });
 
@@ -50,7 +50,7 @@ function Products() {
         { icon: Truck, title: "Online soon", text: "Home delivery across Kerala is on the way." },
       ]} />
 
-      <Split image={imgP} eyebrow="Why Pokkali" title="Rich in taste, rich in story" points={["High in fibre and minerals", "Naturally red, lightly nutty flavour", "Great for kanji, puttu and appam"]}>
+      <Split image={imgP} eyebrow="Why Pokkali" title="Pokkali rice benefits: rich in taste, rich in story" points={["High in fibre and minerals", "Naturally red, lightly nutty flavour", "Great for kanji, puttu and appam"]}>
         <p>Pokkali grains are bold and red, with a flavour shaped by the brackish soil. Locals have long valued it as a light, healing food — perfect for rice porridge and breakfast dishes.</p>
       </Split>
       <Split reverse image={imgB} eyebrow="Aqua season" title="Prawns that grow with the tide">
@@ -59,7 +59,8 @@ function Products() {
 
       <Quote image={imgF} text="When you buy our rice, you keep the field alive for another year." by="Pokkali producers' group, Palliyakkal" />
       <Faq items={[
-        { q: "Can I buy online now?", a: "Online ordering is coming soon. For now, buy at the Village Hub or send us an enquiry for bulk orders." },
+        { q: "How is Pokkali different from other Kerala red rice?", a: "Most red rice in Kerala (like Matta) grows in freshwater paddies. Pokkali is a rare salt-tolerant red rice grown in tidal, brackish fields without chemical fertilisers or pesticides." },
+        { q: "Can I buy Pokkali rice online now?", a: "Online ordering is coming soon. For now, buy at the Village Hub or send us an enquiry for bulk orders." },
         { q: "When are fresh prawns available?", a: "Mainly December to April during the aquaculture season, subject to the day's catch." },
         { q: "Do you supply shops and restaurants?", a: "Yes — contact us with the quantity you need and we'll connect you with producer groups." },
       ]} />

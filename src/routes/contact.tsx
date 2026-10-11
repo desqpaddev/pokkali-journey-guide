@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 
 export const Route = createFileRoute("/contact")({
   staticData: { sitemap: true },
-  head: () => meta("Contact — PAADI Tales", "Enquire about farm tours, products, Village Hub services and water sports at Pokkali Village, Palliyakkal."),
+  head: () => meta("Contact & Book — Pokkali Village Tours near Kochi", "Enquire about Pokkali farm tours, kayaking, Village Hub meals and buying Pokkali rice at Palliyakkal, near Kochi, Kerala.", { path: "/contact", crumb: "Contact" }),
   component: Contact,
 });
 

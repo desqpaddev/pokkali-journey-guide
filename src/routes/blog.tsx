@@ -22,6 +22,12 @@ export const Route = createFileRoute("/blog")({
       { name: "description", content: "Reflections, recipes, and farmer stories from the Pokkali heritage backwaters of Kerala." },
       { property: "og:title", content: "Stories from the Fields — Pokkali Village Blog" },
       { property: "og:description", content: "Reflections, recipes, and farmer stories from Kerala's Pokkali heritage." },
+      { property: "og:url", content: "https://pokkali.in/blog" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+    links: [{ rel: "canonical", href: "https://pokkali.in/blog" }],
+    _x: [
     ],
   }),
   component: BlogList,
