@@ -47,9 +47,9 @@ Strategy: win the easy, specific searches first (Pokkali, day trips, kayaking). 
    - Issue 3: "Eco Travel in Kerala", covering the eco tourism and fishing nets posts
 
    In Admin → Blogs & Newsletter, a new "Send newsletter" area lets you pick an issue, preview it, send a test, then send it to all active subscribers. Each email includes an unsubscribe link. Nothing is sent automatically. You choose when to send each issue.
-5. **Links between pages**: each page links to 2–3 related pages using keyword-rich link text, and the footer links to the new guide.
-6. **Search details Google reads**: each page tells search engines its own main address and how it looks when shared. Google also gets business details (name, address, area), tour and attraction details, FAQs, and breadcrumb trails on the inner pages.
-7. **Sitemap**: add the new page; the blog posts are added automatically.
+6. **Links between pages**: each page links to 2–3 related pages using keyword-rich link text, and the footer links to the new guide.
+7. **Search details Google reads**: each page tells search engines its own main address and how it looks when shared. Google also gets business details (name, address, area), tour and attraction details, FAQs, and breadcrumb trails on the inner pages.
+8. **Sitemap**: add the new page; the blog posts are added automatically.
 
 ## Notes
 - Some facts will be written by me (travel times, activities). I'll flag anything you need to confirm.
@@ -65,5 +65,6 @@ Strategy: win the easy, specific searches first (Pokkali, day trips, kayaking). 
   - BreadcrumbList on inner pages
   - Article on the new blog posts
 - New route `src/routes/day-trip-from-kochi.tsx` using the PageShell components, with `staticData.sitemap: true`.
-- Insert the blog posts as data rows into `blogs` with `is_published = true`, using existing photos for the covers.
+- Insert the 6 blog posts as data rows into `blogs` with `is_published = true`, using existing photos for the covers.
+- Newsletter: a new `newsletter` email template in the registry (props: issue title, intro, featured posts, CTA). An admin-only server function verifies the admin role, then queues one email per active subscriber through the existing email queue, with an idempotency key per issue + subscriber. Test send goes to the admin email first.
 - Extend `meta()` in PageShell to accept a path, so it can output the page address and the share details.
