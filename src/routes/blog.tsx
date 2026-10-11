@@ -26,7 +26,6 @@ export const Route = createFileRoute("/blog")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://pokkali.in/blog" }],
   }),
   component: BlogList,
 });
