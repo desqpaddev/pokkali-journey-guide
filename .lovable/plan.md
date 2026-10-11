@@ -57,7 +57,7 @@ Strategy: win the easy, specific searches first (Pokkali, day trips, kayaking). 
 - Connecting Google Search Console afterwards is recommended so you can track impressions for these keywords.
 
 ## Technical details
-- Use `head()` on each route with title, description, og:title, og:description, og:type, og:url and canonical. Everything points to https://pokkalivillage.com/<path>, leaf routes only.
+- Use `head()` on each route with title, description, og:title, og:description, og:type, og:url and canonical. Everything points to https://pokkali.in/<path>, leaf routes only.
 - Structured data (JSON-LD) through `scripts` in `head()`:
   - LocalBusiness/TouristAttraction on Home and Visit
   - TouristTrip on Farm Tours
@@ -68,3 +68,4 @@ Strategy: win the easy, specific searches first (Pokkali, day trips, kayaking). 
 - Insert the 6 blog posts as data rows into `blogs` with `is_published = true`, using existing photos for the covers.
 - Newsletter: a new `newsletter` email template in the registry (props: issue title, intro, featured posts, CTA). An admin-only server function verifies the admin role, then queues one email per active subscriber through the existing email queue, with an idempotency key per issue + subscriber. Test send goes to the admin email first.
 - Extend `meta()` in PageShell to accept a path, so it can output the page address and the share details.
+- Domain: use **https://pokkali.in** only. Switch the sitemap base URL, the robots.txt Sitemap line, canonical links, og:url and structured data from pokkalivillage.com to pokkali.in. Recommend setting pokkali.in as the Primary domain in Project Settings → Domains, so the other domains redirect to it. Save this as a project rule.
