@@ -16,6 +16,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ProductsRouteImport } from './routes/products'
 import { Route as PokkaliStoryRouteImport } from './routes/pokkali-story'
 import { Route as FarmToursRouteImport } from './routes/farm-tours'
+import { Route as DayTripFromKochiRouteImport } from './routes/day-trip-from-kochi'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -82,6 +83,11 @@ const PokkaliStoryRoute = PokkaliStoryRouteImport.update({
 const FarmToursRoute = FarmToursRouteImport.update({
   id: '/farm-tours',
   path: '/farm-tours',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DayTripFromKochiRoute = DayTripFromKochiRouteImport.update({
+  id: '/day-trip-from-kochi',
+  path: '/day-trip-from-kochi',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -260,6 +266,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
+  '/day-trip-from-kochi': typeof DayTripFromKochiRoute
   '/farm-tours': typeof FarmToursRoute
   '/pokkali-story': typeof PokkaliStoryRoute
   '/products': typeof ProductsRoute
@@ -300,6 +307,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
+  '/day-trip-from-kochi': typeof DayTripFromKochiRoute
   '/farm-tours': typeof FarmToursRoute
   '/pokkali-story': typeof PokkaliStoryRoute
   '/products': typeof ProductsRoute
@@ -341,6 +349,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
+  '/day-trip-from-kochi': typeof DayTripFromKochiRoute
   '/farm-tours': typeof FarmToursRoute
   '/pokkali-story': typeof PokkaliStoryRoute
   '/products': typeof ProductsRoute
@@ -383,6 +392,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/blog'
     | '/contact'
+    | '/day-trip-from-kochi'
     | '/farm-tours'
     | '/pokkali-story'
     | '/products'
@@ -423,6 +433,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/blog'
     | '/contact'
+    | '/day-trip-from-kochi'
     | '/farm-tours'
     | '/pokkali-story'
     | '/products'
@@ -463,6 +474,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/blog'
     | '/contact'
+    | '/day-trip-from-kochi'
     | '/farm-tours'
     | '/pokkali-story'
     | '/products'
@@ -505,6 +517,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   BlogRoute: typeof BlogRouteWithChildren
   ContactRoute: typeof ContactRoute
+  DayTripFromKochiRoute: typeof DayTripFromKochiRoute
   FarmToursRoute: typeof FarmToursRoute
   PokkaliStoryRoute: typeof PokkaliStoryRoute
   ProductsRoute: typeof ProductsRoute
@@ -573,6 +586,13 @@ declare module '@tanstack/react-router' {
       path: '/farm-tours'
       fullPath: '/farm-tours'
       preLoaderRoute: typeof FarmToursRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/day-trip-from-kochi': {
+      id: '/day-trip-from-kochi'
+      path: '/day-trip-from-kochi'
+      fullPath: '/day-trip-from-kochi'
+      preLoaderRoute: typeof DayTripFromKochiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -870,6 +890,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   BlogRoute: BlogRouteWithChildren,
   ContactRoute: ContactRoute,
+  DayTripFromKochiRoute: DayTripFromKochiRoute,
   FarmToursRoute: FarmToursRoute,
   PokkaliStoryRoute: PokkaliStoryRoute,
   ProductsRoute: ProductsRoute,
