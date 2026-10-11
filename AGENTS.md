@@ -13,3 +13,7 @@
 - Agent prices are always computed server-side (`get_agent_price` RPC + `createAgentBooking` server fn); never trust client totals. Why: prevents price tampering.
 - Agent/markup approval fields are protected by DB triggers that reset them unless the caller is admin. Why: agents can edit their own rows safely.
 - Agent bookings start as `pending_approval` and only admins confirm them. Why: business rule requires admin approval of each agent sale.
+
+## SEO
+- Public pages build head tags via `meta(title, desc, { path, crumb, jsonld })` in PageShell, which emits canonical/og:url on the site domain constant `SITE_URL`. Why: one place controls the domain and breadcrumbs.
+- Newsletter issues live in `src/lib/newsletter-issues.ts` and render through the `newsletter` email template. Why: issues are versioned with the blog posts they feature.
