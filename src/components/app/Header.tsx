@@ -199,6 +199,7 @@ export function Footer() {
             <li><Link to="/village-hub" className="hover:text-secondary">Village Hub</Link></li>
             <li><Link to="/water-sports" className="hover:text-secondary">Water Sports</Link></li>
             <li><Link to="/pokkali-story" className="hover:text-secondary">The Pokkali Story</Link></li>
+            <li><Link to="/day-trip-from-kochi" className="hover:text-secondary">Day Trip from Kochi</Link></li>
             <li><Link to="/about" className="hover:text-secondary">About Palliyakkal</Link></li>
             <li><Link to="/visit" className="hover:text-secondary">Plan Your Visit</Link></li>
             <li><Link to="/contact" className="hover:text-secondary">Contact</Link></li>
