@@ -13,6 +13,14 @@ export const Route = createFileRoute("/_authenticated/bookings")({
 });
 
 function Bookings() {
+  const { data: pkgs } = useQuery({
+    queryKey: ["browse-packages"],
+    queryFn: async () => {
+      const { data } = await supabase.from("packages").select("id, title, slug, hero_image_url, price_per_person").eq("is_active", true).order("created_at");
+      return data ?? [];
+    },
+  });
+
   const { data } = useQuery({
     queryKey: ["my-bookings"],
     queryFn: async () => {
