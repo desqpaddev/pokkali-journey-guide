@@ -70,7 +70,7 @@ export function Header() {
             </Button>
           )}
           {!user && (
-            <Button asChild size="sm" className="sm:hidden">
+            <Button asChild size="sm" variant="outline" className="rounded-full">
               <Link to="/auth"><LogIn className="h-4 w-4" />Sign in</Link>
             </Button>
           )}
