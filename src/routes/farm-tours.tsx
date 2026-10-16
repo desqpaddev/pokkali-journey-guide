@@ -19,7 +19,7 @@ function FarmTours() {
     queryKey: ["public-packages"],
     queryFn: async () => {
       const { data } = await supabase.from("packages").select("*").eq("is_active", true).order("created_at");
-      return (data ?? []).filter((p) => !/trial|new tour/i.test(p.title));
+      return data ?? [];
     },
   });
   return (
