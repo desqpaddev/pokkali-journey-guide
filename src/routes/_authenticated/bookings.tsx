@@ -13,6 +13,14 @@ export const Route = createFileRoute("/_authenticated/bookings")({
 });
 
 function Bookings() {
+  const { data: pkgs } = useQuery({
+    queryKey: ["browse-packages"],
+    queryFn: async () => {
+      const { data } = await supabase.from("packages").select("id, title, slug, hero_image_url, price_per_person").eq("is_active", true).order("created_at");
+      return data ?? [];
+    },
+  });
+
   const { data } = useQuery({
     queryKey: ["my-bookings"],
     queryFn: async () => {
@@ -48,11 +56,26 @@ function Bookings() {
           <Button asChild variant="outline"><Link to="/">Browse tours</Link></Button>
         </div>
         {!data?.length ? (
-          <Card className="p-12 text-center">
-            <Wheat className="h-8 w-8 mx-auto text-accent" />
-            <p className="mt-3 text-muted-foreground">No bookings yet.</p>
-            <Button asChild className="mt-4" variant="hero"><Link to="/">Find a tour</Link></Button>
-          </Card>
+          <div>
+            <Card className="p-12 text-center">
+              <Wheat className="h-8 w-8 mx-auto text-accent" />
+              <p className="mt-3 text-muted-foreground">No bookings yet — pick a tour below to get started.</p>
+            </Card>
+            <h2 className="font-display text-3xl mt-10 mb-5">Available tours</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {(pkgs ?? []).map((p: any) => (
+                <Link key={p.id} to="/packages/$slug" params={{ slug: p.slug }} className="group">
+                  <Card className="overflow-hidden h-full transition group-hover:shadow-lg">
+                    {p.hero_image_url && <img src={p.hero_image_url} alt="" className="h-40 w-full object-cover" />}
+                    <div className="p-5">
+                      <h3 className="font-display text-xl">{p.title}</h3>
+                      <div className="mt-2 text-sm text-muted-foreground">₹{Number(p.price_per_person).toLocaleString()} / person</div>
+                    </div>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </div>
         ) : (
           <div className="grid md:grid-cols-2 gap-5">
             {data.map((b: any) => (
